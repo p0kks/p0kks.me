@@ -1,11 +1,18 @@
-
 [
   {
     "title": "Midnight Session",
-    "file": "midnight-session.mp3"
+    "description": "An experimental track exploring ambient textures and minimal rhythms.",
+    "tags": ["ambient", "experimental", "electronic"],
+    "audioSrc": "audio/midnight-session.mp3",
+    "duration": "3:45",
+    "size": "5.2 MB"
   },
   {
     "title": "Lo-Fi Sketch",
-    "file": "lofi-sketch.mp3"
+    "description": "A chill lo-fi beat with a melancholic melody.",
+    "tags": ["lo-fi", "hip-hop", "chill"],
+    "audioSrc": "audio/lofi-sketch.mp3",
+    "duration": "2:10",
+    "size": "3.1 MB"
   }
 ]

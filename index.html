@@ -326,7 +326,7 @@
       document.getElementById('year').textContent = new Date().getFullYear();
 
       // Load computer projects
-      fetch('dev.json')
+      fetch('dev/dev.json')
         .then(response => response.json())
         .then(data => {
           const container = document.getElementById('computer-projects');
@@ -345,7 +345,7 @@
         });
 
       // Load audio projects
-      fetch('audio-projects.json')
+      fetch('audio/audio.json')
         .then(response => response.json())
         .then(data => {
           const container = document.getElementById('audio-projects');
