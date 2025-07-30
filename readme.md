@@ -6,7 +6,8 @@ Ultra-minimal personal website for showcasing audio and computer projects.
 
 - **Single Page Application** - Smooth navigation without page reloads.
 - **Data-Driven Content** - Projects are loaded from JSON files for easy updates.
-- **Audio & Computer Projects** - Sections for both types of work.
+- **Audio Projects**    - Sections for audio projects.
+- **Computer Projects** - Sections for computer projects.
 - **Responsive Design** - Works perfectly on all devices.
 - **Zero Dependencies** - Pure HTML, CSS, JavaScript.
 - **Fast Loading** - Optimized fonts and minimal code.
@@ -18,12 +19,11 @@ Ultra-minimal personal website for showcasing audio and computer projects.
 p0kks.github.io/
 ├── index.html
 ├── computer-projects.json
-├── computer-projects/
+├── computer/
 │   └── ...
 ├── audio-projects.json
 ├── audio/
-│   └── compressed/
-│       └── ...
+│   └── ...
 └── readme.md
 ```
 
@@ -31,8 +31,9 @@ p0kks.github.io/
 
 ### Computer Projects
 
-1.  Edit `computer-projects.json`.
-2.  Add a new JSON object to the array for each new project.
+1.  Upload your file or link to the `computer/` directory.
+2.  Edit `computer-projects.json`.
+3.  Add a new JSON object to the array for each new project.
 
 **Example `computer-projects.json` entry:**
 
@@ -47,7 +48,7 @@ p0kks.github.io/
 
 ### Audio Projects
 
-1.  Upload your audio file to the `audio/compressed/` directory.
+1.  Upload your audio file to the `audio/` directory.
 2.  Edit `audio-projects.json`.
 3.  Add a new JSON object to the array for each new track.
 
