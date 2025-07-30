@@ -18,6 +18,8 @@ Ultra-minimal personal website for showcasing audio and computer projects.
 p0kks.github.io/
 ├── index.html
 ├── computer-projects.json
+├── computer-projects/
+│   └── ...
 ├── audio-projects.json
 ├── audio/
 │   └── compressed/
