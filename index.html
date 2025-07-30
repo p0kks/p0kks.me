@@ -272,59 +272,10 @@
       <h2>Projects</h2>
 
       <div class="folder-structure">💻 Projects</div>
+      <div id="computer-projects"></div>
 
       <div class="folder-structure">🎸 Audio</div>
-      
-      <div class="audio-project">
-        <div class="audio-title">placeholder</div>
-        <div class="audio-description">Lorem Ipsum</div>
-        <div class="audio-tags">
-          <span class="tag">tag1</span>
-          <span class="tag">tag2</span>
-          <span class="tag">tag3</span>
-        </div>
-        <div class="audio-player">
-          <button class="play-btn" onclick="togglePlay(this, 'audio1')">▶</button>
-          <audio id="audio1" preload="metadata">
-            <source src="audio/compressed/neural_fragments.mp3" type="audio/mpeg">
-          </audio>
-          <div class="audio-info">3:47 • 4.2mb</div>
-        </div>
-      </div>
-
-      <div class="audio-project">
-        <div class="audio-title">placeholder</div>
-        <div class="audio-description">Lorem Ipsum</div>
-        <div class="audio-tags">
-          <span class="tag">tag1</span>
-          <span class="tag">tag2</span>
-          <span class="tag">tag3</span>
-        </div>
-        <div class="audio-player">
-          <button class="play-btn" onclick="togglePlay(this, 'audio2')">▶</button>
-          <audio id="audio2" preload="metadata">
-            <source src="audio/compressed/neural_fragments.mp3" type="audio/mpeg">
-          </audio>
-          <div class="audio-info">3:47 • 4.2mb</div>
-        </div>
-      </div>
-
-      <div class="audio-project">
-        <div class="audio-title">placeholder</div>
-        <div class="audio-description">Lorem Ipsum</div>
-        <div class="audio-tags">
-          <span class="tag">tag1</span>
-          <span class="tag">tag2</span>
-          <span class="tag">tag3</span>
-        </div>
-        <div class="audio-player">
-          <button class="play-btn" onclick="togglePlay(this, 'audio3')">▶</button>
-          <audio id="audio3" preload="metadata">
-            <source src="audio/compressed/neural_fragments.mp3" type="audio/mpeg">
-          </audio>
-          <div class="audio-info">3:47 • 4.2mb</div>
-        </div>
-      </div>
+      <div id="audio-projects"></div>
     </div>
 
     <!-- About Page -->
@@ -370,6 +321,51 @@
       updateClock();
       setInterval(updateClock, 1000);
       document.getElementById('year').textContent = new Date().getFullYear();
+
+      // Load computer projects
+      fetch('computer-projects.json')
+        .then(response => response.json())
+        .then(data => {
+          const container = document.getElementById('computer-projects');
+          data.forEach(project => {
+            const projectElement = document.createElement('div');
+            projectElement.classList.add('project');
+            projectElement.innerHTML = `
+              <h3><a href="${project.link}" target="_blank">${project.title}</a></h3>
+              <p>${project.description}</p>
+              <div class="audio-tags">
+                ${project.tags.map(tag => `<span class="tag">${tag}</span>`).join('')}
+              </div>
+            `;
+            container.appendChild(projectElement);
+          });
+        });
+
+      // Load audio projects
+      fetch('audio-projects.json')
+        .then(response => response.json())
+        .then(data => {
+          const container = document.getElementById('audio-projects');
+          data.forEach((project, index) => {
+            const projectElement = document.createElement('div');
+            projectElement.classList.add('audio-project');
+            projectElement.innerHTML = `
+              <div class="audio-title">${project.title}</div>
+              <div class="audio-description">${project.description}</div>
+              <div class="audio-tags">
+                ${project.tags.map(tag => `<span class="tag">${tag}</span>`).join('')}
+              </div>
+              <div class="audio-player">
+                <button class="play-btn" onclick="togglePlay(this, 'audio${index + 1}')">▶</button>
+                <audio id="audio${index + 1}" preload="metadata">
+                  <source src="${project.audioSrc}" type="audio/mpeg">
+                </audio>
+                <div class="audio-info">${project.duration} • ${project.size}</div>
+              </div>
+            `;
+            container.appendChild(projectElement);
+          });
+        });
     });
   
     function showPage(pageId, linkElement) {
