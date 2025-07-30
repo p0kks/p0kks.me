@@ -1,41 +1,437 @@
-
-<!DOCTYPE html>
+  <meta name="description" content="p0kks - Sound designer and developer creating minimal audio experiences">
+  <meta name="keywords" content="audio, sound design, minimal, experimental, composition">
+  <meta name="author" content="p0kks">
+  <meta property="og:title" content="p0kks">
+  <meta property="og:description" content="Sound designer and developer creating minimal audio experiences">
+  <meta property="og:type" content="website">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Home</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>p0kks</title>
   <style>
-    body {
-      background: black;
-      color: white;
-      font-family: 'Montserrat', sans-serif;
-      text-align: center;
-      padding: 2rem;
+    * {
       margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    function updateClock() {
+      const now = new Date();
+      const time = now.toLocaleTimeString('en-US', { 
+        hour12: false,
+        hour: '2-digit',
+        minute: '2-digit',
+        second: '2-digit'
+      });
+      document.getElementById('clock').textContent = time;
     }
+
+    // Update clock immediately and then every second
+    updateClock();
+    setInterval(updateClock, 1000);
+
+    body {
+      background: #000;
+      color: #fff;
+      font-family: 'JetBrains Mono', 'SF Mono', 'Monaco', 'Inconsolata', monospace;
+      font-weight: 500;
+      line-height: 1.2;
+      padding: 40px 20px;
+      min-height: 100vh;
+    }
+
+    .footer {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px;
+      background: #000;
+    }
+
+    .copyright {
+      font-size: 14px;
+      color: #666;
+      font-weight: 400;
+    }
+
+    .clock {
+      font-size: 14px;
+      color: #666;
+      font-weight: 400;
+      font-variant-numeric: tabular-nums;
+    }
+
     .container {
       max-width: 600px;
-      margin: auto;
+      margin: 0 auto;
+      padding-bottom: 80px;
     }
+
+    nav {
+      margin-bottom: 80px;
+    }
+
     nav a {
-      color: white;
-      margin: 0 10px;
+      color: #fff;
       text-decoration: none;
-      font-weight: bold;
+      font-size: 16px;
+      margin-right: 40px;
+      font-weight: 600;
+    }
+
+    nav a:hover {
+      color: #888;
+    }
+
+    nav a.active {
+      color: #888;
+    }
+
+    .page {
+      display: none;
+    }
+
+    .page.active {
+      display: block;
+    }
+
+    h1 {
+      font-size: 42px;
+      font-weight: 700;
+      margin-bottom: 40px;
+      letter-spacing: -1px;
+    }
+
+    h2 {
+      font-size: 28px;
+      font-weight: 600;
+      margin-bottom: 30px;
+      letter-spacing: 0;
+    }
+
+    p {
+      font-size: 16px;
+      font-weight: 400;
+      line-height: 1.6;
+      margin-bottom: 30px;
+      color: #ccc;
+    }
+
+    .project {
+      margin-bottom: 60px;
+    }
+
+    .project h3 {
+      font-size: 20px;
+      font-weight: 600;
+      margin-bottom: 10px;
+      color: #fff;
+    }
+
+    .project p {
+      font-size: 14px;
+      margin-bottom: 0;
+    }
+
+    .audio-project {
+      margin-bottom: 50px;
+      padding-bottom: 30px;
+      border-bottom: 1px solid #333;
+    }
+
+    .audio-project:last-child {
+      border-bottom: none;
+    }
+
+    .audio-title {
+      font-size: 18px;
+      font-weight: 600;
+      margin-bottom: 8px;
+      color: #fff;
+    }
+
+    .audio-description {
+      font-size: 14px;
+      font-weight: 400;
+      color: #999;
+      margin-bottom: 12px;
+      line-height: 1.4;
+    }
+
+    .audio-tags {
+      margin-bottom: 15px;
+    }
+
+    .tag {
+      display: inline-block;
+      font-size: 11px;
+      font-weight: 500;
+      color: #666;
+      margin-right: 12px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .audio-player {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+    }
+
+    .play-btn {
+      background: #fff;
+      color: #000;
+      border: none;
+      width: 32px;
+      height: 32px;
+      font-size: 12px;
+      font-weight: 600;
+      cursor: pointer;
+      font-family: inherit;
+    }
+
+    .play-btn:hover {
+      background: #ccc;
+    }
+
+    .audio-info {
+      font-size: 12px;
+      color: #666;
+      font-weight: 500;
+    }
+
+    .folder-structure {
+      font-size: 12px;
+      color: #555;
+      margin-bottom: 30px;
+      font-weight: 400;
+    }
+
+    .folder-structure::before {
+      content: "audio/";
+      color: #777;
+    }
+
+    .contact {
+      margin-top: 60px;
+    }
+
+    .contact a {
+      color: #fff;
+      text-decoration: none;
+      font-weight: 500;
+      margin-right: 30px;
+    }
+
+    .contact a:hover {
+      color: #888;
+    }
+
+    @media (max-width: 768px) {
+      body {
+        padding: 20px 15px;
+      }
+      
+      nav a {
+        margin-right: 25px;
+        font-size: 14px;
+      }
+      
+      h1 {
+        font-size: 32px;
+      }
+      
+      h2 {
+        font-size: 24px;
+      }
+      
+      p {
+        font-size: 14px;
+      }
     }
   </style>
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
   <div class="container">
     <nav>
-      <a href="index.html">Index</a>
-      <a href="projects.html">Projects</a>
-      <a href="about.html">About</a>
+      <a href="#" onclick="showPage('index')" class="nav-link active">Index</a>
+      <a href="#" onclick="showPage('projects')" class="nav-link">Projects</a>
+      <a href="#" onclick="showPage('about')" class="nav-link">About</a>
     </nav>
-    <h1>Welcome</h1>
-    <p>Minimal Audio Project Archive</p>
+
+    <!-- Index Page -->
+    <div id="index" class="page active">
+      <h1>p0kks</h1>
+      <p>Sound designer and developer focused on creating minimal, functional experiences.</p>
+      <p>Currently building audio tools and experimental compositions.</p>
+    </div>
+
+    <!-- Projects Page -->
+    <div id="projects" class="page">
+      <h2>Projects</h2>
+      
+      <div class="folder-structure">compressed/</div>
+      
+      <div class="audio-project">
+        <div class="audio-title">neural_fragments</div>
+        <div class="audio-description">Exploring human consciousness through manipulated field recordings and synthesized textures</div>
+        <div class="audio-tags">
+          <span class="tag">ambient</span>
+          <span class="tag">experimental</span>
+          <span class="tag">drone</span>
+        </div>
+        <div class="audio-player">
+          <button class="play-btn" onclick="togglePlay(this, 'audio1')">▶</button>
+          <audio id="audio1" preload="metadata">
+            <source src="audio/compressed/neural_fragments.mp3" type="audio/mpeg">
+          </audio>
+          <div class="audio-info">3:47 • 4.2mb</div>
+        </div>
+      </div>
+
+      <div class="audio-project">
+        <div class="audio-title">void_transmission</div>
+        <div class="audio-description">Raw electromagnetic interference data converted to sonic frequencies during solar flare activity</div>
+        <div class="audio-tags">
+          <span class="tag">noise</span>
+          <span class="tag">generative</span>
+          <span class="tag">space</span>
+        </div>
+        <div class="audio-player">
+          <button class="play-btn" onclick="togglePlay(this, 'audio2')">▶</button>
+          <audio id="audio2" preload="metadata">
+            <source src="audio/compressed/void_transmission.mp3" type="audio/mpeg">
+          </audio>
+          <div class="audio-info">5:21 • 6.8mb</div>
+        </div>
+      </div>
+
+      <div class="audio-project">
+        <div class="audio-title">binary_dreams</div>
+        <div class="audio-description">Algorithmic composition exploring the liminal space between computational order and chaos</div>
+        <div class="audio-tags">
+          <span class="tag">algorithmic</span>
+          <span class="tag">minimal</span>
+          <span class="tag">techno</span>
+        </div>
+        <div class="audio-player">
+          <button class="play-btn" onclick="togglePlay(this, 'audio3')">▶</button>
+          <audio id="audio3" preload="metadata">
+            <source src="audio/compressed/binary_dreams.mp3" type="audio/mpeg">
+          </audio>
+          <div class="audio-info">4:33 • 5.1mb</div>
+        </div>
+      </div>
+
+      <div class="audio-project">
+        <div class="audio-title">static_ritual</div>
+        <div class="audio-description">Field recordings from abandoned radio towers processed through granular synthesis</div>
+        <div class="audio-tags">
+          <span class="tag">field recording</span>
+          <span class="tag">granular</span>
+          <span class="tag">ritual</span>
+        </div>
+        <div class="audio-player">
+          <button class="play-btn" onclick="togglePlay(this, 'audio4')">▶</button>
+          <audio id="audio4" preload="metadata">
+            <source src="audio/compressed/static_ritual.mp3" type="audio/mpeg">
+          </audio>
+          <div class="audio-info">6:12 • 7.3mb</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- About Page -->
+    <div id="about" class="page">
+      <h2>About</h2>
+      <p>Sound designer and developer who believes in the power of simplicity. My work focuses on removing unnecessary elements to reveal what truly matters.</p>
+      
+      <p>Exploring the intersection of technology and sonic experience through minimal compositions and experimental audio processing.</p>
+      
+      <p>When not creating, I'm usually reading, hiking, or listening to ambient music in my studio.</p>
+
+      <div class="contact">
+        <a href="https://twitter.com/p0kks">Twitter</a>
+        <a href="https://github.com/p0kks">GitHub</a>
+        <a href="https://discord.gg/CVG27QpcRZ">Discord</a>
+        <a href="https://t.me/p0kks">Telegram</a>
+      </div>
+    </div>
   </div>
+
+  <div class="footer">
+    <div class="clock" id="clock"></div>
+    <div class="copyright">© p0kks</div>
+  </div>
+
+  <script>
+    function showPage(pageId) {
+      // Hide all pages
+      document.querySelectorAll('.page').forEach(page => {
+        page.classList.remove('active');
+      });
+      
+      // Remove active class from all nav links
+      document.querySelectorAll('.nav-link').forEach(link => {
+        link.classList.remove('active');
+      });
+      
+      // Show selected page
+      document.getElementById(pageId).classList.add('active');
+      
+      // Add active class to clicked nav link
+      event.target.classList.add('active');
+      
+      // Stop all audio when switching pages
+      document.querySelectorAll('audio').forEach(audio => {
+        audio.pause();
+        audio.currentTime = 0;
+      });
+      document.querySelectorAll('.play-btn').forEach(btn => {
+        btn.textContent = '▶';
+      });
+    }
+
+    function togglePlay(button, audioId) {
+      const audio = document.getElementById(audioId);
+      const allAudio = document.querySelectorAll('audio');
+      const allButtons = document.querySelectorAll('.play-btn');
+      
+      if (audio.paused) {
+        // Pause all other audio
+        allAudio.forEach(a => {
+          if (a !== audio) {
+            a.pause();
+            a.currentTime = 0;
+          }
+        });
+        
+        // Reset all other buttons
+        allButtons.forEach(btn => {
+          if (btn !== button) {
+            btn.textContent = '▶';
+          }
+        });
+        
+        // Play current audio
+        audio.play();
+        button.textContent = '⏸';
+      } else {
+        audio.pause();
+        button.textContent = '▶';
+      }
+      
+      // Reset button when audio ends
+      audio.onended = () => {
+        button.textContent = '▶';
+      };
+    }
+  </script>
 </body>
 </html>
