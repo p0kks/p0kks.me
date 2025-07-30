@@ -10,6 +10,7 @@
   <meta property="og:title" content="p0kks">
   <meta property="og:description" content="Coding with a fetish of minimalism and logic. Creating music with intuition and emotion. Dedicated to find balance between two distinct worlds">
   <meta property="og:type" content="website">
+  <link rel="icon" href="favicon.ico" type="image/x-icon">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -36,19 +37,14 @@
       left: 0;
       right: 0;
       display: flex;
-      justify-content: space-between;
+      justify-content: center;
       align-items: center;
+      gap: 15px;
       padding: 20px;
       background: #000;
     }
 
-    .footer-left {
-      display: flex;
-      align-items: center;
-    }
-
     .runes {
-      margin-left: 10px;
       font-size: 14px;
       color: #666;
     }
@@ -274,8 +270,10 @@
     <!-- Projects Page -->
     <div id="projects" class="page">
       <h2>Projects</h2>
-      
-      <div class="folder-structure">compressed/</div>
+
+      <div class="folder-structure">💻 Projects</div>
+
+      <div class="folder-structure">🎸 Audio</div>
       
       <div class="audio-project">
         <div class="audio-title">placeholder</div>
@@ -348,11 +346,9 @@
   </div>
 
   <div class="footer">
-    <div class="footer-left">
-      <div class="clock" id="clock"></div>
-      <div class="runes">ᚾᛟᚱᚹᚨᛁ</div>
-    </div>
-    <div class="copyright">© p0kks</div>
+    <div class="clock" id="clock"></div>
+    <div class="runes">ᚾᛟᚱᚹᚨᛁ</div>
+    <div class="copyright">© p0kks <span id="year"></span></div>
   </div>
 
   <script>
@@ -373,6 +369,7 @@
     document.addEventListener('DOMContentLoaded', () => {
       updateClock();
       setInterval(updateClock, 1000);
+      document.getElementById('year').textContent = new Date().getFullYear();
     });
   
     function showPage(pageId, linkElement) {
