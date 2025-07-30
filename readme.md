@@ -2,7 +2,7 @@
 
 Ultra-minimal personal website for showcasing audio projects and creative work.
 
-## Features
+## Features   
 
 - **Single Page Application** - Smooth navigation without page reloads
 - **Audio Project Showcase** - Clean player interface with metadata
