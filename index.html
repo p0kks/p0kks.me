@@ -271,10 +271,10 @@
     <div id="projects" class="page">
       <h2>Projects</h2>
 
-      <div class="folder-structure dev">💻 Projects</div>
+      <div class="folder-structure dev">dev/💻 Projects</div>
       <div id="computer-projects"></div>
 
-      <div class="folder-structure">🎸 Audio</div>
+      <div class="folder-structure">audio/🎸 Projects</div>
       <div id="audio-projects"></div>
     </div>
 
@@ -285,7 +285,7 @@
       
       <p>🤓 & 🐱 with 🖥️ & 🎸</p>
       
-      <p>for any inquries, reach out on:</p>
+      <p>For any inquiries, feel free to reach out at(down-arrow)</p>
 
       <div class="contact">
         <a href="https://twitter.com/p0kks">Twitter</a>
@@ -323,7 +323,7 @@
       document.getElementById('year').textContent = new Date().getFullYear();
 
       // Load computer projects
-      fetch('computer-projects.json')
+      fetch('dev.json')
         .then(response => response.json())
         .then(data => {
           const container = document.getElementById('computer-projects');
