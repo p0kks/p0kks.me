@@ -1,3 +1,9 @@
+  <!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>p0kks</title>
   <meta name="description" content="p0kks - Coding with a fetish of minimalism and logic. Creating music with intuition and emotion. Dedicated to find balance between two distinct worlds.">
   <meta name="keywords" content="audio, sound design, minimal, experimental, composition">
   <meta name="author" content="p0kks">
@@ -5,31 +11,14 @@
   <meta property="og:description" content="Coding with a fetish of minimalism and logic. Creating music with intuition and emotion. Dedicated to find balance between two distinct worlds">
   <meta property="og:type" content="website">
   <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><!DOCTYPE html>
-<html lang="en">
-<head>  
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>p0kks</title>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
   <style>
     * {
       margin: 0;
       padding: 0;
       box-sizing: border-box;
-    function updateClock() {
-      const now = new Date();
-      const time = now.toLocaleTimeString('en-US', { 
-        hour12: false,
-        hour: '2-digit',
-        minute: '2-digit',
-        second: '2-digit'
-      });
-      document.getElementById('clock').textContent = time;
     }
-
-    // Update clock immediately and then every second
-    updateClock();
-    setInterval(updateClock, 1000);
 
     body {
       background: #000;
@@ -255,21 +244,20 @@
       }
     }
   </style>
-  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
   <div class="container">
     <nav>
-      <a href="#" onclick="showPage('index')" class="nav-link active">Index</a>
-      <a href="#" onclick="showPage('projects')" class="nav-link">Projects</a>
-      <a href="#" onclick="showPage('about')" class="nav-link">About</a>
+      <a href="#" onclick="showPage('index', this)" class="nav-link active">Index</a>
+      <a href="#" onclick="showPage('projects', this)" class="nav-link">Projects</a>
+      <a href="#" onclick="showPage('about', this)" class="nav-link">About</a>
     </nav>
 
     <!-- Index Page -->
     <div id="index" class="page active">
       <h1>p0kks</h1>
-      <p>Sound designer and developer focused on creating minimal, functional experiences.</p>
-      <p>Currently building audio tools and experimental compositions.</p>
+      <p>Coding with a fetish of minimalism and logic. Creating music with intuition and emotion.</p>
+      <p>Dedicated to find balance between two distinct worlds.</p>
     </div>
 
     <!-- Projects Page -->
@@ -279,12 +267,12 @@
       <div class="folder-structure">compressed/</div>
       
       <div class="audio-project">
-        <div class="audio-title">neural_fragments</div>
-        <div class="audio-description">Exploring human consciousness through manipulated field recordings and synthesized textures</div>
+        <div class="audio-title">placeholder</div>
+        <div class="audio-description">Lorem Ipsum</div>
         <div class="audio-tags">
-          <span class="tag">ambient</span>
-          <span class="tag">experimental</span>
-          <span class="tag">drone</span>
+          <span class="tag">tag1</span>
+          <span class="tag">tag2</span>
+          <span class="tag">tag3</span>
         </div>
         <div class="audio-player">
           <button class="play-btn" onclick="togglePlay(this, 'audio1')">▶</button>
@@ -296,53 +284,36 @@
       </div>
 
       <div class="audio-project">
-        <div class="audio-title">void_transmission</div>
-        <div class="audio-description">Raw electromagnetic interference data converted to sonic frequencies during solar flare activity</div>
+        <div class="audio-title">placeholder</div>
+        <div class="audio-description">Lorem Ipsum</div>
         <div class="audio-tags">
-          <span class="tag">noise</span>
-          <span class="tag">generative</span>
-          <span class="tag">space</span>
+          <span class="tag">tag1</span>
+          <span class="tag">tag2</span>
+          <span class="tag">tag3</span>
         </div>
         <div class="audio-player">
           <button class="play-btn" onclick="togglePlay(this, 'audio2')">▶</button>
           <audio id="audio2" preload="metadata">
-            <source src="audio/compressed/void_transmission.mp3" type="audio/mpeg">
+            <source src="audio/compressed/neural_fragments.mp3" type="audio/mpeg">
           </audio>
-          <div class="audio-info">5:21 • 6.8mb</div>
+          <div class="audio-info">3:47 • 4.2mb</div>
         </div>
       </div>
 
       <div class="audio-project">
-        <div class="audio-title">binary_dreams</div>
-        <div class="audio-description">Algorithmic composition exploring the liminal space between computational order and chaos</div>
+        <div class="audio-title">placeholder</div>
+        <div class="audio-description">Lorem Ipsum</div>
         <div class="audio-tags">
-          <span class="tag">algorithmic</span>
-          <span class="tag">minimal</span>
-          <span class="tag">techno</span>
+          <span class="tag">tag1</span>
+          <span class="tag">tag2</span>
+          <span class="tag">tag3</span>
         </div>
         <div class="audio-player">
           <button class="play-btn" onclick="togglePlay(this, 'audio3')">▶</button>
           <audio id="audio3" preload="metadata">
-            <source src="audio/compressed/binary_dreams.mp3" type="audio/mpeg">
+            <source src="audio/compressed/neural_fragments.mp3" type="audio/mpeg">
           </audio>
-          <div class="audio-info">4:33 • 5.1mb</div>
-        </div>
-      </div>
-
-      <div class="audio-project">
-        <div class="audio-title">static_ritual</div>
-        <div class="audio-description">Field recordings from abandoned radio towers processed through granular synthesis</div>
-        <div class="audio-tags">
-          <span class="tag">field recording</span>
-          <span class="tag">granular</span>
-          <span class="tag">ritual</span>
-        </div>
-        <div class="audio-player">
-          <button class="play-btn" onclick="togglePlay(this, 'audio4')">▶</button>
-          <audio id="audio4" preload="metadata">
-            <source src="audio/compressed/static_ritual.mp3" type="audio/mpeg">
-          </audio>
-          <div class="audio-info">6:12 • 7.3mb</div>
+          <div class="audio-info">3:47 • 4.2mb</div>
         </div>
       </div>
     </div>
@@ -350,11 +321,11 @@
     <!-- About Page -->
     <div id="about" class="page">
       <h2>About</h2>
-      <p>Sound designer and developer who believes in the power of simplicity. My work focuses on removing unnecessary elements to reveal what truly matters.</p>
+      <p>Singersongwriter and developer who believes in the power of simplicity. My work focuses removing unnecessary elements to reveal what truly matters.</p>
       
-      <p>Exploring the intersection of technology and sonic experience through minimal compositions and experimental audio processing.</p>
+      <p>🤓 & 🐱 with 🖥️ & 🎸</p>
       
-      <p>When not creating, I'm usually reading, hiking, or listening to ambient music in my studio.</p>
+      <p>for any inquries, reach out on:</p>
 
       <div class="contact">
         <a href="https://twitter.com/p0kks">Twitter</a>
@@ -371,24 +342,43 @@
   </div>
 
   <script>
-    function showPage(pageId) {
-      // Hide all pages
+    function updateClock() {
+      const now = new Date();
+      const time = now.toLocaleTimeString('en-US', { 
+        hour12: false,
+        hour: '2-digit',
+        minute: '2-digit',
+        second: '2-digit'
+      });
+      const clockElement = document.getElementById('clock');
+      if (clockElement) {
+        clockElement.textContent = time;
+      }
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      updateClock();
+      setInterval(updateClock, 1000);
+    });
+  
+    function showPage(pageId, linkElement) {
       document.querySelectorAll('.page').forEach(page => {
         page.classList.remove('active');
       });
       
-      // Remove active class from all nav links
       document.querySelectorAll('.nav-link').forEach(link => {
         link.classList.remove('active');
       });
       
-      // Show selected page
-      document.getElementById(pageId).classList.add('active');
+      const pageToShow = document.getElementById(pageId);
+      if (pageToShow) {
+        pageToShow.classList.add('active');
+      }
       
-      // Add active class to clicked nav link
-      event.target.classList.add('active');
+      if (linkElement) {
+        linkElement.classList.add('active');
+      }
       
-      // Stop all audio when switching pages
       document.querySelectorAll('audio').forEach(audio => {
         audio.pause();
         audio.currentTime = 0;
@@ -400,26 +390,24 @@
 
     function togglePlay(button, audioId) {
       const audio = document.getElementById(audioId);
+      if (!audio) return;
+
       const allAudio = document.querySelectorAll('audio');
       const allButtons = document.querySelectorAll('.play-btn');
       
       if (audio.paused) {
-        // Pause all other audio
         allAudio.forEach(a => {
           if (a !== audio) {
             a.pause();
-            a.currentTime = 0;
           }
         });
         
-        // Reset all other buttons
         allButtons.forEach(btn => {
           if (btn !== button) {
             btn.textContent = '▶';
           }
         });
         
-        // Play current audio
         audio.play();
         button.textContent = '⏸';
       } else {
@@ -427,7 +415,6 @@
         button.textContent = '▶';
       }
       
-      // Reset button when audio ends
       audio.onended = () => {
         button.textContent = '▶';
       };
