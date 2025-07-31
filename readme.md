@@ -1,70 +1,63 @@
 # p0kks
 
-Ultra-minimal personal website for showcasing audio and computer projects.
+Ultra-minimal personal website showcasing the intersection of code and music.
+
+## About
+
+Clean, fast, and functional personal portfolio built with zero dependencies. Features dynamic project loading, audio playback, and responsive design.
 
 ## Features
 
-- **Single Page Application** - Smooth navigation without page reloads.
-- **Data-Driven Content** - Projects are loaded from JSON files for easy updates.
-- **Audio Projects**    - Sections for audio projects.
-- **Computer Projects** - Sections for computer projects.
-- **Responsive Design** - Works perfectly on all devices.
-- **Zero Dependencies** - Pure HTML, CSS, JavaScript.
-- **Fast Loading** - Optimized fonts and minimal code.
-- **Live Clock** - Real-time footer display.
+• **Zero Dependencies** - Pure HTML, CSS, JavaScript
+• **Audio Integration** - Built-in audio player for music projects  
+• **Dynamic Content** - Projects loaded from JSON files
+• **Responsive Design** - Works on all devices
+• **Fast Loading** - Optimized fonts and minimal code
+• **Dark Theme** - Easy on the eyes
+• **Live Clock** - Real-time footer display
 
-## File Structure
+## Structure
 
 ```
-p0kks.github.io/
-├── index.html
-├── computer-projects.json
-├── computer/
-│   └── ...
-├── audio-projects.json
+├── index.html           # Main site file
+├── dev/
+│   └── dev.json        # Computer projects data
 ├── audio/
-│   └── ...
-└── readme.md
+│   ├── audio.json      # Audio projects data
+│   └── *.mp3           # Audio files
+└── p0kks.png           # Site icon
 ```
 
-## How to Update Projects
+## Adding Projects
 
 ### Computer Projects
-
-1.  Upload your file or link to the `computer/` directory.
-2.  Edit `computer-projects.json`.
-3.  Add a new JSON object to the array for each new project.
-
-**Example `computer-projects.json` entry:**
-
+Edit `dev/dev.json`:
 ```json
 {
-  "title": "My New Project",
-  "description": "A brief description of my awesome project.",
-  "tags": ["python", "api", "backend"],
-  "link": "https://github.com/p0kks/my-new-project"
+  "title": "Project Name",
+  "description": "Brief description",
+  "tags": ["javascript", "minimal"],
+  "link": "https://github.com/username/repo"
 }
 ```
 
-### Audio Projects
-
-1.  Upload your audio file to the `audio/` directory.
-2.  Edit `audio-projects.json`.
-3.  Add a new JSON object to the array for each new track.
-
-**Example `audio-projects.json` entry:**
-
+### Audio Projects  
+Edit `audio/audio.json`:
 ```json
 {
-  "title": "My New Track",
-  "description": "A description of the new audio track.",
+  "title": "Track Name",
+  "description": "Track description", 
   "tags": ["ambient", "experimental"],
-  "audioSrc": "audio/compressed/my_new_track.mp3",
+  "audioSrc": "audio/track.mp3",
   "duration": "3:14",
   "size": "4.5mb"
 }
 ```
 
+## Live Site
+
+Visit: [p0kks.github.io](https://p0kks.github.io)
+
 ## License
 
-Open source - feel free to use and modify for your own projects.
+Open source - use and modify freely.
