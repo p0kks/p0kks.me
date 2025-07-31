@@ -61,7 +61,6 @@
       gap: 15px;
       padding: 20px;
       background: var(--bg-primary);
-      border-top: 1px solid var(--border-color);
       backdrop-filter: blur(10px);
     }
 
@@ -179,15 +178,10 @@
       margin-bottom: 60px;
       padding: 20px 0;
       border-bottom: 1px solid var(--border-color);
-      transition: transform 0.2s ease;
     }
 
     .project:last-child {
       border-bottom: none;
-    }
-
-    .project:hover {
-      transform: translateX(5px);
     }
 
     .project h3 {
@@ -217,15 +211,10 @@
       margin-bottom: 50px;
       padding-bottom: 30px;
       border-bottom: 1px solid var(--border-color);
-      transition: transform 0.2s ease;
     }
 
     .audio-project:last-child {
       border-bottom: none;
-    }
-
-    .audio-project:hover {
-      transform: translateX(5px);
     }
 
     .audio-title {
@@ -332,16 +321,29 @@
       color: var(--text-primary);
       text-decoration: none;
       font-weight: 500;
-      padding: 10px 15px;
-      border-radius: 6px;
-      transition: all 0.2s ease;
-      display: inline-block;
+      margin-right: 30px;
+      position: relative;
+      transition: color 0.2s ease;
+    }
+
+    .contact a::after {
+      content: '';
+      position: absolute;
+      bottom: -4px;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background: var(--text-primary);
+      transition: width 0.3s ease;
     }
 
     .contact a:hover {
-      color: var(--bg-primary);
-      background: var(--text-primary);
-      transform: translateY(-2px);
+      color: var(--accent-hover);
+    }
+
+    .contact a:hover::after {
+      width: 100%;
+      background: var(--accent-hover);
     }
 
     .loading {
@@ -492,32 +494,7 @@
       }
     ];
 
-    const SAMPLE_AUDIO_PROJECTS = [
-      {
-        title: "Midnight Oslo",
-        description: "Ambient composition recorded during winter nights in Oslo. Features field recordings mixed with synthesized drones.",
-        tags: ["ambient", "field-recording", "synthesizer"],
-        audioSrc: "data:audio/wav;base64,UklGRnoGAABXQVZFZm10IBAAAAABAAEAQB8AAEAfAAABAAgAZGF0YQoGAACBhYqFbF1fdJivrJBhNjVgodDbq2EcBj+a2/LDciUFLIHO8tiJNwgZaLvt559NEAxQp+PwtmMcBjiR1/LMeSwFJHfH8N2QQAoUXrTp66hVFApGn+DyvmUQBz2HzfLUdSgGKnbG7+GUTA==",
-        duration: "4:23",
-        size: "6.1mb"
-      },
-      {
-        title: "Digital Rainfall",
-        description: "Experimental piece exploring the intersection of organic rain sounds and digital manipulation techniques.",
-        tags: ["experimental", "digital", "nature"],
-        audioSrc: "data:audio/wav;base64,UklGRnoGAABXQVZFZm10IBAAAAABAAEAQB8AAEAfAAABAAgAZGF0YQoGAACBhYqFbF1fdJivrJBhNjVgodDbq2EcBj+a2/LDciUFLIHO8tiJNwgZaLvt559NEAxQp+PwtmMcBjiR1/LMeSwFJHfH8N2QQAoUXrTp66hVFApGn+DyvmUQBz2HzfLUdSgGKnbG7+GUTA==",
-        duration: "3:47",
-        size: "5.3mb"
-      },
-      {
-        title: "Fjord Echoes",
-        description: "Minimalist piano composition inspired by Norwegian landscapes. Recorded in a remote cabin overlooking Geirangerfjord.",
-        tags: ["piano", "minimal", "norway"],
-        audioSrc: "data:audio/wav;base64,UklGRnoGAABXQVZFZm10IBAAAAABAAEAQB8AAEAfAAABAAgAZGF0YQoGAACBhYqFbF1fdJivrJBhNjVgodDbq2EcBj+a2/LDciUFLIHO8tiJNwgZaLvt559NEAxQp+PwtmMcBjiR1/LMeSwFJHfH8N2QQAoUXrTp66hVFApGn+DyvmUQBz2HzfLUdSgGKnbG7+GUTA==",
-        duration: "5:12",
-        size: "7.4mb"
-      }
-    ];
+    const SAMPLE_AUDIO_PROJECTS = [];
 
     // Utility functions
     function debounce(func, wait) {
