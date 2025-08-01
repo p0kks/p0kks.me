@@ -174,6 +174,15 @@
       color: var(--text-secondary);
     }
 
+    .death-clock {
+      font-size: 16px;
+      color: var(--text-secondary);
+      font-weight: 400;
+      line-height: 1.6;
+      margin-bottom: 30px;
+      font-variant-numeric: tabular-nums;
+    }
+
     .project {
       margin-bottom: 60px;
       padding: 20px 0;
@@ -434,6 +443,7 @@
     <!-- Index Page -->
     <div id="index" class="page active">
       <h1>p0kks</h1>
+      <div id="death-clock" class="death-clock"></div>
       <p>Coding with a fetish of minimalism and logic. Creating music with intuition and emotion.</p>
       <p>Dedicated to find balance between two distinct worlds.</p>
     </div>
@@ -523,6 +533,28 @@
       }
     }
 
+    function updateDeathClock() {
+      const now = new Date();
+      const target = new Date('2071-10-21T00:00:00');
+      const diff = target.getTime() - now.getTime();
+      
+      const deathClockElement = document.getElementById('death-clock');
+      if (!deathClockElement) return;
+      
+      if (diff <= 0) {
+        deathClockElement.textContent = 'Time expired';
+        return;
+      }
+      
+      const years = Math.floor(diff / (1000 * 60 * 60 * 24 * 365.25));
+      const days = Math.floor((diff % (1000 * 60 * 60 * 24 * 365.25)) / (1000 * 60 * 60 * 24));
+      const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+      const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+      
+      deathClockElement.textContent = `${years}y ${days}d ${hours}h ${minutes}m ${seconds}s`;
+    }
+
     function showError(containerId, message) {
       const container = document.getElementById(containerId);
       if (container) {
@@ -609,9 +641,11 @@
 
     // Initialize application
     document.addEventListener('DOMContentLoaded', () => {
-      // Start clock
+      // Start clocks
       updateClock();
+      updateDeathClock();
       setInterval(updateClock, 1000);
+      setInterval(updateDeathClock, 1000);
       
       // Set year
       const yearElement = document.getElementById('year');
