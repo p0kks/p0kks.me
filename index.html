@@ -17,7 +17,7 @@
   <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
   <style>
     :root {
-      --bg-primary: #000;
+      --bg-primary: #0e0e0e;
       --text-primary: #fff;
       --text-secondary: #ccc;
       --text-muted: #999;
@@ -319,6 +319,24 @@
       color: var(--text-subtle);
     }
 
+    .socials {
+      display: flex;
+      gap: 20px;
+    }
+
+    .social-link {
+      width: 20px;
+      height: 20px;
+      fill: #888;
+      transition: all 0.4s ease;
+    }
+
+    .social-link:hover {
+      fill: #fff;
+      transform: scale(1.1);
+      cursor: pointer;
+    }
+
     .contact {
       margin-top: 60px;
       display: flex;
@@ -443,7 +461,6 @@
     <!-- Index Page -->
     <div id="index" class="page active">
       <h1>p0kks</h1>
-      <div id="death-clock" class="death-clock"></div>
       <p>Coding with a fetish of minimalism and logic. Creating music with intuition and emotion.</p>
       <p>Dedicated to find balance between two distinct worlds.</p>
     </div>
@@ -463,14 +480,31 @@
     <div id="about" class="page">
       <h2>About</h2>
       <p>Singer-songwriter and developer who believes in the power of simplicity. My work focuses on removing unnecessary elements to reveal what truly matters.</p>
-      
-      <p>🤓 & 🐱 with 🖥️ & 🎸</p>
 
-      <div class="contact">
-        <a href="https://twitter.com/p0kks" target="_blank" rel="noopener noreferrer" aria-label="Twitter profile">Twitter</a>
-        <a href="https://github.com/p0kks" target="_blank" rel="noopener noreferrer" aria-label="GitHub profile">GitHub</a>
-        <a href="https://discord.gg/CVG27QpcRZ" target="_blank" rel="noopener noreferrer" aria-label="Discord server">Discord</a>
-        <a href="https://t.me/p0kks" target="_blank" rel="noopener noreferrer" aria-label="Telegram contact">Telegram</a>
+      <p>Time Left</p>
+      <div id="death-clock" class="death-clock"></div>
+
+      <div class="socials">
+        <a href="https://twitter.com/p0kks" target="_blank" title="Twitter">
+          <svg class="social-link" viewBox="0 0 24 24">
+            <path d="M22.46 6c-.77.35-1.6.59-2.46.7a4.3 4.3 0 001.88-2.37 8.59 8.59 0 01-2.72 1.04 4.27 4.27 0 00-7.3 3.89A12.11 12.11 0 013 4.7a4.27 4.27 0 001.32 5.7 4.22 4.22 0 01-1.93-.53v.05a4.27 4.27 0 003.42 4.18 4.3 4.3 0 01-1.92.07 4.27 4.27 0 003.98 2.96A8.58 8.58 0 012 19.54 12.09 12.09 0 008.29 21c7.55 0 11.68-6.26 11.68-11.68 0-.18-.01-.35-.02-.53A8.36 8.36 0 0022.46 6z"/>
+          </svg>
+        </a>
+        <a href="https://github.com/p0kks" target="_blank" title="GitHub">
+          <svg class="social-link" viewBox="0 0 24 24">
+            <path d="M12 0C5.37 0 0 5.37 0 12c0 5.3 3.44 9.8 8.2 11.4.6.1.8-.26.8-.58v-2.2c-3.34.73-4.03-1.6-4.03-1.6-.55-1.4-1.34-1.77-1.34-1.77-1.1-.75.08-.74.08-.74 1.2.08 1.85 1.25 1.85 1.25 1.08 1.85 2.84 1.32 3.53 1 .1-.78.42-1.32.76-1.63-2.66-.3-5.47-1.33-5.47-5.9 0-1.3.46-2.36 1.24-3.2-.12-.3-.54-1.5.12-3.13 0 0 1-.32 3.3 1.23a11.5 11.5 0 016 0c2.3-1.55 3.3-1.23 3.3-1.23.66 1.63.24 2.83.12 3.13.78.84 1.24 1.9 1.24 3.2 0 4.6-2.82 5.6-5.5 5.9.44.4.82 1.1.82 2.2v3.3c0 .3.2.68.82.57A12 12 0 0024 12c0-6.63-5.37-12-12-12z"/>
+          </svg>
+        </a>
+        <a href="https://discord.gg/CVG27QpcRZ" target="_blank" title="Discord">
+          <svg class="social-link" viewBox="0 0 24 24">
+            <path d="M20.317 4.369a19.791 19.791 0 00-4.885-1.515.07.07 0 00-.073.035 13.86 13.86 0 00-.605 1.243 18.858 18.858 0 00-5.63 0 13.79 13.79 0 00-.607-1.243.07.07 0 00-.073-.035 19.736 19.736 0 00-4.885 1.515.063.063 0 00-.03.025c-3.09 4.547-3.936 8.965-3.5 13.345a.082.082 0 00.031.057 19.968 19.968 0 006.02 3.012.07.07 0 00.076-.025 14.035 14.035 0 001.206-1.95.07.07 0 00-.038-.099 13.09 13.09 0 01-1.87-.9.07.07 0 01-.007-.116c.126-.095.252-.192.374-.291a.07.07 0 01.072-.01c3.927 1.805 8.18 1.805 12.06 0a.07.07 0 01.073.009c.122.099.248.196.375.291a.07.07 0 01-.006.116 12.503 12.503 0 01-1.87.9.07.07 0 00-.039.1c.39.682.803 1.334 1.207 1.948a.07.07 0 00.076.026 19.931 19.931 0 006.02-3.012.077.077 0 00.031-.057c.5-5.177-.83-9.555-3.498-13.344a.06.06 0 00-.03-.025zM8.02 15.335c-1.183 0-2.155-1.085-2.155-2.419 0-1.333.954-2.418 2.155-2.418 1.212 0 2.175 1.096 2.155 2.418 0 1.334-.954 2.419-2.155 2.419zm7.974 0c-1.183 0-2.155-1.085-2.155-2.419 0-1.333.954-2.418 2.155-2.418 1.212 0 2.175 1.096 2.155 2.418 0 1.334-.943 2.419-2.155 2.419z"/>
+          </svg>
+        </a>
+        <a href="https://t.me/p0kks" target="_blank" title="Telegram">
+          <svg class="social-link" viewBox="0 0 24 24">
+            <path d="M9.68 16.26l-.38 3.35c.54 0 .78-.24 1.07-.53l2.57-2.45 5.32 3.9c.98.54 1.68.26 1.93-.9L23.9 5.16c.3-1.25-.45-1.75-1.4-1.45L1.66 9.62c-1.25.39-1.23 1.2-.22 1.52l5.5 1.72L18.76 6.9c.61-.39 1.17-.18.71.25"/>
+          </svg>
+        </a>
       </div>
     </div>
   </div>
