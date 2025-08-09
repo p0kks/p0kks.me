@@ -1,52 +1,79 @@
 # p0kks
 
-Ultra-minimal personal website showcasing the intersection of code and music.
+> **Ultra-minimal personal website at the intersection of code and music**
 
-## About
+[![Pure HTML](https://img.shields.io/badge/built%20with-pure%20html-orange.svg)](https://developer.mozilla.org/en-US/docs/Web/HTML)
+[![Zero Dependencies](https://img.shields.io/badge/dependencies-zero-brightgreen.svg)](https://github.com/p0kks/p0kks.github.io)
+[![Live Site](https://img.shields.io/badge/live-p0kks.github.io-blue.svg)](https://p0kks.github.io)
 
-Clean, fast, and functional personal portfolio built with zero dependencies. Features dynamic project loading, audio playback, and responsive design.
+---
+
+## Philosophy
+
+**Zero bloat. Maximum expression.**
+
+Clean, fast, functional portfolio built without frameworks, bundlers, or dependencies. Pure web technologies showcasing the beauty of simplicity.
+
+---
 
 ## Features
 
-• **Zero Dependencies** - Pure HTML, CSS, JavaScript
-• **Audio Integration** - Built-in audio player for music projects  
-• **Dynamic Content** - Projects loaded from JSON files
-• **Responsive Design** - Works on all devices
-• **Fast Loading** - Optimized fonts and minimal code
-• **Dark Theme** - Easy on the eyes
-• **Live Clock** - Real-time footer display
+**🚀 Performance First**
+- Zero dependencies — pure HTML, CSS, JavaScript  
+- Optimized fonts and minimal code
+- Instant loading, zero build process
+
+**🎵 Audio Integration** 
+- Built-in audio player for music projects
+- Real-time playback with duration/size display
+- Seamless track navigation
+
+**📱 Universal Design**
+- Responsive across all devices
+- Dark theme optimized for focus
+- Live clock in footer
+
+**⚡ Dynamic Content**
+- Projects loaded from JSON files
+- Easy content updates without touching code
+- Clean separation of data and presentation
+
+---
 
 ## Structure
 
 ```
-├── index.html           # Main site file
-├── dev/
-│   └── dev.json        # Computer projects data
-├── audio/
-│   ├── audio.json      # Audio projects data
-│   └── *.mp3           # Audio files
-└── p0kks.png           # Site icon
+p0kks/
+├── 🏠 index.html           # Single-file website
+├── 💻 dev/
+│   └── dev.json           # Code projects data
+├── 🎵 audio/
+│   ├── audio.json         # Music projects data  
+│   └── *.mp3              # Audio files
+└── 🎨 p0kks.png           # Site favicon
 ```
+
+---
 
 ## Adding Projects
 
-### Computer Projects
-Edit `dev/dev.json`:
+### Code Projects
+**`dev/dev.json`**
 ```json
 {
   "title": "Project Name",
-  "description": "Brief description",
+  "description": "What it does",
   "tags": ["javascript", "minimal"],
   "link": "https://github.com/username/repo"
 }
 ```
 
-### Audio Projects  
-Edit `audio/audio.json`:
+### Music Projects  
+**`audio/audio.json`**
 ```json
 {
   "title": "Track Name",
-  "description": "Track description", 
+  "description": "Genre/mood description", 
   "tags": ["ambient", "experimental"],
   "audioSrc": "audio/track.mp3",
   "duration": "3:14",
@@ -54,10 +81,35 @@ Edit `audio/audio.json`:
 }
 ```
 
-## Live Site
+---
 
-Visit: [p0kks.github.io](https://p0kks.github.io)
+## Design Principles
 
-## License
+**Minimal** — Every element serves a purpose  
+**Fast** — No frameworks, no build steps, no waiting  
+**Accessible** — Works everywhere, for everyone  
+**Focused** — Content over complexity  
 
-Open source - use and modify freely.
+---
+
+## Live Experience
+
+**[→ p0kks.github.io](https://p0kks.github.io)**
+
+---
+
+## Inspiration
+
+For developers and creatives who believe great things come from restraint, not excess.
+
+*"Perfection is achieved not when there is nothing more to add, but when there is nothing left to take away."*
+
+---
+
+<div align="center">
+
+**Built with intention, not dependencies**
+
+[🌟 Star](https://github.com/p0kks/p0kks.github.io) • [🔧 Fork](https://github.com/p0kks/p0kks.github.io/fork) • [🎵 Listen](https://p0kks.github.io)
+
+</div>
