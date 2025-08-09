@@ -7,7 +7,7 @@
   },
   {
     "title": "lotion-bot",
-    "description": "A Discord bot for the Lotion server (https://discord.gg/CVG27QpcRZ)",
+    "description": "A Discord bot for the Lotion server",
     "tags": ["Discord", "Bot", "Lotion server"],
     "links": [
       "https://github.com/p0kks/lotion-bot"
