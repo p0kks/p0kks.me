@@ -15,120 +15,196 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
-
-<!-- Spheria AI Clone Widget -->
-<script id="spheria_widget_bubble" src="https://spheria.ai/w/widget_chat"
-        data-avatar="https://storage.googleapis.com/spheria-media/pp/a3cedeacd9384d8295e3fe382cc44812_f6d14326359f_cc364df9dd6c.JPEG"
-        data-chat-url="https://spheria.ai/pokks-?mode=embed&show=chat&cg=%F0%9F%91%8B"></script>
-
 <style>
-:root { --bg-primary:#0e0e0e;--text-primary:#fff;--text-secondary:#ccc;--text-muted:#999;--text-subtle:#666;--text-faint:#555;--border-color:#333;--accent-color:#fff;--accent-hover:#888;--button-bg:#fff;--button-text:#000;--button-hover:#ccc;--font-mono:'JetBrains Mono','SF Mono','Monaco','Inconsolata',monospace;}
-* { margin:0; padding:0; box-sizing:border-box; }
-body { background: var(--bg-primary); color: var(--text-primary); font-family: var(--font-mono); font-weight:500; line-height:1.2; padding:40px 20px; min-height:100vh; -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale; }
-.footer { position:fixed; bottom:0; left:0; right:0; display:flex; justify-content:center; align-items:center; gap:15px; padding:20px; background:var(--bg-primary); backdrop-filter:blur(10px);}
-.runes { font-size:14px; color:var(--text-subtle); user-select:none;}
-.copyright { font-size:14px; color:var(--text-subtle); font-weight:400;}
-.clock { font-size:14px; color:var(--text-subtle); font-weight:400; font-variant-numeric:tabular-nums; min-width:72px; text-align:center;}
-.container { max-width:600px; margin:0 auto; padding-bottom:100px;}
-nav { margin-bottom:80px; position:sticky; top:0; background:var(--bg-primary); padding:20px 0; z-index:10;}
-nav a { color:var(--text-primary); text-decoration:none; font-size:16px; margin-right:40px; font-weight:600; position:relative; transition:color 0.2s ease;}
-nav a::after { content:''; position:absolute; bottom:-4px; left:0; width:0; height:2px; background:var(--text-primary); transition:width 0.3s ease;}
-nav a:hover { color: var(--accent-hover);}
-nav a:hover::after { width:100%;}
-nav a.active { color: var(--accent-hover);}
-nav a.active::after { width:100%; background:var(--accent-hover);}
-.page { display:none; animation: fadeIn 0.3s ease-in-out;}
-.page.active { display:block;}
-@keyframes fadeIn { from{opacity:0; transform:translateY(10px);} to{opacity:1; transform:translateY(0);} }
-h1 { font-size:clamp(32px,8vw,42px); font-weight:700; margin-bottom:40px; letter-spacing:-1px;}
-h2 { font-size:clamp(24px,6vw,28px); font-weight:600; margin-bottom:30px; letter-spacing:0;}
-p { font-size:16px; font-weight:400; line-height:1.6; margin-bottom:30px; color:var(--text-secondary);}
-.death-clock { font-size:16px; color:var(--text-secondary); font-weight:400; line-height:1.6; margin-bottom:30px; font-variant-numeric:tabular-nums;}
-.project { margin-bottom:60px; padding:20px 0; border-bottom:1px solid var(--border-color);}
-.project:last-child { border-bottom:none;}
-.project h3 { font-size:20px; font-weight:600; margin-bottom:10px; color:var(--text-primary);}
-.project h3 a { color:inherit; text-decoration:none; transition:color 0.2s ease;}
-.project h3 a:hover { color:var(--accent-hover);}
-.project p { font-size:14px; margin-bottom:0; color:var(--text-muted);}
-.audio-project { margin-bottom:50px; padding-bottom:30px; border-bottom:1px solid var(--border-color);}
-.audio-project:last-child { border-bottom:none;}
-.audio-title { font-size:18px; font-weight:600; margin-bottom:8px; color:var(--text-primary);}
-.audio-description { font-size:14px; font-weight:400; color:var(--text-muted); margin-bottom:12px; line-height:1.4;}
-.audio-tags, .project-tags { margin-bottom:15px;}
-.tag { display:inline-block; font-size:11px; font-weight:500; color:var(--text-subtle); margin-right:12px; text-transform:uppercase; letter-spacing:1px; padding:4px 8px; background:rgba(102,102,102,0.1); border-radius:4px; transition:background 0.2s ease;}
-.tag:hover { background:rgba(102,102,102,0.2);}
-.audio-player { display:flex; align-items:center; gap:15px;}
-.play-btn { background:var(--button-bg); color:var(--button-text); border:none; width:32px; height:32px; font-size:12px; font-weight:600; cursor:pointer; font-family:inherit; border-radius:4px; transition:background 0.2s ease, transform 0.1s ease; display:flex; align-items:center; justify-content:center;}
-.play-btn:hover { background:var(--button-hover); transform:scale(1.05);}
-.play-btn:active { transform:scale(0.95);}
-.audio-info { font-size:12px; color:var(--text-subtle); font-weight:500;}
-.folder-structure { font-size:12px; color:var(--text-faint); margin-bottom:30px; font-weight:400; user-select:none;}
-.folder-structure.dev::before { content:"dev/"; color:var(--text-subtle);}
-.folder-structure.audio::before { content:"audio/"; color:var(--text-subtle);}
-.socials { display:flex; gap:20px;}
-.social-link { width:20px; height:20px; fill:#888; transition:all 0.4s ease;}
-.social-link:hover { fill:#fff; transform:scale(1.1); cursor:pointer;}
-.contact { margin-top:60px; display:flex; flex-wrap:wrap; gap:20px;}
-.contact a { color:var(--text-primary); text-decoration:none; font-weight:500; margin-right:30px; position:relative; transition:color 0.2s ease;}
-.contact a::after { content:''; position:absolute; bottom:-4px; left:0; width:0; height:2px; background:var(--text-primary); transition:width 0.3s ease;}
-.contact a:hover { color:var(--accent-hover);}
-.contact a:hover::after { width:100%; background:var(--accent-hover);}
-.loading { color:var(--text-subtle); font-style:italic; font-size:14px;}
-.error { color:#ff6b6b; font-size:14px; padding:10px; background:rgba(255,107,107,0.1); border-radius:4px; margin:20px 0;}
-@media(max-width:768px){body{padding:20px 15px;}nav{padding:15px 0;}nav a{margin-right:25px; font-size:14px;}h1{margin-bottom:30px;}h2{margin-bottom:25px;}p{font-size:14px;}.contact{flex-direction:column; align-items:flex-start;}.contact a{margin-right:0;}}
-@media(max-width:480px){.container{padding-bottom:120px;}.footer{flex-direction:column; gap:10px; padding:15px;}nav a{margin-right:20px; font-size:13px;}}
-@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:0.01ms!important;animation-iteration-count:1!important;transition-duration:0.01ms!important;}}
-/* Spheria Widget override */
-#spheria_widget_bubble { position:fixed !important; top:15px !important; right:15px !important; width:50px !important; height:50px !important; border-radius:50% !important; overflow:hidden !important; z-index:9999 !important; transition:transform 0.2s ease, box-shadow 0.2s ease; box-shadow:0 2px 6px rgba(0,0,0,0.4);}
-#spheria_widget_bubble:hover { transform:scale(1.1); box-shadow:0 4px 12px rgba(0,0,0,0.5);}
+:root {
+  --bg-primary: #0e0e0e;
+  --text-primary: #fff;
+  --text-secondary: #ccc;
+  --text-muted: #999;
+  --text-subtle: #666;
+  --text-faint: #555;
+  --border-color: #333;
+  --accent-color: #fff;
+  --accent-hover: #888;
+  --button-bg: #fff;
+  --button-text: #000;
+  --button-hover: #ccc;
+  --font-mono: 'JetBrains Mono', 'SF Mono', 'Monaco', 'Inconsolata', monospace;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  font-family: var(--font-mono);
+  font-weight: 500;
+  line-height: 1.2;
+  padding: 40px 20px;
+  min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+nav {
+  margin-bottom: 40px;
+  position: sticky;
+  top: 0;
+  background: var(--bg-primary);
+  padding: 20px 0;
+  z-index: 10;
+}
+nav a {
+  color: var(--text-primary);
+  text-decoration: none;
+  font-size: 16px;
+  margin-right: 40px;
+  font-weight: 600;
+  position: relative;
+  transition: color 0.2s ease;
+}
+nav a::after {
+  content: '';
+  position: absolute;
+  bottom: -4px;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background: var(--text-primary);
+  transition: width 0.3s ease;
+}
+nav a:hover { color: var(--accent-hover); }
+nav a:hover::after { width: 100%; }
+nav a.active { color: var(--accent-hover); }
+nav a.active::after { width: 100%; background: var(--accent-hover); }
+.container { max-width: 600px; margin: 0 auto; padding-bottom: 120px; }
+.page { display: none; animation: fadeIn 0.3s ease-in-out; }
+.page.active { display: block; }
+@keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+h1 { font-size: clamp(32px, 8vw, 42px); font-weight: 700; margin-bottom: 40px; letter-spacing: -1px; }
+h2 { font-size: clamp(24px, 6vw, 28px); font-weight: 600; margin-bottom: 30px; letter-spacing: 0; }
+p { font-size: 16px; font-weight: 400; line-height: 1.6; margin-bottom: 30px; color: var(--text-secondary); }
+.footer { position: fixed; bottom: 0; left: 0; right: 0; display: flex; justify-content: center; align-items: center; gap: 15px; padding: 20px; background: var(--bg-primary); backdrop-filter: blur(10px); }
+.clock { font-size: 14px; color: var(--text-subtle); font-weight: 400; font-variant-numeric: tabular-nums; min-width: 72px; text-align: center; }
+.runes { font-size: 14px; color: var(--text-subtle); user-select: none; }
+.copyright { font-size: 14px; color: var(--text-subtle); font-weight: 400; }
+
+/* AI Window Styles */
+.ai-window {
+  width: 600px;
+  max-width: 90%;
+  height: 400px;
+  background: #111;
+  color: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  margin: 20px 0;
+  overflow: auto;
+  transition: width 0.3s ease, height 0.3s ease;
+  position: relative;
+}
+.ai-window.small { width: 300px; height: 200px; }
+.ai-btn { padding: 8px 16px; cursor: pointer; margin-bottom: 10px; }
+
+/* Responsive */
+@media (max-width: 768px) {
+  body { padding: 20px 15px; }
+  nav { padding: 15px 0; }
+  nav a { margin-right: 25px; font-size: 14px; }
+  h1 { margin-bottom: 30px; }
+  h2 { margin-bottom: 25px; }
+  p { font-size: 14px; }
+}
+@media (max-width: 480px) {
+  .container { padding-bottom: 140px; }
+  .footer { flex-direction: column; gap: 10px; padding: 15px; }
+  nav a { margin-right: 20px; font-size: 13px; }
+}
 </style>
 </head>
 <body>
-
 <div class="container">
 <nav>
-<a href="#" onclick="showPage('index', this)" class="nav-link active" aria-label="Home page">Index</a>
-<a href="#" onclick="showPage('projects', this)" class="nav-link" aria-label="Projects page">Projects</a>
-<a href="#" onclick="showPage('about', this)" class="nav-link" aria-label="About page">About</a>
+  <a href="#" onclick="showPage('index', this)" class="nav-link active">Index</a>
+  <a href="#" onclick="showPage('projects', this)" class="nav-link">Projects</a>
+  <a href="#" onclick="showPage('audio', this)" class="nav-link">Audio</a>
+  <a href="#" onclick="showPage('about', this)" class="nav-link">About</a>
 </nav>
 
 <!-- Index Page -->
 <div id="index" class="page active">
-<h1>p0kks</h1>
-<p>Coding with a fetish of minimalism and logic. Creating music with intuition and emotion.</p>
-<p>Dedicated to find balance between two distinct worlds.</p>
+  <h1>p0kks</h1>
+  <p>Coding with a fetish of minimalism and logic. Creating music with intuition and emotion.</p>
+  <p>Dedicated to find balance between two distinct worlds.</p>
 </div>
 
 <!-- Projects Page -->
 <div id="projects" class="page">
-<h2>Projects</h2>
-<div class="folder-structure dev">💻 Projects</div>
-<div id="computer-projects" class="loading">Loading projects...</div>
-<div class="folder-structure audio">🎸 Projects</div>
-<div id="audio-projects" class="loading">Loading audio...</div>
+  <h2>Projects</h2>
+  <p>Projects will load here.</p>
+</div>
+
+<!-- Audio Page -->
+<div id="audio" class="page">
+  <h2>Audio</h2>
+  <button class="ai-btn" onclick="toggleAiWindow()">Toggle AI Window</button>
+  <div id="ai-window" class="ai-window">
+    <h3>AI Clone</h3>
+    <p>This is your interactive AI clone window.</p>
+  </div>
+  <p>Audio projects will load here.</p>
 </div>
 
 <!-- About Page -->
 <div id="about" class="page">
-<h2>About</h2>
-<p>Singer-songwriter and developer who believes in the power of simplicity. My work focuses on removing unnecessary elements to reveal what truly matters.</p>
-<p>Time Left</p>
-<div id="death-clock" class="death-clock"></div>
-<div class="socials">
-<!-- social icons here -->
-</div>
-</div>
+  <h2>About</h2>
+  <p>Singer-songwriter and developer who believes in the power of simplicity. My work focuses on removing unnecessary elements to reveal what truly matters.</p>
+  <p>Time Left</p>
+  <div id="death-clock" class="death-clock"></div>
 </div>
 
 <div class="footer">
-<div class="clock" id="clock" aria-label="Current time"></div>
-<div class="runes" aria-label="Norwegian runes">ᚾᛟᚱᚹᚨᛁ</div>
-<div class="copyright">© p0kks <span id="year"></span></div>
+  <div class="clock" id="clock"></div>
+  <div class="runes">ᚾᛟᚱᚹᚨᛁ</div>
+  <div class="copyright">© p0kks <span id="year"></span></div>
 </div>
 
 <script>
-// All your original JS remains here (clocks, project loading, page switch, audio)
-</script>
+function showPage(pageId, linkElement) {
+  document.querySelectorAll('.page').forEach(page => page.classList.remove('active'));
+  document.querySelectorAll('.nav-link').forEach(link => link.classList.remove('active'));
+  document.getElementById(pageId)?.classList.add('active');
+  linkElement?.classList.add('active');
+}
 
+function toggleAiWindow() {
+  document.getElementById('ai-window')?.classList.toggle('small');
+}
+
+// Clock
+function updateClock() {
+  const now = new Date();
+  document.getElementById('clock').textContent = now.toLocaleTimeString('en-US', { hour12: false });
+}
+
+// Death Clock
+function updateDeathClock() {
+  const now = new Date();
+  const target = new Date('2071-10-21T00:00:00');
+  const diff = target - now;
+  if(diff <= 0) { document.getElementById('death-clock').textContent = 'Time expired'; return; }
+  const years = Math.floor(diff / (1000*60*60*24*365.25));
+  const days = Math.floor((diff % (1000*60*60*24*365.25)) / (1000*60*60*24));
+  const hours = Math.floor((diff % (1000*60*60*24)) / (1000*60*60));
+  const minutes = Math.floor((diff % (1000*60*60)) / (1000*60));
+  const seconds = Math.floor((diff % (1000*60)) / 1000);
+  document.getElementById('death-clock').textContent = `${years}y ${days}d ${hours}h ${minutes}m ${seconds}s`;
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  updateClock();
+  updateDeathClock();
+  setInterval(updateClock, 1000);
+  setInterval(updateDeathClock, 1000);
+  document.getElementById('year').textContent = new Date().getFullYear();
+});
+</script>
 </body>
 </html>
