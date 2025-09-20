@@ -276,31 +276,9 @@ p {
   border: 0px solid #333;
   border-radius: 0px;
   padding: 25px;
-  transition: all 0.3s ease;
+  transition: none;
   position: relative;
   overflow: hidden;
-}
-
-.project-card::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 3px;
-  background: linear-gradient(90deg, #444, #666, #444);
-  opacity: 0;
-  transition: opacity 0s ease;
-}
-
-.project-card:hover {
-  border-color: #555;
-  background: rgba(10, 10, 10, 0.568);
-  transform: translateY(-2px);
-}
-
-.project-card:hover::before {
-  opacity: 1;
 }
 
 .project-title {
