@@ -186,7 +186,7 @@ p {
   line-height: 1.4; 
 }
 
-/* HOME PAGE - Simplified visual design */
+/* HOME PAGE - Enhanced visual design */
 #home {
   display: flex;
   flex-direction: column;
@@ -224,7 +224,7 @@ p {
 #home .home-column h2 {
   font-size: 16px;
   color: #666;
-  margin-bottom: 20px;
+  margin-bottom: 30px;
   letter-spacing: 1px;
 }
 
@@ -232,31 +232,35 @@ p {
   color: #4d4d4d;
   line-height: 1.6;
   margin: 0;
-  text-align: left;
+  text-align: center;
 }
 
-#home .home-column.audio::after {
-  content: '●';
+/* Audio column styles */
+#home .home-column.audio .typing-text {
   display: block;
-  margin-top: 20px;
-  color: #333;
-  font-size: 8px;
-  animation: pulse 2s infinite;
-}
-
-#home .home-column.code::after {
-  content: '{ }';
-  display: block;
-  margin-top: 20px;
-  color: #333;
   font-family: 'Consolas', monospace;
-  font-size: 14px;
-  opacity: 0.5;
+  font-size: 12px;
+  color: #333;
+  margin-bottom: 10px;
+  animation: typing 4s steps(40) infinite;
+  overflow: hidden;
+  white-space: nowrap;
 }
 
-@keyframes pulse {
-  0%, 100% { opacity: 0.3; transform: scale(1); }
-  50% { opacity: 0.7; transform: scale(1.5); }
+@keyframes typing {
+  0%, 100% { width: 0 }
+  50% { width: 100% }
+}
+
+/* Code column styles */
+#home .home-column.code .code-snippet {
+  display: block;
+  font-family: 'Consolas', monospace;
+  font-size: 13px;
+  color: #333;
+  margin-bottom: 10px;
+  text-align: left;
+  line-height: 1.4;
 }
 
 #home .home-divider {
@@ -266,6 +270,33 @@ p {
   bottom: 30px;
   width: 1px;
   background: linear-gradient(to bottom, transparent, #333, transparent);
+}
+
+/* Hide these sections in other tabs */
+#code .home-column,
+#audio .home-column,
+#about .home-column {
+  display: none;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  #home .columns-container {
+    flex-direction: column;
+    gap: 20px;
+  }
+  
+  #home .home-divider {
+    display: none;
+  }
+  
+  #home .home-column.audio .typing-text {
+    font-size: 10px;
+  }
+  
+  #home .home-column.code .code-snippet {
+    font-size: 11px;
+  }
 }
 
 /* Responsive design for mobile */
@@ -455,14 +486,26 @@ footer {
   <div class="columns-container">
     <div class="home-column audio">
       <h2>Audio Works</h2>
-      <p>Crafting atmospheric soundscapes and experimental compositions. A journey through ambient textures and electronic expressions, where each piece tells its own story.</p>
+      <p>
+        <span class="typing-text">01001110 01101111 01110100 01100101 ...</span>
+        <br><br>
+        Converting binary thoughts into sonic poetry.
+        <br>
+        Sample rate: human emotion
+        <br>
+        Bit depth: infinite
+      </p>
     </div>
     
     <div class="home-divider"></div>
     
     <div class="home-column code">
       <h2>Code Works</h2>
-      <p>Building minimal, thoughtful digital spaces. Creating clean code that resonates with purpose, where functionality meets aesthetic harmony.</p>
+      <p>
+        <span class="code-snippet">while (alive) {<br>&nbsp;&nbsp;create();<br>&nbsp;&nbsp;evolve();<br>}</span>
+        <br><br>
+        Turning coffee into code since undefined
+      </p>
     </div>
   </div>
 </div>
