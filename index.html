@@ -186,7 +186,7 @@ p {
   line-height: 1.4; 
 }
 
-/* HOME PAGE - Enhanced visual design */
+/* HOME PAGE - Minimalist centered design */
 #home {
   display: flex;
   flex-direction: column;
@@ -196,106 +196,91 @@ p {
 #home .home-intro {
   width: 100%;
   text-align: left;
-  margin: 0 auto 40px;
-  padding: 0;
 }
 
-#home .columns-container {
-  display: flex;
+#home .home-content {
   width: 100%;
-  max-width: 760px;
-  gap: 40px;
-  position: relative;
-}
-
-#home .home-column {
-  flex: 1;
-  padding: 30px;
-  background: rgba(10, 10, 10, 0.2);
-  transition: all 0.3s ease;
-  position: relative;
+  max-width: 500px;
+  margin: 40px auto;
   text-align: center;
+  position: relative;
 }
 
-#home .home-column:hover {
+#home .unified-element {
+  padding: 40px;
+  background: rgba(10, 10, 10, 0.2);
+  transition: all 0.4s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+#home .unified-element:hover {
   background: rgba(10, 10, 10, 0.3);
 }
 
-#home .home-column h2 {
-  font-size: 16px;
-  color: #666;
-  margin-bottom: 30px;
-  letter-spacing: 1px;
+#home .element-content {
+  position: relative;
+  z-index: 1;
 }
 
-#home .home-column p {
+#home .element-text {
+  font-family: 'Consolas', monospace;
   color: #4d4d4d;
+  margin: 20px 0;
   line-height: 1.6;
-  margin: 0;
-  text-align: center;
 }
 
-/* Audio column styles */
-#home .home-column.audio .typing-text {
-  display: block;
+#home .wave-form {
+  height: 20px;
+  margin: 30px 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 3px;
+}
+
+#home .wave-bar {
+  width: 2px;
+  height: 15px;
+  background: #333;
+  animation: waveform 1.5s ease-in-out infinite;
+}
+
+#home .wave-bar:nth-child(2n) {
+  animation-delay: 0.2s;
+}
+
+#home .wave-bar:nth-child(3n) {
+  animation-delay: 0.3s;
+}
+
+#home .code-element {
   font-family: 'Consolas', monospace;
-  font-size: 12px;
   color: #333;
-  margin-bottom: 10px;
-  animation: typing 4s steps(40) infinite;
-  overflow: hidden;
-  white-space: nowrap;
+  margin: 20px 0;
+  opacity: 0.7;
 }
 
-@keyframes typing {
-  0%, 100% { width: 0 }
-  50% { width: 100% }
+@keyframes waveform {
+  0%, 100% { height: 15px; opacity: 0.3; }
+  50% { height: 20px; opacity: 0.7; }
 }
 
-/* Code column styles */
-#home .home-column.code .code-snippet {
-  display: block;
-  font-family: 'Consolas', monospace;
-  font-size: 13px;
-  color: #333;
-  margin-bottom: 10px;
-  text-align: left;
-  line-height: 1.4;
-}
-
-#home .home-divider {
-  position: absolute;
-  left: 50%;
-  top: 30px;
-  bottom: 30px;
-  width: 1px;
-  background: linear-gradient(to bottom, transparent, #333, transparent);
-}
-
-/* Hide these sections in other tabs */
-#code .home-column,
-#audio .home-column,
-#about .home-column {
+/* Hide in other tabs */
+#code .unified-element,
+#audio .unified-element,
+#about .unified-element {
   display: none;
 }
 
 /* Responsive design */
 @media (max-width: 768px) {
-  #home .columns-container {
-    flex-direction: column;
-    gap: 20px;
+  #home .unified-element {
+    padding: 30px 20px;
   }
   
-  #home .home-divider {
-    display: none;
-  }
-  
-  #home .home-column.audio .typing-text {
-    font-size: 10px;
-  }
-  
-  #home .home-column.code .code-snippet {
-    font-size: 11px;
+  #home .wave-form {
+    margin: 20px 0;
   }
 }
 
@@ -477,35 +462,33 @@ footer {
   </div>
 </div>
 
-<!-- HOME PAGE - Simplified visual design -->
+<!-- HOME PAGE - Unified design -->
 <div id="home" class="page active">
   <div class="home-intro">
     <p>Hei! You've found a quiet corner on the internet. Stay as long as you like.</p>
   </div>
   
-  <div class="columns-container">
-    <div class="home-column audio">
-      <h2>Audio Works</h2>
-      <p>
-        <span class="typing-text">01001110 01101111 01110100 01100101 ...</span>
-        <br><br>
-        Converting binary thoughts into sonic poetry.
-        <br>
-        Sample rate: human emotion
-        <br>
-        Bit depth: infinite
-      </p>
-    </div>
-    
-    <div class="home-divider"></div>
-    
-    <div class="home-column code">
-      <h2>Code Works</h2>
-      <p>
-        <span class="code-snippet">while (alive) {<br>&nbsp;&nbsp;create();<br>&nbsp;&nbsp;evolve();<br>}</span>
-        <br><br>
-        Turning coffee into code since undefined
-      </p>
+  <div class="home-content">
+    <div class="unified-element">
+      <div class="element-content">
+        <div class="wave-form">
+          <div class="wave-bar"></div>
+          <div class="wave-bar"></div>
+          <div class="wave-bar"></div>
+          <div class="wave-bar"></div>
+          <div class="wave-bar"></div>
+          <div class="wave-bar"></div>
+          <div class="wave-bar"></div>
+        </div>
+        
+        <div class="element-text">
+          acoustic waves && clean code
+        </div>
+        
+        <div class="code-element">
+          { harmony.compile(); }
+        </div>
+      </div>
     </div>
   </div>
 </div>
