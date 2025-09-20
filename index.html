@@ -33,7 +33,7 @@ body {
   z-index: 100;
   background: rgba(7, 7, 7, 0.95); /* Slight transparency for modern feel */
   backdrop-filter: blur(10px); /* Modern glass effect */
-  border-bottom: 1px solid #1a1a1a; /* Subtle separation */
+  border-bottom: 0px solid #1a1a1a; /* Subtle separation */
 }
 
 .header-content {
@@ -64,7 +64,7 @@ nav a {
   font-size: 14px;
   transition: all 0.3s ease; /* Smoother transitions */
   padding: 8px 12px; /* Better touch targets */
-  border-radius: 4px; /* Modern rounded corners */
+  border-radius: 0px; /* Modern rounded corners */
   position: relative;
 }
 
@@ -87,12 +87,12 @@ nav a.active {
   transform: translateX(-50%); /* Center the dropdown */
   background: rgba(7, 7, 7, 0.98);
   backdrop-filter: blur(15px);
-  border: 1px solid #1a1a1a;
-  border-radius: 8px;
+  border: 0px solid #1a1a1a;
+  border-radius: 0px;
   padding: 8px 0;
   min-width: 140px;
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.8); /* Modern shadow */
-  animation: fadeIn 0.2s ease;
+  animation: none;
 }
 
 @keyframes fadeIn {
@@ -121,7 +121,7 @@ nav a.active {
 #toggleButton {
   font-size: 16px;
   background: rgba(255, 255, 255, 0.1);
-  border: 1px solid #333;
+  border: 0px solid #333;
   border-radius: 6px;
   color: #4d4d4d;
   cursor: pointer;
@@ -133,7 +133,7 @@ nav a.active {
 
 #toggleButton:hover {
   background: rgba(255, 255, 255, 0.15);
-  color: #888;
+  color: #fff;
 }
 
 /* BANNER - Improved responsive behavior */
@@ -148,7 +148,7 @@ nav a.active {
   height: 120px; /* Fixed height for consistency */
   object-fit: cover;
   display: block;
-  border-bottom: 1px solid #1a1a1a;
+  border-bottom: 0px solid #1a1a1a;
 }
 
 /* PAGE CONTENT - Better spacing and mobile support */
@@ -185,8 +185,8 @@ h3 {
 }
 
 p { 
-  margin-bottom: 15px;
-  line-height: 1.6; /* Better readability */
+  margin-bottom: 14px;
+  line-height: 1; /* Better readability */
 }
 
 /* HOME PAGE - Improved text alignment */
@@ -203,7 +203,7 @@ p {
 }
 
 .about-header {
-  border-bottom: 2px solid #333;
+  border-bottom: 0px solid #333;
   padding-bottom: 15px;
   margin-bottom: 25px;
 }
@@ -227,7 +227,7 @@ p {
   width: 200px;
   height: 200px;
   background: #1a1a1a;
-  border: 2px solid #333;
+  border: 0px solid #333;
   margin: 0 auto 25px;
   display: flex;
   align-items: center;
@@ -249,8 +249,8 @@ p {
   color: #4d4d4d;
   text-decoration: none;
   padding: 8px 16px;
-  border: 1px solid #333;
-  border-radius: 6px;
+  border: 0px solid #333;
+  border-radius: 0px;
   transition: all 0.3s ease;
 }
 
@@ -277,8 +277,8 @@ p {
 
 .project-card {
   background: rgba(255, 255, 255, 0.02);
-  border: 1px solid #333;
-  border-radius: 12px;
+  border: 0px solid #333;
+  border-radius: 0px;
   padding: 25px;
   transition: all 0.3s ease;
   position: relative;
@@ -331,8 +331,8 @@ p {
   color: #4d4d4d;
   text-decoration: none;
   padding: 6px 12px;
-  border: 1px solid #333;
-  border-radius: 4px;
+  border: 0px solid #333;
+  border-radius: 0px;
   font-size: 12px;
   transition: all 0.3s ease;
   display: inline-flex;
@@ -354,7 +354,7 @@ footer {
   font-size: 11px;
   color: #333;
   padding: 20px;
-  border-top: 1px solid #1a1a1a;
+  border-top: 0px solid #1a1a1a;
   background: rgba(7, 7, 7, 0.8);
 }
 
