@@ -158,7 +158,7 @@ nav a.active {
 h1 { 
   font-size: 24px; 
   margin-bottom: 20px;
-  color: #4d4d4d; /* Slightly lighter for hierarchy */
+  color: #4d4d4d; 
 }
 
 h2 { 
@@ -174,33 +174,77 @@ h3 {
 }
 
 p { 
-  margin-bottom: 14px;
-  line-height: 1.4; /* Better readability */
+  margin-bottom: 5px auto;
+  line-height: 1.4; 
 }
 
-/* HOME PAGE - Improved text alignment and design */
-#home p {
+/* HOME PAGE - Two column design */
+#home {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.home-intro {
+  width: 100%;
   text-align: left;
+  margin: 0px auto;
+  padding: 0%;
+}
+
+.columns-container {
+  display: flex;
+  width: 100%;
   max-width: 760px;
+  gap: 40px;
+  position: relative;
+}
+
+.column {
+  flex: 1;
+  padding: 30px;
+  background: rgba(10, 10, 10, 0.3);
+  border-radius: 2px;
+  transition: all 0.3s ease;
+}
+
+.column:hover {
+  background: rgba(10, 10, 10, 0.5);
+}
+
+.column h2 {
+  font-size: 16px;
+  color: #666;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.column p {
+  color: #4d4d4d;
+  line-height: 1.6;
   margin: 0;
-  padding: 0;
+  text-align: left;
 }
 
-/* Cool design element for home page */
-#home::after {
-  content: "";
-  display: block;
-  width: 2px;
-  height: 120px;
-  background: linear-gradient(to bottom, transparent, #4d4d4d, transparent);
-  margin: 40px auto;
-  animation: pulse 4s ease-in-out infinite;
+.divider {
+  position: absolute;
+  left: 50%;
+  top: 20px;
+  bottom: 20px;
+  width: 3px;
+  background: linear-gradient(to bottom, transparent, #333, transparent);
 }
 
-@keyframes pulse {
-  0% { opacity: 0.3; height: 120px; }
-  50% { opacity: 0.7; height: 140px; }
-  100% { opacity: 0.3; height: 120px; }
+/* Responsive design for mobile */
+@media (max-width: 768px) {
+  .columns-container {
+    flex-direction: column;
+    gap: 20px;
+  }
+  
+  .divider {
+    display: none;
+  }
 }
 
 /* ABOUT PAGE - Complete rebuild with placeholders */
@@ -365,11 +409,25 @@ footer {
   </div>
 </div>
 
-<!-- HOME PAGE - Improved content -->
+<!-- HOME PAGE - Two column design -->
 <div id="home" class="page active">
-  <p>Hei! You've found a quiet corner on the internet.</p>
-  <p>This is my space — dark, simple, and honest.</p>
-  <p>Stay as long as you like.</p>
+  <div class="home-intro">
+    <p>Hei! You've found a quiet corner on the internet. Stay as long as you like.</p>
+  </div>
+  
+  <div class="columns-container">
+    <div class="column">
+      <h2>Audio</h2>
+      <p>Crafting atmospheric soundscapes and experimental compositions. A journey through ambient textures and electronic expressions, where each piece tells its own story.</p>
+    </div>
+    
+    <div class="divider"></div>
+    
+    <div class="column">
+      <h2>Coder</h2>
+      <p>Building minimal, thoughtful digital spaces. Creating clean code that resonates with purpose, where functionality meets aesthetic harmony.</p>
+    </div>
+  </div>
 </div>
 
 <!-- CODE PROJECTS - Improved layout with better project cards -->
