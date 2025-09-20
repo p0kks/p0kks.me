@@ -32,14 +32,13 @@ body {
   right: 0;
   z-index: 100;
   background: rgba(7, 7, 7, 0.95); /* Slight transparency for modern feel */
-  backdrop-filter: blur(10px); /* Modern glass effect */
   border-bottom: 0px solid #1a1a1a; /* Subtle separation */
 }
 
 .header-content {
   max-width: 760px;
   margin: 0 auto;
-  padding: 0 20px; /* Added horizontal padding for mobile */
+  padding: 0px; /* Added horizontal padding for mobile */
 }
 
 .top-bar {
@@ -63,7 +62,6 @@ nav a {
   font-weight: normal;
   font-size: 14px;
   padding: 8px 12px; /* Better touch targets */
-  border-radius: 0px; /* Modern rounded corners */
   position: relative;
 }
 
@@ -153,7 +151,7 @@ nav a.active {
   width: 100%; 
   max-width: 760px; 
   margin-top: 200px; /* Adjusted for new header height */
-  padding: 40px 20px 60px; /* Added horizontal and bottom padding */
+  padding: 10px 20px 10px; /* Added horizontal and bottom padding */
   min-height: calc(100vh - 260px); /* Ensure content area fills remaining space */
 }
 
@@ -165,13 +163,13 @@ nav a.active {
 h1 { 
   font-size: 24px; 
   margin-bottom: 20px;
-  color: #666; /* Slightly lighter for hierarchy */
+  color: #4d4d4d; /* Slightly lighter for hierarchy */
 }
 
 h2 { 
   font-size: 18px; 
   margin-bottom: 15px;
-  color: #555;
+  color: #4d4d4d;
 }
 
 h3 {
@@ -182,7 +180,7 @@ h3 {
 
 p { 
   margin-bottom: 14px;
-  line-height: 1; /* Better readability */
+  line-height: 1.4; /* Better readability */
 }
 
 /* HOME PAGE - Improved text alignment */
@@ -204,24 +202,10 @@ p {
   margin-bottom: 25px;
 }
 
-.about-title {
-  /* PLACEHOLDER: Replace with your name/title */
-  font-size: 28px;
-  color: #666;
-  margin-bottom: 8px;
-}
-
-.about-subtitle {
-  /* PLACEHOLDER: Replace with your role/description */
-  font-size: 16px;
-  color: #4d4d4d;
-  font-style: italic;
-}
-
 .about-image {
   /* PLACEHOLDER: Replace with your image */
-  width: 200px;
-  height: 200px;
+  width: 100px;
+  height: 100px;
   background: #1a1a1a;
   border: 0px solid #333;
   margin: 0 auto 25px;
@@ -235,7 +219,7 @@ p {
 .about-links {
   display: flex;
   gap: 20px;
-  justify-content: center;
+  justify-content: left;
   margin-bottom: 30px;
   flex-wrap: wrap;
 }
@@ -258,8 +242,8 @@ p {
 
 .about-content {
   /* PLACEHOLDER: Replace with your bio/story */
-  line-height: 1.7;
-  max-width: 600px;
+  line-height: 1.4;
+  max-width: 760px;
   margin: 0 auto;
 }
 
