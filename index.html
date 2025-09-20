@@ -5,87 +5,56 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>p0kks</title>
 <style>
-* { margin: 0; padding: 0; box-sizing: border-box; }
+/* RESET & BASE STYLES - Improved foundation */
+* { 
+  margin: 0; 
+  padding: 0; 
+  box-sizing: border-box; 
+}
 
 body { 
   background: #070707; 
   color: #4d4d4d; 
-  font: 14px/1.2 monospace; 
+  font: 14px/1.4 'Consolas', 'Monaco', monospace; /* Better line height and font stack */
   display: flex;
   flex-direction: column;
   min-height: 100vh;
   align-items: center;
-  padding: 0px 0 0; /* Space for fixed header */
   text-align: center;
+  overflow-x: hidden; /* Prevent horizontal scroll */
 }
 
+/* HEADER - Fixed positioning and improved structure */
 .header {
   position: fixed;
   top: 0;
   left: 0;
   right: 0;
   z-index: 100;
-  background: #070707;
+  background: rgba(7, 7, 7, 0.95); /* Slight transparency for modern feel */
+  backdrop-filter: blur(10px); /* Modern glass effect */
+  border-bottom: 1px solid #1a1a1a; /* Subtle separation */
 }
 
 .header-content {
-  position: relative;
   max-width: 760px;
   margin: 0 auto;
+  padding: 0 20px; /* Added horizontal padding for mobile */
 }
 
 .top-bar {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 25px 0;
-  max-width: 760px;
-  margin: 0 auto;
+  padding: 20px 0; /* Reduced padding */
   position: relative;
-  z-index: 100;
 }
 
+/* NAVIGATION - Enhanced hover states and accessibility */
 nav {
   display: flex;
-  gap: 20px;
-}
-
-.tagline {
-  color: #4d4d4d;
-  font-size: 14px;
-  display: flex;
+  gap: 25px; /* Increased gap for better touch targets */
   align-items: center;
-  gap: 10px;
-}
-
-#toggleButton {
-  font-size: 18px;
-  background: none;
-  border: none;
-  box-shadow: none;
-  color: #4d4d4d;
-  cursor: pointer;
-  padding: 0;
-  font-family: monospace;
-}
-
-.dropdown {
-  position: relative;
-  display: inline-block;
-}
-
-.dropdown-content {
-  display: none;
-  position: absolute;
-  top: 100%;
-  left: 0;
-  background: #070707;
-  padding: 25px 10px;
-  min-width: 120px;
-}
-
-.dropdown:hover .dropdown-content {
-  display: block;
 }
 
 nav a {
@@ -93,201 +62,596 @@ nav a {
   text-decoration: none;
   font-weight: normal;
   font-size: 14px;
-  transition: all 0.2s;
-  display: inline-block;
-  padding-bottom: 2px;
-  border-bottom: 1px solid transparent;
+  transition: all 0.3s ease; /* Smoother transitions */
+  padding: 8px 12px; /* Better touch targets */
+  border-radius: 4px; /* Modern rounded corners */
+  position: relative;
 }
 
 nav a:hover,
 nav a.active {
-  color: #444444;
-  font-weight: bold;
-  border-bottom: 1px solid #444444;
+  color: #888;
+  background: rgba(255, 255, 255, 0.05); /* Subtle background highlight */
+}
+
+/* DROPDOWN - Improved positioning and animation */
+.dropdown {
+  position: relative;
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%); /* Center the dropdown */
+  background: rgba(7, 7, 7, 0.98);
+  backdrop-filter: blur(15px);
+  border: 1px solid #1a1a1a;
+  border-radius: 8px;
+  padding: 8px 0;
+  min-width: 140px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.8); /* Modern shadow */
+  animation: fadeIn 0.2s ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateX(-50%) translateY(-5px); }
+  to { opacity: 1; transform: translateX(-50%) translateY(0); }
+}
+
+.dropdown:hover .dropdown-content {
+  display: block;
 }
 
 .dropdown-content a {
   display: block;
-  padding: 10px 20px;
+  padding: 12px 20px;
+  margin: 0;
+  border-radius: 0;
 }
 
+/* AUDIO CONTROLS - Fixed and improved */
+.audio-controls {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+#toggleButton {
+  font-size: 16px;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid #333;
+  border-radius: 6px;
+  color: #4d4d4d;
+  cursor: pointer;
+  padding: 8px 12px;
+  font-family: monospace;
+  transition: all 0.3s ease;
+  min-width: 40px; /* Consistent button size */
+}
+
+#toggleButton:hover {
+  background: rgba(255, 255, 255, 0.15);
+  color: #888;
+}
+
+/* BANNER - Improved responsive behavior */
+.banner {
+  width: 100%;
+  max-width: 760px;
+  margin: 0 auto;
+}
+
+.banner img {
+  width: 100%;
+  height: 120px; /* Fixed height for consistency */
+  object-fit: cover;
+  display: block;
+  border-bottom: 1px solid #1a1a1a;
+}
+
+/* PAGE CONTENT - Better spacing and mobile support */
 .page { 
   display: none; 
   width: 100%; 
   max-width: 760px; 
-  margin-top: 230px;
+  margin-top: 200px; /* Adjusted for new header height */
+  padding: 40px 20px 60px; /* Added horizontal and bottom padding */
+  min-height: calc(100vh - 260px); /* Ensure content area fills remaining space */
 }
+
 .page.active { 
   display: block; 
-  margin-top: 230px;
 }
 
+/* TYPOGRAPHY - Improved hierarchy */
 h1 { 
-  font-size: 20px; 
-  margin-bottom: 0px;
-  text-align: center;
+  font-size: 24px; 
+  margin-bottom: 20px;
+  color: #666; /* Slightly lighter for hierarchy */
 }
+
 h2 { 
-  font-size: 16px; 
-  margin-bottom: 0px;
-  text-align: center;
+  font-size: 18px; 
+  margin-bottom: 15px;
+  color: #555;
 }
+
+h3 {
+  font-size: 16px;
+  margin-bottom: 10px;
+  color: #4d4d4d;
+}
+
 p { 
-  margin-bottom: 0px;
-  text-align: center;
+  margin-bottom: 15px;
+  line-height: 1.6; /* Better readability */
 }
 
-.banner {
-  width: 760px;
+/* HOME PAGE - Improved text alignment */
+#home p {
+  text-align: left;
+  max-width: 600px;
+  margin: 0 auto 15px;
+}
+
+/* ABOUT PAGE - Complete rebuild with placeholders */
+.about-section {
+  margin-bottom: 40px;
+  text-align: left;
+}
+
+.about-header {
+  border-bottom: 2px solid #333;
+  padding-bottom: 15px;
+  margin-bottom: 25px;
+}
+
+.about-title {
+  /* PLACEHOLDER: Replace with your name/title */
+  font-size: 28px;
+  color: #666;
+  margin-bottom: 8px;
+}
+
+.about-subtitle {
+  /* PLACEHOLDER: Replace with your role/description */
+  font-size: 16px;
+  color: #4d4d4d;
+  font-style: italic;
+}
+
+.about-image {
+  /* PLACEHOLDER: Replace with your image */
+  width: 200px;
+  height: 200px;
+  background: #1a1a1a;
+  border: 2px solid #333;
+  margin: 0 auto 25px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #333;
+  font-size: 12px;
+}
+
+.about-links {
+  display: flex;
+  gap: 20px;
+  justify-content: center;
+  margin-bottom: 30px;
+  flex-wrap: wrap;
+}
+
+.about-links a {
+  /* PLACEHOLDER: Add your social/contact links */
+  color: #4d4d4d;
+  text-decoration: none;
+  padding: 8px 16px;
+  border: 1px solid #333;
+  border-radius: 6px;
+  transition: all 0.3s ease;
+}
+
+.about-links a:hover {
+  color: #888;
+  border-color: #555;
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.about-content {
+  /* PLACEHOLDER: Replace with your bio/story */
+  line-height: 1.7;
+  max-width: 600px;
   margin: 0 auto;
-  display: block;
-}
-.banner img {
-  width: 100%;
-  height: auto;
-  display: block;
-  max-height: 150px;
-  object-fit: cover;
 }
 
-.grid {
+/* PROJECTS - Modern card-based design */
+.projects-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-  gap: 20px; 
-  margin-top: 20px 0;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 25px;
+  margin-top: 30px;
 }
 
-.project { border: 2px solid #333; padding: 20px; }
-.project h3 { margin-bottom: 10px; }
+.project-card {
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid #333;
+  border-radius: 12px;
+  padding: 25px;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
 
+.project-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, #444, #666, #444);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.project-card:hover {
+  border-color: #555;
+  background: rgba(255, 255, 255, 0.05);
+  transform: translateY(-2px);
+}
+
+.project-card:hover::before {
+  opacity: 1;
+}
+
+.project-title {
+  font-size: 18px;
+  color: #666;
+  margin-bottom: 12px;
+  font-weight: bold;
+}
+
+.project-description {
+  font-size: 13px;
+  color: #4d4d4d;
+  margin-bottom: 20px;
+  line-height: 1.5;
+}
+
+.project-links {
+  display: flex;
+  gap: 15px;
+  flex-wrap: wrap;
+}
+
+.project-links a {
+  color: #4d4d4d;
+  text-decoration: none;
+  padding: 6px 12px;
+  border: 1px solid #333;
+  border-radius: 4px;
+  font-size: 12px;
+  transition: all 0.3s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.project-links a:hover {
+  color: #888;
+  border-color: #555;
+  background: rgba(255, 255, 255, 0.05);
+}
+
+/* FOOTER - Improved positioning */
 footer {
   margin-top: auto;
   width: 100%;
   text-align: center;
-  font-size: 12px;
-  background: #070707;
-  position: sticky;
-  bottom: 0;
+  font-size: 11px;
+  color: #333;
+  padding: 20px;
+  border-top: 1px solid #1a1a1a;
+  background: rgba(7, 7, 7, 0.8);
+}
+
+/* RESPONSIVE DESIGN - Mobile optimization */
+@media (max-width: 768px) {
+  .top-bar {
+    flex-direction: column;
+    gap: 15px;
+    padding: 15px 0;
+  }
+  
+  nav {
+    gap: 15px;
+  }
+  
+  .page {
+    margin-top: 250px; /* Adjusted for mobile header */
+    padding: 20px 15px 40px;
+  }
+  
+  .projects-grid {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+  
+  .about-links {
+    flex-direction: column;
+    align-items: center;
+  }
+}
+
+@media (max-width: 480px) {
+  nav {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  
+  .banner img {
+    height: 80px;
+  }
+  
+  .project-card {
+    padding: 20px;
+  }
 }
 </style>
 </head>
 <body>
 
 <div class="header">
-  <div class="top-bar">
-    <nav>
-      <a href="#" onclick="show('home', this)" class="active">home</a>
-      <div class="dropdown">
-        <a href="#" class="dropbtn">projects</a>
-        <div class="dropdown-content">
-          <a href="#" onclick="show('code', this)">code</a>
-          <a href="#" onclick="show('audio', this)">audio</a>
+  <div class="header-content">
+    <div class="top-bar">
+      <nav>
+        <a href="#" onclick="show('home', this)" class="active">home</a>
+        <div class="dropdown">
+          <a href="#" class="dropbtn">projects</a>
+          <div class="dropdown-content">
+            <a href="#" onclick="show('code', this)">code</a>
+            <a href="#" onclick="show('audio', this)">audio</a>
+          </div>
         </div>
+        <a href="#" onclick="show('about', this)">about</a>
+      </nav>
+      <div class="audio-controls">
+        <!-- FIXED: Hidden YouTube player for audio -->
+        <div id="player" style="display: none;"></div>
+        <button id="toggleButton" title="Toggle music">⏸⏸</button>
       </div>
-      <a href="#" onclick="show('about', this)">about</a>
-    </nav>
-    <div class="tagline">
-        <div id="player"></div>
-        <button id="toggleButton">❚❚</button>
     </div>
-  </div>
-  <div class="banner">
-    <img src="banner.png" alt="banner">
+    <div class="banner">
+      <img src="banner.png" alt="p0kks banner">
+    </div>
   </div>
 </div>
 
+<!-- HOME PAGE - Improved content -->
 <div id="home" class="page active">
-  <p style="text-align: left;">Hei! You’ve found a quiet corner on the internet.</p>
-  <p style="text-align: left;">This is my space - dark, simple, and honest.</p>
-  <p style="text-align: left;">Stay as long as you like.</p>
+  <p>Hei! You've found a quiet corner on the internet.</p>
+  <p>This is my space — dark, simple, and honest.</p>
+  <p>Stay as long as you like.</p>
 </div>
 
+<!-- CODE PROJECTS - Improved layout with better project cards -->
 <div id="code" class="page">
-  <h1>➖</h1>
-  <div class="grid">
-    <div class="project">
-      <h3>Website</h3>
-      <p><a href="https://github.com/p0kks/p0kks.github.io">GitHub</a></p>
-      <p><a href="https://p0kks.github.io/">p0kks.github.io</a></p>
+  <h1>Code Projects</h1>
+  <div class="projects-grid">
+    <div class="project-card">
+      <div class="project-title">Personal Website</div>
+      <div class="project-description">
+        A minimalist personal portfolio built with vanilla HTML, CSS, and JavaScript. 
+        Features dark theme and clean typography.
+      </div>
+      <div class="project-links">
+        <a href="https://github.com/p0kks/p0kks.github.io" target="_blank">
+          📁 GitHub
+        </a>
+        <a href="https://p0kks.github.io/" target="_blank">
+          🌐 Live Site
+        </a>
+      </div>
     </div>
-    <div class="project">
-      <h3>Discord Bot</h3>
-      <p><a href="https://github.com/p0kks/Lotion-Bot">GitHub</a></p>
-      <p><a href="https://discord.gg/CVG27QpcRZ">Discord server</a></p>
+    <div class="project-card">
+      <div class="project-title">Discord Bot</div>
+      <div class="project-description">
+        A custom Discord bot built for community management and user engagement. 
+        Includes various utility commands and features.
+      </div>
+      <div class="project-links">
+        <a href="https://github.com/p0kks/Lotion-Bot" target="_blank">
+          📁 GitHub
+        </a>
+        <a href="https://discord.gg/CVG27QpcRZ" target="_blank">
+          💬 Discord
+        </a>
+      </div>
     </div>
   </div>
 </div>
 
+<!-- AUDIO PROJECTS - Improved layout matching code style -->
 <div id="audio" class="page">
-  <h1>➖</h1>
-  <div class="grid">
-    <div class="project">
-      <h3>Audio Project 1</h3>
-      <p><a href="https://google.com/">Link</a></p>
+  <h1>Audio Projects</h1>
+  <div class="projects-grid">
+    <div class="project-card">
+      <div class="project-title">Audio Project 1</div>
+      <div class="project-description">
+        <!-- PLACEHOLDER: Add description of your first audio project -->
+        Description of your first audio project goes here. Replace this text with details about the project.
+      </div>
+      <div class="project-links">
+        <a href="https://google.com/" target="_blank">
+          🎵 Listen
+        </a>
+      </div>
     </div>
-    <div class="project">
-      <h3>Audio Project 2</h3>
-      <p><a href="https://google.com/">Link</a></p>
+    <div class="project-card">
+      <div class="project-title">Audio Project 2</div>
+      <div class="project-description">
+        <!-- PLACEHOLDER: Add description of your second audio project -->
+        Description of your second audio project goes here. Replace this text with details about the project.
+      </div>
+      <div class="project-links">
+        <a href="https://google.com/" target="_blank">
+          🎵 Listen
+        </a>
+      </div>
     </div>
-    <div class="project">
-      <h3>Audio Project 3</h3>
-      <p><a href="https://google.com/">Link</a></p>
+    <div class="project-card">
+      <div class="project-title">Audio Project 3</div>
+      <div class="project-description">
+        <!-- PLACEHOLDER: Add description of your third audio project -->
+        Description of your third audio project goes here. Replace this text with details about the project.
+      </div>
+      <div class="project-links">
+        <a href="https://google.com/" target="_blank">
+          🎵 Listen
+        </a>
+      </div>
     </div>
   </div>
 </div>
 
+<!-- ABOUT PAGE - Complete rebuild with clear placeholders -->
 <div id="about" class="page">
-  <div class="grid">
-  <h1 style="text-align: left; margin-bottom: 1em;">bio</h1>
-  <h1 style="text-align: left; margin-bottom: 1em;">history</h1>
-  <h1 style="text-align: left; margin-bottom: 1em;">resources</h1>
-  <p style="text-align: center; margin-bottom: 1em;">lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum</p>
-  <p style="text-align: right; margin-bottom: 1em;">lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum </p>
-</div>
+  <div class="about-section">
+    <div class="about-header">
+      <div class="about-title">
+        <!-- PLACEHOLDER: Replace with your name -->
+        Your Name Here
+      </div>
+      <div class="about-subtitle">
+        <!-- PLACEHOLDER: Replace with your role/title -->
+        Developer • Creator • [Your Role]
+      </div>
+    </div>
+    
+    <div class="about-image">
+      <!-- PLACEHOLDER: Replace with <img src="your-photo.jpg" alt="Your Name"> -->
+      [Your Photo Here]
+    </div>
+    
+    <div class="about-links">
+      <!-- PLACEHOLDER: Replace with your actual links -->
+      <a href="mailto:your-email@example.com">Email</a>
+      <a href="https://github.com/yourusername" target="_blank">GitHub</a>
+      <a href="https://linkedin.com/in/yourprofile" target="_blank">LinkedIn</a>
+      <a href="https://twitter.com/yourusername" target="_blank">Twitter</a>
+    </div>
+    
+    <div class="about-content">
+      <!-- PLACEHOLDER: Replace with your bio -->
+      <p>
+        This is where your bio goes. Tell your story, share what drives you, 
+        and give visitors a sense of who you are beyond your work.
+      </p>
+      <p>
+        Add multiple paragraphs as needed. Talk about your background, interests, 
+        current projects, or anything else you'd like people to know about you.
+      </p>
+      <p>
+        Keep it authentic and personal while maintaining the clean, minimal 
+        aesthetic of the site.
+      </p>
+    </div>
+  </div>
 </div>
 
 <footer>
-<div>© p0kks</div>  
+  <div>© p0kks</div>
 </footer>
 
+<!-- JAVASCRIPT - Fixed navigation and audio functionality -->
 <script>
+// IMPROVED: Navigation function with better state management
 function show(id, el) {
+  // Remove active class from all pages and nav items
   document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
   document.querySelectorAll('nav a').forEach(a => a.classList.remove('active'));
+  
+  // Show selected page
   document.getElementById(id).classList.add('active');
+  
+  // Handle dropdown navigation highlighting
   if (el.closest('.dropdown-content')) {
     el.closest('.dropdown').querySelector('.dropbtn').classList.add('active');
+  } else {
+    el.classList.add('active');
   }
-  el.classList.add('active');
 }
-</script>
-<script src="https://www.youtube.com/iframe_api"></script>
-<script>
-  var player;
-  function onYouTubeIframeAPIReady() {
-    player = new YT.Player('player', {
-      height: '0',
-      width: '0',
-      videoId: '5qap5aO4i9A',
-      events: {
-        'onReady': onPlayerReady
-      }
-    });
-  }
 
-  function onPlayerReady(event) {
-    event.target.playVideo();
-  }
+// FIXED: YouTube API integration with correct video
+var player;
+var isPlaying = false;
 
-  document.getElementById('toggleButton').addEventListener('click', function() {
-    if (player.getPlayerState() == YT.PlayerState.PLAYING) {
-      player.pauseVideo();
-      this.innerHTML = '▶';
-    } else {
-      player.playVideo();
-      this.innerHTML = '❚❚';
+function onYouTubeIframeAPIReady() {
+  player = new YT.Player('player', {
+    height: '0',
+    width: '0',
+    // FIXED: Updated to requested video URL
+    videoId: 'O5p2ZX7UU9w',
+    playerVars: {
+      autoplay: 1,
+      loop: 1,
+      playlist: 'O5p2ZX7UU9w', // For looping
+      controls: 0,
+      showinfo: 0,
+      modestbranding: 1,
+      iv_load_policy: 3
+    },
+    events: {
+      'onReady': onPlayerReady,
+      'onStateChange': onPlayerStateChange
     }
   });
+}
+
+function onPlayerReady(event) {
+  // FIXED: Autoplay on ready
+  event.target.setVolume(30); // Set reasonable volume
+  event.target.playVideo();
+  isPlaying = true;
+  updateButton();
+}
+
+function onPlayerStateChange(event) {
+  // Update button state based on player state
+  if (event.data == YT.PlayerState.PLAYING) {
+    isPlaying = true;
+  } else {
+    isPlaying = false;
+  }
+  updateButton();
+}
+
+function updateButton() {
+  const button = document.getElementById('toggleButton');
+  button.innerHTML = isPlaying ? '⏸⏸' : '▶▶';
+}
+
+// FIXED: Toggle functionality
+document.getElementById('toggleButton').addEventListener('click', function() {
+  if (player && player.getPlayerState) {
+    if (isPlaying) {
+      player.pauseVideo();
+    } else {
+      player.playVideo();
+    }
+  }
+});
+
+// Load YouTube API
+if (!window.YT) {
+  const tag = document.createElement('script');
+  tag.src = 'https://www.youtube.com/iframe_api';
+  const firstScriptTag = document.getElementsByTagName('script')[0];
+  firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+}
 </script>
 
 </body>
