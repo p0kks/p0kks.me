@@ -186,21 +186,21 @@ p {
   line-height: 1.4; 
 }
 
-/* HOME PAGE - Two column design */
+/* HOME PAGE - Simplified visual design */
 #home {
   display: flex;
   flex-direction: column;
   align-items: center;
 }
 
-.home-intro {
+#home .home-intro {
   width: 100%;
   text-align: left;
-  margin: 0px auto;
-  padding: 0%;
+  margin: 0 auto 40px;
+  padding: 0;
 }
 
-.columns-container {
+#home .columns-container {
   display: flex;
   width: 100%;
   max-width: 760px;
@@ -208,49 +208,74 @@ p {
   position: relative;
 }
 
-.column {
+#home .home-column {
   flex: 1;
   padding: 30px;
-  background: rgba(10, 10, 10, 0.3);
-  border-radius: 2px;
+  background: rgba(10, 10, 10, 0.2);
   transition: all 0.3s ease;
-}
-
-.column:hover {
-  background: rgba(10, 10, 10, 0.5);
-}
-
-.column h2 {
-  font-size: 16px;
-  color: #666;
-  margin-bottom: 20px;
+  position: relative;
   text-align: center;
 }
 
-.column p {
+#home .home-column:hover {
+  background: rgba(10, 10, 10, 0.3);
+}
+
+#home .home-column h2 {
+  font-size: 16px;
+  color: #666;
+  margin-bottom: 20px;
+  letter-spacing: 1px;
+}
+
+#home .home-column p {
   color: #4d4d4d;
   line-height: 1.6;
   margin: 0;
   text-align: left;
 }
 
-.divider {
+#home .home-column.audio::after {
+  content: '●';
+  display: block;
+  margin-top: 20px;
+  color: #333;
+  font-size: 8px;
+  animation: pulse 2s infinite;
+}
+
+#home .home-column.code::after {
+  content: '{ }';
+  display: block;
+  margin-top: 20px;
+  color: #333;
+  font-family: 'Consolas', monospace;
+  font-size: 14px;
+  opacity: 0.5;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 0.3; transform: scale(1); }
+  50% { opacity: 0.7; transform: scale(1.5); }
+}
+
+#home .home-divider {
   position: absolute;
   left: 50%;
-  top: 20px;
-  bottom: 20px;
-  width: 3px;
+  top: 30px;
+  bottom: 30px;
+  width: 1px;
   background: linear-gradient(to bottom, transparent, #333, transparent);
 }
 
 /* Responsive design for mobile */
 @media (max-width: 768px) {
-  .columns-container {
+  #home .columns-container {
     flex-direction: column;
     gap: 20px;
   }
   
-  .divider {
+  #home .home-divider {
     display: none;
   }
 }
@@ -421,22 +446,22 @@ footer {
   </div>
 </div>
 
-<!-- HOME PAGE - Two column design -->
+<!-- HOME PAGE - Simplified visual design -->
 <div id="home" class="page active">
   <div class="home-intro">
     <p>Hei! You've found a quiet corner on the internet. Stay as long as you like.</p>
   </div>
   
   <div class="columns-container">
-    <div class="column">
-      <h2>Audio</h2>
+    <div class="home-column audio">
+      <h2>Audio Works</h2>
       <p>Crafting atmospheric soundscapes and experimental compositions. A journey through ambient textures and electronic expressions, where each piece tells its own story.</p>
     </div>
     
-    <div class="divider"></div>
+    <div class="home-divider"></div>
     
-    <div class="column">
-      <h2>Coder</h2>
+    <div class="home-column code">
+      <h2>Code Works</h2>
       <p>Building minimal, thoughtful digital spaces. Creating clean code that resonates with purpose, where functionality meets aesthetic harmony.</p>
     </div>
   </div>
@@ -554,19 +579,32 @@ footer {
 // Use strict mode for better error catching and performance
 'use strict';
 function show(id, el) {
+  // Prevent default link behavior
+  event.preventDefault();
+  
   // Remove active class from all pages and nav items
   document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
   document.querySelectorAll('nav a').forEach(a => a.classList.remove('active'));
+  document.querySelector('.dropbtn').classList.remove('active');
   
   // Show selected page
-  document.getElementById(id).classList.add('active');
+  const targetPage = document.getElementById(id);
+  if (targetPage) {
+    targetPage.classList.add('active');
+  }
   
   // Handle dropdown navigation highlighting
   if (el.closest('.dropdown-content')) {
+    // If it's a dropdown item, highlight both the item and the dropdown button
+    el.classList.add('active');
     el.closest('.dropdown').querySelector('.dropbtn').classList.add('active');
   } else {
+    // If it's a main nav item
     el.classList.add('active');
   }
+  
+  // Update URL hash without scrolling
+  history.pushState(null, '', '#' + id);
 }
 
 // FIXED: YouTube API integration with correct video
