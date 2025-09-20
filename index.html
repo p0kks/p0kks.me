@@ -69,13 +69,30 @@ nav a {
   text-decoration: none;
   font-weight: normal;
   font-size: 14px;
-  padding: 8px 12px; /* Better touch targets */
+  padding: 8px 12px;
   position: relative;
+}
+
+nav a::after {
+  content: '';
+  position: absolute;
+  width: 0;
+  height: 1px;
+  bottom: 0;
+  left: 50%;
+  background-color: #666;
+  transition: all 0.3s ease;
+}
+
+nav a:hover::after,
+nav a.active::after {
+  width: calc(100% - 24px);
+  left: 12px;
 }
 
 nav a:hover,
 nav a.active {
-  color: #fff;
+  color: #666;
 }
 
 /* DROPDOWN - Improved positioning and animation */
@@ -207,11 +224,15 @@ p {
 }
 
 #home .unified-element {
-  padding: 40px;
+  padding: 60px;
   background: rgba(10, 10, 10, 0.2);
   transition: all 0.4s ease;
   position: relative;
   overflow: hidden;
+  min-height: 300px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 #home .unified-element:hover {
@@ -226,22 +247,24 @@ p {
 #home .element-text {
   font-family: 'Consolas', monospace;
   color: #4d4d4d;
-  margin: 20px 0;
+  margin: 30px 0;
   line-height: 1.6;
+  font-size: 16px;
+  letter-spacing: 0.5px;
 }
 
 #home .wave-form {
-  height: 20px;
-  margin: 30px 0;
+  height: 40px;
+  margin: 40px 0;
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 3px;
+  gap: 4px;
 }
 
 #home .wave-bar {
-  width: 2px;
-  height: 15px;
+  width: 3px;
+  height: 25px;
   background: #333;
   animation: waveform 1.5s ease-in-out infinite;
 }
@@ -252,6 +275,10 @@ p {
 
 #home .wave-bar:nth-child(3n) {
   animation-delay: 0.3s;
+}
+
+#home .wave-bar:nth-child(4n) {
+  animation-delay: 0.4s;
 }
 
 #home .code-element {
@@ -378,16 +405,24 @@ p {
   color: #666;  /* Added hover state */
 }
 
-/* FOOTER - Improved positioning */
+/* FOOTER - Fixed positioning at bottom */
 footer {
-  margin-top: auto;
+  position: fixed;
+  bottom: 0;
+  left: 0;
   width: 100%;
   text-align: center;
   font-size: 11px;
   color: #333;
-  padding: 20px 0;  /* Fixed invalid padding */
-  border-top: 0px solid #1a1a1a;
-  background: rgba(7, 7, 7, 0.8);
+  padding: 15px 0;
+  background: rgba(7, 7, 7, 0.95);
+  backdrop-filter: blur(5px);
+  z-index: 1000;
+}
+
+/* Add padding to body to prevent content from being hidden behind fixed footer */
+body {
+  padding-bottom: 50px;
 }
 
 /* RESPONSIVE DESIGN - Mobile optimization */
@@ -464,14 +499,12 @@ footer {
 
 <!-- HOME PAGE - Unified design -->
 <div id="home" class="page active">
-  <div class="home-intro">
-    <p>Hei! You've found a quiet corner on the internet. Stay as long as you like.</p>
-  </div>
-  
   <div class="home-content">
     <div class="unified-element">
       <div class="element-content">
         <div class="wave-form">
+          <div class="wave-bar"></div>
+          <div class="wave-bar"></div>
           <div class="wave-bar"></div>
           <div class="wave-bar"></div>
           <div class="wave-bar"></div>
