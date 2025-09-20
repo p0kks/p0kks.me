@@ -178,11 +178,29 @@ p {
   line-height: 1.4; /* Better readability */
 }
 
-/* HOME PAGE - Improved text alignment */
+/* HOME PAGE - Improved text alignment and design */
 #home p {
   text-align: left;
   max-width: 760px;
-  margin: 0 auto 0px;
+  margin: 0;
+  padding: 0;
+}
+
+/* Cool design element for home page */
+#home::after {
+  content: "";
+  display: block;
+  width: 2px;
+  height: 120px;
+  background: linear-gradient(to bottom, transparent, #4d4d4d, transparent);
+  margin: 40px auto;
+  animation: pulse 4s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0% { opacity: 0.3; height: 120px; }
+  50% { opacity: 0.7; height: 140px; }
+  100% { opacity: 0.3; height: 120px; }
 }
 
 /* ABOUT PAGE - Complete rebuild with placeholders */
@@ -203,15 +221,6 @@ p {
   justify-content: left;
   margin-bottom: 10px;
   flex-wrap: wrap;
-}
-
-.about-links a {
-  /* PLACEHOLDER: Add your social/contact links */
-  color: #4d4d4d;
-  text-decoration: none;
-  padding: 0px 10px;
-  border: 0px solid #333;
-  border-radius: 0px;
 }
 
 .about-content {
@@ -416,6 +425,20 @@ footer {
         </a>
       </div>
     </div>
+    <div class="project-card">
+      <div class="project-title">Audio Project 2</div>
+      <div class="project-description">
+        A showcase of experimental sound design and atmospheric compositions.
+        Exploring the boundaries between ambient and electronic genres.
+      </div>
+      <div class="project-links">
+        <a href="https://google.com/" target="_blank">
+          🎵 Listen
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
 
 <!-- ABOUT PAGE - Complete rebuild with clear placeholders -->
 <div id="about" class="page">
