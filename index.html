@@ -15,7 +15,7 @@
 body { 
   background: #070707; 
   color: #4d4d4d; 
-  font: 14px/1.4 'Consolas', 'Monaco', monospace; /* Better line height and font stack */
+  font: 14px/1.2 'Consolas', 'Monaco', monospace; /* Better line height and font stack */
   display: flex;
   flex-direction: column;
   min-height: 100vh;
@@ -62,7 +62,6 @@ nav a {
   text-decoration: none;
   font-weight: normal;
   font-size: 14px;
-  transition: all 0.3s ease; /* Smoother transitions */
   padding: 8px 12px; /* Better touch targets */
   border-radius: 0px; /* Modern rounded corners */
   position: relative;
@@ -70,8 +69,7 @@ nav a {
 
 nav a:hover,
 nav a.active {
-  color: #888;
-  background: rgba(255, 255, 255, 0.05); /* Subtle background highlight */
+  color: #fff;
 }
 
 /* DROPDOWN - Improved positioning and animation */
@@ -91,8 +89,6 @@ nav a.active {
   border-radius: 0px;
   padding: 8px 0;
   min-width: 140px;
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.8); /* Modern shadow */
-  animation: none;
 }
 
 @keyframes fadeIn {
