@@ -3,7 +3,15 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="p0kks - Audio and Code Portfolio">
+<meta name="theme-color" content="#070707">
+<meta property="og:title" content="p0kks">
+<meta property="og:description" content="A quiet corner on the internet for audio works and minimal code.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://p0kks.github.io">
 <title>p0kks</title>
+<link rel="icon" type="image/png" href="p0kks.favicon.png">
+<link rel="apple-touch-icon" href="p0kks.favicon.png">
 <style>
 /* RESET & BASE STYLES - Improved foundation */
 * { 
@@ -317,12 +325,16 @@ p {
 .project-links a {
   color: #4d4d4d;
   text-decoration: none;
-  padding: 5px 5px;
+  padding: 5px;
   font-size: 12px;
   transition: all 0.3s ease;
   display: inline-flex;
-  align-items: left;
+  align-items: center;  /* Fixed invalid alignment */
   gap: 5px;
+}
+
+.project-links a:hover {
+  color: #666;  /* Added hover state */
 }
 
 /* FOOTER - Improved positioning */
@@ -332,7 +344,7 @@ footer {
   text-align: center;
   font-size: 11px;
   color: #333;
-  padding: 20px auto;
+  padding: 20px 0;  /* Fixed invalid padding */
   border-top: 0px solid #1a1a1a;
   background: rgba(7, 7, 7, 0.8);
 }
@@ -351,7 +363,7 @@ footer {
   
   .page {
     margin-top: 250px; /* Adjusted for mobile header */
-    padding: 20px 15px 40px;
+    padding: 0px 15px 40px;
   }
   
   .projects-grid {
@@ -398,9 +410,9 @@ footer {
         <a href="#" onclick="show('about', this)">about</a>
       </nav>
       <div class="audio-controls">
-        <!-- FIXED: Hidden YouTube player for audio -->
-        <div id="player" style="display: none;"></div>
-        <button id="toggleButton" title="Toggle music">⏸⏸</button>
+        <!-- Hidden YouTube player for audio -->
+        <div id="player" style="display: none;" aria-hidden="true"></div>
+        <button id="toggleButton" title="Toggle background music" aria-label="Toggle background music">⏸</button>
       </div>
     </div>
     <div class="banner">
@@ -537,9 +549,10 @@ footer {
   <div>© p0kks</div>
 </footer>
 
-<!-- JAVASCRIPT - Fixed navigation and audio functionality -->
-<script>
-// IMPROVED: Navigation function with better state management
+<!-- JAVASCRIPT - Optimized navigation and audio functionality -->
+<script defer>
+// Use strict mode for better error catching and performance
+'use strict';
 function show(id, el) {
   // Remove active class from all pages and nav items
   document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
@@ -616,13 +629,25 @@ document.getElementById('toggleButton').addEventListener('click', function() {
   }
 });
 
-// Load YouTube API
-if (!window.YT) {
-  const tag = document.createElement('script');
-  tag.src = 'https://www.youtube.com/iframe_api';
-  const firstScriptTag = document.getElementsByTagName('script')[0];
-  firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+// Load YouTube API with error handling
+function loadYouTubeAPI() {
+  if (!window.YT) {
+    try {
+      const tag = document.createElement('script');
+      tag.src = 'https://www.youtube.com/iframe_api';
+      const firstScriptTag = document.getElementsByTagName('script')[0];
+      firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+    } catch (error) {
+      console.error('Failed to load YouTube API:', error);
+      document.getElementById('toggleButton').style.display = 'none';
+    }
+  }
 }
+
+// Initialize on DOMContentLoaded
+document.addEventListener('DOMContentLoaded', function() {
+  loadYouTubeAPI();
+});
 </script>
 
 </body>
