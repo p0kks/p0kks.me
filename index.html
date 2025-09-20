@@ -215,7 +215,8 @@ p {
   text-align: left;
 }
 
-#home .home-content {
+.home-content {
+  display: none;  /* Hide by default */
   width: 100%;
   max-width: 500px;
   margin: 40px auto;
@@ -223,7 +224,12 @@ p {
   position: relative;
 }
 
-#home .unified-element {
+/* Only show when home page is active */
+#home.active .home-content {
+  display: block;
+}
+
+.unified-element {
   padding: 60px;
   background: rgba(10, 10, 10, 0.2);
   transition: all 0.4s ease;
@@ -235,16 +241,24 @@ p {
   justify-content: center;
 }
 
-#home .unified-element:hover {
+.unified-element:hover {
   background: rgba(10, 10, 10, 0.3);
 }
 
-#home .element-content {
+.element-content {
   position: relative;
   z-index: 1;
+  opacity: 0;
+  transform: translateY(10px);
+  transition: all 0.4s ease;
 }
 
-#home .element-text {
+#home.active .element-content {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.element-text {
   font-family: 'Consolas', monospace;
   color: #4d4d4d;
   margin: 30px 0;
@@ -253,7 +267,7 @@ p {
   letter-spacing: 0.5px;
 }
 
-#home .wave-form {
+.wave-form {
   height: 40px;
   margin: 40px 0;
   display: flex;
@@ -262,22 +276,30 @@ p {
   gap: 4px;
 }
 
-#home .wave-bar {
+.wave-bar {
   width: 3px;
   height: 25px;
   background: #333;
   animation: waveform 1.5s ease-in-out infinite;
+  opacity: 0;
+  transform: scaleY(0.7);
+  transition: all 0.3s ease;
 }
 
-#home .wave-bar:nth-child(2n) {
+#home.active .wave-bar {
+  opacity: 1;
+  transform: scaleY(1);
+}
+
+#home.active .wave-bar:nth-child(2n) {
   animation-delay: 0.2s;
 }
 
-#home .wave-bar:nth-child(3n) {
+#home.active .wave-bar:nth-child(3n) {
   animation-delay: 0.3s;
 }
 
-#home .wave-bar:nth-child(4n) {
+#home.active .wave-bar:nth-child(4n) {
   animation-delay: 0.4s;
 }
 
