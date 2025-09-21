@@ -45,8 +45,9 @@ body {
 
 .header-content {
   max-width: 760px;
+  height: 200px; /* Fixed height */
   margin: 0 auto;
-  padding: 0px; /* Added horizontal padding for mobile */
+  padding: 0;
 }
 
 .top-bar {
@@ -165,18 +166,27 @@ nav a.active {
   border-bottom: 0px solid #1a1a1a;
 }
 
-/* PAGE CONTENT - Better spacing and mobile support */
+/* PAGE CONTENT - Consistent spacing */
 .page { 
   display: none; 
   width: 100%; 
   max-width: 760px; 
-  margin-top: 200px; /* Adjusted for new header height */
-  padding: 10px 20px 10px; /* Added horizontal and bottom padding */
-  min-height: calc(100vh - 260px); /* Ensure content area fills remaining space */
+  margin-top: 210px; /* 200px header + 10px spacing */
+  padding: 0 20px 60px;
+  min-height: calc(100vh - 260px);
+  position: absolute; /* Prevent pages from affecting layout when hidden */
+  left: 0;
+  right: 0;
 }
 
 .page.active { 
-  display: block; 
+  display: block;
+  position: relative; /* Reset position when active */
+}
+
+/* Remove any unwanted margins from first elements */
+.page > *:first-child {
+  margin-top: 0;
 }
 
 /* TYPOGRAPHY - Improved hierarchy */
@@ -215,11 +225,14 @@ p {
   text-align: left;
 }
 
+#home:not(.active) {
+  display: none;
+}
+
 .home-content {
-  display: none;  /* Hide by default */
   width: 100%;
   max-width: 500px;
-  margin: 40px auto;
+  margin: 0 auto;
   text-align: center;
   position: relative;
 }
@@ -353,74 +366,130 @@ p {
 
 .about-header {
   border-bottom: 0px solid #333;
-  padding-bottom: 15px;
-  margin-bottom: 25px;
+  padding-bottom: 5px;
+  margin-bottom: 5px;
 }
 
-.about-links {
+.social-links {
   display: flex;
-  gap: 20px;
-  justify-content: left;
-  margin-bottom: 10px;
+  gap: 10px; /* Increased gap for better spacing */
+  justify-content: center;
+  margin: 0 0 0px; /* Removed top margin, increased bottom margin */
   flex-wrap: wrap;
+  padding: 5px;
+  border-bottom: 0px solid #1a1a1a;
+  background: rgba(10, 10, 10, 0.2); /* Subtle background */
+}
+
+.social-icon {
+  width: 18px;
+  height: 18px;
+  fill: #4d4d4d;
+  transition: all 0.3s ease;
+  opacity: 0.5; /* Slightly dimmed by default */
+}
+
+.social-links a {
+  padding: 10px; /* Added padding for better touch targets */
+  border-radius: 0px;
+}
+
+.social-links a:hover .social-icon {
+  fill: #4d4d4d;
+  opacity: 1;
+  transform: translateY(0px); /* Subtle lift effect */
+}
+
+.social-links a:active .social-icon {
+  fill: #4d4d4d;
+  transform: translateY(0);
 }
 
 .about-content {
-  /* PLACEHOLDER: Replace with your bio/story */
-  line-height: 1.4;
+  line-height: 1.5;
   max-width: 760px;
+  padding: 5px;
+  background: rgba(10, 10, 10, 0.2);
+  text-align: justify;
 }
 
-/* PROJECTS - Modern card-based design */
-.projects-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: 25px;
-  margin-top: 30px;
+.about-content p {
+  margin-bottom: 5px;
+  opacity: 0.9;
+  font-size: 14px;
+}
+
+.about-content p:last-child {
+  margin-bottom: 0;
+}
+
+/* PROJECTS - Minimal design */
+.project-container {
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+  margin: 0 auto;
+  max-width: 600px;
+  padding-top: 0; /* Remove any top padding */
 }
 
 .project-card {
-  background: rgba(10, 10, 10, 0.568);
-  border: 0px solid #333;
-  border-radius: 0px;
-  padding: 25px;
-  transition: none;
-  position: relative;
-  overflow: hidden;
+  background: rgba(10, 10, 10, 0.2);
+  padding: 30px;
+  transition: all 0.3s ease;
+}
+
+.project-card:hover {
+  background: rgba(10, 10, 10, 0.3);
 }
 
 .project-title {
-  font-size: 18px;
+  font-size: 16px;
   color: #666;
-  margin-bottom: 12px;
-  font-weight: bold;
-  text-align: center;
+  margin-bottom: 15px;
+  font-weight: normal;
+  letter-spacing: 1px;
 }
 
 .project-description {
   font-size: 13px;
   color: #4d4d4d;
-  margin-bottom: 20px;
-  line-height: 1.5;
-  text-align: left;
+  margin-bottom: 25px;
+  line-height: 1.6;
+  font-family: 'Consolas', monospace;
 }
-
 
 .project-links {
   display: flex;
-  gap: 10px;
-  flex-wrap: wrap;
+  gap: 20px;
 }
 
-.project-links a {
+.project-link {
   color: #4d4d4d;
   text-decoration: none;
-  padding: 5px;
   font-size: 12px;
   transition: all 0.3s ease;
-  display: inline-flex;
-  align-items: center;  /* Fixed invalid alignment */
-  gap: 5px;
+  position: relative;
+  padding: 5px 0;
+}
+
+.project-link::after {
+  content: '';
+  position: absolute;
+  width: 0;
+  height: 1px;
+  bottom: 0;
+  left: 0;
+  background-color: #666;
+  transition: all 0.3s ease;
+}
+
+.project-link:hover {
+  color: #666;
+}
+
+.project-link:hover::after {
+  width: 100%;
 }
 
 .project-links a:hover {
@@ -548,106 +617,112 @@ body {
   </div>
 </div>
 
-<!-- CODE PROJECTS - Improved layout with better project cards -->
+<!-- CODE PROJECTS - Minimalist layout -->
 <div id="code" class="page">
-  <h1>Code Projects</h1>
-  <div class="projects-grid">
+  <div class="project-container">
     <div class="project-card">
       <div class="project-title">p0kks.github.io</div>
       <div class="project-description">
-        A minimalist personal portfolio built with vanilla HTML, CSS, and JavaScript. 
-        Features dark theme and clean typography.
+        A minimalist corner on the internet.
+        Built with pure HTML, CSS, and JS.
       </div>
       <div class="project-links">
-        <a href="https://github.com/p0kks/p0kks.github.io" target="_blank">
-          📁 GitHub
+        <a href="https://github.com/p0kks/p0kks.github.io" target="_blank" class="project-link">
+          view source
         </a>
-        <a href="https://p0kks.github.io/" target="_blank">
-          🌐 Live Site
+        <a href="https://p0kks.github.io/" target="_blank" class="project-link">
+          visit site
         </a>
       </div>
     </div>
+
     <div class="project-card">
-      <div class="project-title">Discord Bot</div>
+      <div class="project-title">harmony</div>
       <div class="project-description">
-        A custom Discord bot built for community management and user engagement. 
-        Includes various utility commands and features.
+        Discord community enhancement.
+        Focus on minimal interaction.
       </div>
       <div class="project-links">
-        <a href="https://github.com/p0kks/Lotion-Bot" target="_blank">
-          📁 GitHub
+        <a href="https://github.com/p0kks/Lotion-Bot" target="_blank" class="project-link">
+          view source
         </a>
-        <a href="https://discord.gg/CVG27QpcRZ" target="_blank">
-          💬 Discord
+        <a href="https://discord.gg/CVG27QpcRZ" target="_blank" class="project-link">
+          join server
         </a>
       </div>
     </div>
   </div>
 </div>
 
-<!-- AUDIO PROJECTS - Improved layout matching code style -->
+<!-- AUDIO PROJECTS - Minimalist layout -->
 <div id="audio" class="page">
-  <h1>Audio Projects</h1>
-  <div class="projects-grid">
+  <div class="project-container">
     <div class="project-card">
-      <div class="project-title">Audio Project 1</div>
+      <div class="project-title">ethereal</div>
       <div class="project-description">
-        <!-- PLACEHOLDER: Add description of your first audio project -->
-        Description of your first audio project goes here. Replace this text with details about the project.
+        Ambient soundscapes.
+        Digital peace finding form.
       </div>
       <div class="project-links">
-        <a href="https://google.com/" target="_blank">
-          🎵 Listen
+        <a href="#" target="_blank" class="project-link">
+          listen
         </a>
       </div>
     </div>
+
     <div class="project-card">
-      <div class="project-title">Audio Project 2</div>
+      <div class="project-title">wave.01</div>
       <div class="project-description">
-        A showcase of experimental sound design and atmospheric compositions.
-        Exploring the boundaries between ambient and electronic genres.
+        Electronic expressions.
+        Minimal form, maximum depth.
       </div>
       <div class="project-links">
-        <a href="https://google.com/" target="_blank">
-          🎵 Listen
+        <a href="#" target="_blank" class="project-link">
+          listen
         </a>
       </div>
     </div>
   </div>
 </div>
 
-<!-- ABOUT PAGE - Complete rebuild with clear placeholders -->
+<!-- ABOUT PAGE - Minimalist design -->
 <div id="about" class="page">
-  <div class="about-section">
-    <div class="about-header">
-      <div class="about-title"></div>
-      <div class="about-subtitle"></div>
-    </div>
-    
-    <div class="about-links">
-      <!-- PLACEHOLDER: Replace with your actual links -->
-      <a href="https://github.com/p0kks" target="_blank">GitHub</a>
-      <a href="https://discord.gg" target="_blank">Discord</a>
-      <a href="https://twitter.com/p0kks" target="_blank">Twitter</a>
-      <a href="http://t.me/p0kks" target="_blank">Telegram</a>
-
-    </div>
-    
-    <div class="about-content">
-      <!-- PLACEHOLDER: Replace with your bio -->
-      <p>
-        This is where your bio goes. Tell your story, share what drives you, 
-        and give visitors a sense of who you are beyond your work.
-      </p>
-      <p>
-        Add multiple paragraphs as needed. Talk about your background, interests, 
-        current projects, or anything else you'd like people to know about you.
-      </p>
-      <p>
-        Keep it authentic and personal while maintaining the clean, minimal 
-        aesthetic of the site.
-      </p>
-    </div>
+  <div class="social-links">
+    <a href="https://github.com/p0kks" target="_blank" aria-label="GitHub">
+      <svg viewBox="0 0 24 24" class="social-icon">
+        <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/>
+      </svg>
+    </a>
+    <a href="https://discord.gg" target="_blank" aria-label="Discord">
+      <svg viewBox="0 0 24 24" class="social-icon">
+        <path d="M20.317 4.37a19.791 19.791 0 00-4.885-1.515.074.074 0 00-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 00-5.487 0 12.64 12.64 0 00-.617-1.25.077.077 0 00-.079-.037A19.736 19.736 0 003.677 4.37a.07.07 0 00-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 00.031.057 19.9 19.9 0 005.993 3.03.078.078 0 00.084-.028c.462-.63.874-1.295 1.226-1.994.021-.041.001-.09-.041-.106a13.107 13.107 0 01-1.872-.892.077.077 0 01-.008-.128 10.2 10.2 0 00.372-.292.074.074 0 01.077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 01.078.01c.12.098.246.198.373.292a.077.077 0 01-.006.127 12.299 12.299 0 01-1.873.892.077.077 0 00-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 00.084.028 19.839 19.839 0 006.002-3.03.077.077 0 00.032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 00-.031-.03zM8.02 15.33c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.956-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.956 2.418-2.157 2.418zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.955-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.946 2.418-2.157 2.418z"/>
+      </svg>
+    </a>
+    <a href="https://twitter.com/p0kks" target="_blank" aria-label="Twitter">
+      <svg viewBox="0 0 24 24" class="social-icon">
+        <path d="M23.953 4.57a10 10 0 01-2.825.775 4.958 4.958 0 002.163-2.723c-.951.555-2.005.959-3.127 1.184a4.92 4.92 0 00-8.384 4.482C7.69 8.095 4.067 6.13 1.64 3.162a4.822 4.822 0 00-.666 2.475c0 1.71.87 3.213 2.188 4.096a4.904 4.904 0 01-2.228-.616v.06a4.923 4.923 0 003.946 4.827 4.996 4.996 0 01-2.212.085 4.936 4.936 0 004.604 3.417 9.867 9.867 0 01-6.102 2.105c-.39 0-.779-.023-1.17-.067a13.995 13.995 0 007.557 2.209c9.053 0 13.998-7.496 13.998-13.985 0-.21 0-.42-.015-.63A9.935 9.935 0 0024 4.59z"/>
+      </svg>
+    </a>
+    <a href="http://t.me/p0kks" target="_blank" aria-label="Telegram">
+      <svg viewBox="0 0 24 24" class="social-icon">
+        <path d="M11.944 0A12 12 0 000 12a12 12 0 0012 12 12 12 0 0012-12A12 12 0 0012 0a12 12 0 00-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 01.171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/>
+      </svg>
+    </a>
+  </div>
+  
+  <div class="about-content">
+    <p>
+      This is where your bio goes. Tell your story, share what drives you, 
+      and give visitors a sense of who you are beyond your work.
+    </p>
+    <p>
+      Add multiple paragraphs as needed. Talk about your background, interests, 
+      current projects, or anything else you'd like people to know about you.
+    </p>
+    <p>
+      Keep it authentic and personal while maintaining the clean, minimal 
+      aesthetic of the site.
+    </p>
   </div>
 </div>
 
