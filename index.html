@@ -231,7 +231,7 @@ p {
 
 .home-content {
   width: 100%;
-  max-width: 500px;
+  max-width: 760px;
   margin: 0 auto;
   text-align: center;
   position: relative;
@@ -427,15 +427,16 @@ p {
 .project-container {
   display: flex;
   flex-direction: column;
-  gap: 40px;
-  margin: 0 auto;
+  align-items: start;
+  gap: 10px;
+  margin: 0 auto; /* keeps the container centered */
   max-width: 600px;
-  padding-top: 0; /* Remove any top padding */
+  padding-top: 0;
 }
 
 .project-card {
   background: rgba(10, 10, 10, 0.2);
-  padding: 30px;
+  padding: 10px;
   transition: all 0.3s ease;
 }
 
@@ -444,17 +445,18 @@ p {
 }
 
 .project-title {
-  font-size: 16px;
+  font-size: 18px;
   color: #666;
   margin-bottom: 15px;
-  font-weight: normal;
-  letter-spacing: 1px;
+  font-weight: bold;
+  letter-spacing: 0px;
+  text-align: left;
 }
 
 .project-description {
-  font-size: 13px;
+  font-size: 14px;
   color: #4d4d4d;
-  margin-bottom: 25px;
+  margin-bottom: 15px;
   line-height: 1.6;
   font-family: 'Consolas', monospace;
 }
@@ -470,7 +472,7 @@ p {
   font-size: 12px;
   transition: all 0.3s ease;
   position: relative;
-  padding: 5px 0;
+  padding: 15px 0;
 }
 
 .project-link::after {
@@ -623,31 +625,31 @@ body {
     <div class="project-card">
       <div class="project-title">p0kks.github.io</div>
       <div class="project-description">
-        A minimalist corner on the internet.
+        A minimalist portfolio website.
         Built with pure HTML, CSS, and JS.
       </div>
       <div class="project-links">
         <a href="https://github.com/p0kks/p0kks.github.io" target="_blank" class="project-link">
-          view source
+          📂 view repo
         </a>
         <a href="https://p0kks.github.io/" target="_blank" class="project-link">
-          visit site
+          🌐 visit p0kks.github.io
         </a>
       </div>
     </div>
 
     <div class="project-card">
-      <div class="project-title">harmony</div>
+      <div class="project-title">Discord Bot 'Lotion'</div>
       <div class="project-description">
         Discord community enhancement.
-        Focus on minimal interaction.
+        A custom made Discord bot.
       </div>
       <div class="project-links">
         <a href="https://github.com/p0kks/Lotion-Bot" target="_blank" class="project-link">
-          view source
+          📂 view repo
         </a>
         <a href="https://discord.gg/CVG27QpcRZ" target="_blank" class="project-link">
-          join server
+          🗨️ visit 'Lotion' server
         </a>
       </div>
     </div>
@@ -658,27 +660,27 @@ body {
 <div id="audio" class="page">
   <div class="project-container">
     <div class="project-card">
-      <div class="project-title">ethereal</div>
+      <div class="project-title">Audio 01</div>
       <div class="project-description">
         Ambient soundscapes.
         Digital peace finding form.
       </div>
       <div class="project-links">
         <a href="#" target="_blank" class="project-link">
-          listen
+          🔉listen
         </a>
       </div>
     </div>
 
     <div class="project-card">
-      <div class="project-title">wave.01</div>
+      <div class="project-title">Audio 02</div>
       <div class="project-description">
         Electronic expressions.
         Minimal form, maximum depth.
       </div>
       <div class="project-links">
         <a href="#" target="_blank" class="project-link">
-          listen
+          🔉listen
         </a>
       </div>
     </div>
