@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>p0kks.me A personal portfolio website</title>
+<title>p0kks.me Personal Portfolio Website</title>
 <link rel="icon" href="assets/p0kks.favicon.png">
 
 <!-- Inter font -->
@@ -14,7 +14,7 @@
   --bg:#070707;
   --fg:#e9e9e9;
   --muted:#4d4d4d;
-  --panel:#0b0b0b;
+  --panel:#0f0f0f;
   --maxw:680px;
   --font:"Inter", sans-serif;
   --topbar-h:52px;
@@ -29,16 +29,25 @@ body{background:var(--bg);color:var(--muted);font:14px/1.5 var(--font);padding-b
 nav{display:flex;gap:16px}
 nav a{display:inline-flex;align-items:center;justify-content:center;width:20px;height:20px;border-bottom:3px solid transparent}
 nav svg{width:20px;height:20px;fill:var(--muted)}
-nav a:hover{border-bottom:3px solid var(--muted)}
-nav a.active{border-bottom:3px solid var(--fg)}
+nav a:hover{text-decoration:underline;text-decoration-thickness:3px;text-decoration-color:var(--muted);text-underline-offset:8px}
+nav a.active{text-decoration:underline;text-decoration-thickness:3px;text-decoration-color:var(--fg);text-underline-offset:8px}
 nav a.active svg{fill:var(--fg)}
 .banner img{width:100%;height:var(--banner-h);object-fit:cover;display:block}
+.filter-btn{color:var(--muted);background:transparent;border:none;padding:6px 12px;cursor:pointer;font-family:var(--font);font-size:13px}
+.filter-btn.active{color:var(--fg);text-decoration:underline;text-decoration-thickness:3px}
+a:hover{text-decoration:underline;text-decoration-thickness:3px;color:#ffffff}
+.site-title:hover{text-decoration:underline;text-decoration-thickness:3px;color:#ffffff}
+.filter-btn:hover{text-decoration:underline;text-decoration-thickness:3px;color:#ffffff}
+.filter-btn.active:hover{color:#ffffff}
 .container{width:100%;max-width:var(--maxw);padding:18px;margin:0 auto;margin-top:calc(var(--topbar-h) + var(--banner-h))}
 .page{display:none;margin-top:18px}
 .page.active{display:block}
-.project-container{display:flex;flex-direction:column;gap:12px;max-width:520px}
-.project-card{background:var(--panel);padding:12px;border:1px solid rgba(255,255,255,0.03)}
-.project-title{color:var(--fg);font-weight:700;margin-bottom:6px}
+.project-container{display:flex;flex-direction:column;gap:12px;max-width:520px;}
+.project-card{background:var(--panel);padding:12px;border:1px solid rgba(255,255,255,0.03);border-left:3px solid var(--muted)}
+.project-card[data-category="code"]{border-left-color:#0066cc}
+.project-card[data-category="audio"]{border-left-color:#cc0000}
+.project-card[data-category="Other"]{border-left-color:var(--muted)}
+.project-title{color:var(--fg);font-weight:700;margin-bottom:3px}
 .project-description{color:var(--muted);font-size:13px;line-height:1.4}
 footer{position:fixed;bottom:0;left:0;right:0;background:rgba(7,7,7,0.95);padding:8px 0;font-size:12px}
 .footer-inner{max-width:var(--maxw);margin:0 auto;display:flex;justify-content:space-between;align-items:center;padding:0 12px}
@@ -56,12 +65,6 @@ footer{position:fixed;bottom:0;left:0;right:0;background:rgba(7,7,7,0.95);paddin
         <a href="#projects" data-target="projects" aria-label="projects">
           <svg viewBox="0 0 24 24"><path d="M4 4h7v7H4zm9 0h7v7h-7zM4 13h7v7H4zm9 0h7v7h-7z"/></svg>
         </a>
-        <a href="#code" data-target="code" aria-label="code">
-          <svg viewBox="0 0 24 24"><path d="M9 18l-6-6 6-6m6 12l6-6-6-6"/></svg>
-        </a>
-        <a href="#audio" data-target="audio" aria-label="audio">
-          <svg viewBox="0 0 24 24"><path d="M9 18V6l12-2v12l-12 2zM3 6h2v12H3z"/></svg>
-        </a>
         <a href="#about" data-target="about" aria-label="about">
           <svg viewBox="0 0 24 24"><path d="M12 12a5 5 0 1 0-5-5 5 5 0 0 0 5 5zm0 2c-3.33 0-10 1.67-10 5v3h20v-3c0-3.33-6.67-5-10-5z"/></svg>
         </a>
@@ -76,34 +79,33 @@ footer{position:fixed;bottom:0;left:0;right:0;background:rgba(7,7,7,0.95);paddin
 <div class="container">
   <main>
     <section id="home" class="page active">
-      <h1 style="color:var(--fg);text-align:center">p0kks</h1>
       <p style="max-width:640px;margin:12px auto;color:var(--muted);text-align:left">
         A quiet, minimal place for audio and code.
       </p>
     </section>
 
     <section id="projects" class="page">
+      <div class="filter-buttons" style="display: flex; gap: 12px; margin-bottom: 18px;">
+        <button class="filter-btn active" data-filter="all">All</button>
+        <button class="filter-btn" data-filter="code">code</button>
+        <button class="filter-btn" data-filter="audio">audio</button>
+        <button class="filter-btn" data-filter="other">other</button>
+      </div>
       <div class="project-container">
-        <div class="project-card">
-          <div class="project-title">p0kks.github.io</div>
+        <div class="project-card" data-category="code">
+          <div class="project-title">p0kks.me</div>
           <div class="project-description">Minimal portfolio built with plain html css js</div>
         </div>
-      </div>
-    </section>
-
-    <section id="code" class="page">
-      <div class="project-container">
-        <div class="project-card">
+        <div class="project-card" data-category="code">
           <div class="project-title">Discord Bot</div>
           <div class="project-description">Community bot and utilities</div>
         </div>
-      </div>
-    </section>
-
-    <section id="audio" class="page">
-      <div class="project-container">
-        <div class="project-card">
+        <div class="project-card" data-category="audio">
           <div class="project-title">Ambient set</div>
+          <div class="project-description">Short ambient explorations</div>
+        </div>
+        <div class="project-card" data-category="other">
+          <div class="project-title">Settings</div>
           <div class="project-description">Short ambient explorations</div>
         </div>
       </div>
@@ -126,6 +128,9 @@ footer{position:fixed;bottom:0;left:0;right:0;background:rgba(7,7,7,0.95);paddin
 <script>
 'use strict';
 const navLinks=document.querySelectorAll('nav a, .site-title');
+const filterButtons=document.querySelectorAll('.filter-btn');
+const projectCards=document.querySelectorAll('.project-card');
+
 function showPage(id,link){
   document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
   navLinks.forEach(a=>a.classList.remove('active'));
@@ -134,12 +139,36 @@ function showPage(id,link){
   if(link && link.tagName==='A' && link.dataset.target){ link.classList.add('active'); }
   history.replaceState(null,'','#'+id);
 }
+
+function filterProjects(category){
+  projectCards.forEach(card=>{
+    if(category==='all' || card.dataset.category===category){
+      card.style.display='block';
+    }else{
+      card.style.display='none';
+    }
+  });
+  
+  filterButtons.forEach(btn=>{
+    btn.classList.toggle('active',btn.dataset.filter===category);
+  });
+}
+
 navLinks.forEach(a=>{
   a.addEventListener('click',e=>{
     e.preventDefault();
     showPage(a.dataset.target||'home',a);
   });
 });
+
+filterButtons.forEach(btn=>{
+  btn.addEventListener('click',()=>{
+    filterProjects(btn.dataset.filter);
+  });
+});
+
+// Initialize with all projects visible
+filterProjects('all');
 </script>
 </body>
 </html>
