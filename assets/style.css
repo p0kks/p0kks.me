@@ -56,9 +56,9 @@ a:hover{text-decoration:underline;text-decoration-thickness:3px;color:#ffffff}
 .filter-btn:hover{text-decoration:underline;text-decoration-thickness:3px;color:#ffffff}
 .filter-btn.active:hover{color:#ffffff}
 .container{width:100%;max-width:var(--maxw);padding:18px;margin:0 auto;margin-top:calc(var(--topbar-h) + var(--banner-h))}
-.page{display:none;margin-top:18px}
+.page{display:none;margin-top:5px}
 .page.active{display:block}
-.project-container{display:flex;flex-direction:column;gap:12px;max-width:600px;}
+.project-container{display:flex;flex-direction:column;gap:12px;max-width:680px;}
 .project-card{background:var(--panel);padding:12px;border:1px solid rgba(255,255,255,0.03);border-left:3px solid var(--muted)}
 .project-card[data-category="code"]{border-left-color:#0066cc}
 .project-card[data-category="audio"]{border-left-color:#cc0000}
