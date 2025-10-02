@@ -118,6 +118,14 @@ nav a {
   border-bottom: none;
 }
 
+.dropdown-about summary:hover h3,
+.dropdown-bookmarks summary:hover h3,
+.dropdown-hardware summary:hover h3,
+.dropdown-gallery summary:hover h3,
+.dropdown-contact summary:hover h3 {
+  color: var(--secondary-text-color);
+}
+
 .dropdown-about summary::after,
 .dropdown-bookmarks summary::after,
 .dropdown-hardware summary::after,
@@ -171,11 +179,19 @@ nav a {
   color: #c9c9c9;
 }
 
+.dropdown-project summary:hover .project-title {
+  color: var(--secondary-text-color);
+}
+
 .dropdown-project .project-subtitle {
   order: 1; /* Subtitle comes before title */
   font-size: 0.75em;
   color: var(--primary-text-color);
   margin-bottom: 5px;
+}
+
+.dropdown-project summary:hover .project-subtitle {
+  color: var(--secondary-text-color);
 }
 
 .dropdown-project summary {
@@ -289,14 +305,7 @@ h3 {
   align-items: center;
 }
   
-.project-card {
-  background-color: #111111;
-  padding: 15px 15px 15px 15px;
-  margin-left: -10px;
-  margin-right: -10px;
-  margin-bottom: 15px;
-  width: 100%;
-}
+
 
 .project-header {
   display: flex;
@@ -392,4 +401,28 @@ footer {
     display: flex;
     justify-content: space-between;
     align-items: center;
+}
+
+.toggle-buttons {
+  color: var(--primary-text-color);
+  text-decoration-line: none;
+  display: flex;
+  justify-content: center;
+  background: none;
+  gap: 10px;
+}
+
+.toggle-btn {
+  color: var(--primary-text-color);
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 0.9em;
+  font-family: var(--font-family);
+  padding: 20px 0;
+  align-items: center;
+}
+
+.toggle-btn.interactive-element::after {
+  content: none;
 }

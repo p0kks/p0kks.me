@@ -42,7 +42,7 @@ filterButtons.forEach(button => {
 
         projectCards.forEach(card => {
             if (filter === 'all' || card.dataset.category === filter) {
-                card.style.display = 'block';
+                card.style.display = '';
             } else {
                 card.style.display = 'none';
             }
@@ -86,3 +86,20 @@ function showSlides(n) {
 //     console.log('Dropdown closed');
 //   }
 // });
+
+// Toggle all dropdowns
+const toggleAllBtn = document.getElementById('toggle-all');
+if (toggleAllBtn) {
+    const allDropdowns = document.querySelectorAll('details[class^="dropdown-"]');
+    let allOpen = false;
+
+    toggleAllBtn.addEventListener('click', () => {
+        allOpen = !allOpen;
+        
+        allDropdowns.forEach(dropdown => {
+            dropdown.open = allOpen;
+        });
+        
+        toggleAllBtn.textContent = allOpen ? 'close all' : 'toggle all';
+    });
+}
