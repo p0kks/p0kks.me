@@ -3,170 +3,224 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="tl;dr: p0kks' portfolio website. A showcase of code and music.">
 <title>p0kks.me Portfolio Website Of Code And Music</title>
 <link rel="icon" href="assets/favicon.png">
 
-<!-- Inter font -->
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
-<!-- Glitch font -->
-<link href="https://fonts.googleapis.com/css?family=Press+Start+2P" rel="stylesheet">
 
-<link rel="stylesheet" href="assets/style.css">
+
+<link rel="stylesheet" href="style.css">
 </head>
 <body>
 <header class="header">
-  <div class="header-inner">
-    <div class="topbar">
-      <a href="#home" data-target="home" class="site-title">p0kks.me</a>
-      <nav>
-        <a href="#home" data-target="home" class="active" aria-label="home" title="Home">
-          <svg viewBox="0 0 24 24"><path d="M12 5.69l5 4.5V18h-2v-6H9v6H7v-7.81l5-4.5M12 3L2 12h3v8h14v-8h3L12 3z"/></svg>
-        </a>
-        <a href="#projects" data-target="projects" aria-label="projects" title="Projects">
-          <svg viewBox="0 0 24 24"><path d="M12 2L2 7L12 12L22 7L12 2M12 12L2 17L12 22L22 17L12 12M2 7L2 17L12 22V12V2L2 7Z"/></svg>
-        </a>
-        <a href="#about" data-target="about" aria-label="about" title="About">
-          <svg viewBox="0 0 24 24"><path d="M12,19.2C9.5,19.2 7.29,17.92 6,16C6.03,14 10,12.9 12,12.9C14,12.9 17.97,14 18,16C16.71,17.92 14.5,19.2 12,19.2M12,5A3,3 0 0,1 15,8A3,3 0 0,1 12,11A3,3 0 0,1 9,8A3,3 0 0,1 12,5M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12C22,6.47 17.5,2 12,2Z"/></svg>
-        </a>
-      </nav>
-    </div>
-    <div class="banner">
-      <img src="assets/banner.png" alt="banner image" loading="lazy" width="680" height="128">
-    </div>
-  </div>
+<div class="header-inner">
+<div class="topbar">
+  <a href="#home" data-target="home" class="site-title">
+    <img src="assets/p0kks logo/p0kks.logo 256px.png" alt="p0kks logo" class="site-logo">
+  </a>
+  <nav>
+    <a href="#home" data-target="home" class="active interactive-element">index</a>
+    <a href="#projects" data-target="projects" class="interactive-element">projects</a>
+  </nav>
+</div>
+
 </header>
 
 <div class="container">
   <main>
     <section id="home" class="page active">
-        <h3>
-          <span class="fade">i like computers</span>
-          <br>
-          <span>i also like music</span>
-          <br>
-          <span class="fade">i made a website</span>
-          <br>
-          <span>and i don't know what i'm doing</span>
-        </h3>
-        <hr class="fade-hr">
-        <p>Resources</p>
-        <a href="https://www.reaper.fm/" class="link" target="_blank" rel="noopener noreferrer">Reaper (digital audio workstation)</a>
-        <br>
-        <a href="https://www.ultimate-guitar.com/" class="link" target="_blank" rel="noopener noreferrer">Guitar Tabs (ultimate-guitar.com)</a>
-        <br>
-        <a href="https://www.majorgeeks.com/" class="link" target="_blank" rel="noopener noreferrer">Majorgeeks (utility)</a>
-        <br>
-        <a href="chrome://flags" class="link">chrome://flags (browser settings)</a>
-        <br>
-        <a href="https://kleki.com/" class="link" target="_blank" rel="noopener noreferrer">Kleki (image editor)</a>
+        <details class="dropdown-about">
+            <summary class="interactive-element"><h3>About</h3></summary>
+            <div class="dropdown-content">
+                <p>Lorem ipsum dolor sit amet.</p>
+            </div>
+        </details>
+        <details class="dropdown-bookmarks">
+            <summary class="interactive-element"><h3>Bookmarks</h3></summary>
+            <div class="dropdown-content bookmarks-grid">
+                <div>
+                  <p><a href="#" class="interactive-element"><span class="link-icon">🔗</span>placeholder 3</a></p>
+                  <p><a href="#" class="interactive-element"><span class="link-icon">🔗</span>placeholder 3</a></p>
+                  <p><a href="#" class="interactive-element"><span class="link-icon">🔗</span>placeholder 3</a></p>
+                  <p><a href="#" class="interactive-element"><span class="link-icon">🔗</span>placeholder 3</a></p>
+                  <p><a href="#" class="interactive-element"><span class="link-icon">🔗</span>placeholder 3</a></p>
+                  <p><a href="#" class="interactive-element"><span class="link-icon">🔗</span>placeholder 3</a></p>
+                </div>
+                <div>
+                  <p><a href="#" class="interactive-element"><span class="link-icon">🔗</span>placeholder 3</a></p>
+                  <p><a href="#" class="interactive-element"><span class="link-icon">🔗</span>placeholder 3</a></p>
+                  <p><a href="#" class="interactive-element"><span class="link-icon">🔗</span>placeholder 3</a></p>
+                  <p><a href="#" class="interactive-element"><span class="link-icon">🔗</span>placeholder 3</a></p>
+                  <p><a href="#" class="interactive-element"><span class="link-icon">🔗</span>placeholder 3</a></p>
+                  <p><a href="#" class="interactive-element"><span class="link-icon">🔗</span>placeholder 3</a></p>
+                </div>
+            </div>
+        </details>
+        <details class="dropdown-hardware">
+            <summary class="interactive-element"><h3>Hardware</h3></summary>
+            <div class="dropdown-content">
+                <p><strong>Current Setup:</strong></p>
+                <ul>
+                    <li>Custom PC - Ryzen 7, RTX 3070</li>
+                    <li>Mechanical Keyboard - Custom build</li>
+                    <li>Audio Interface - Focusrite Scarlett</li>
+                    <li>Monitors - Dual 27" IPS displays</li>
+                </ul>
+                <p><strong>Projects:</strong></p>
+                <ul>
+                    <li>Custom keyboard PCB design</li>
+                    <li>Raspberry Pi home server</li>
+                    <li>3D printed accessories</li>
+                </ul>
+            </div>
+        </details>
+        <details class="dropdown-gallery">
+            <summary class="interactive-element"><h3>Gallery</h3></summary>
+            <div class="dropdown-content">
+              <div class="slideshow-container">
+                <div class="slide">
+                  <img src="assets/gallery/slide1.png">
+                  <div class="slide-nav">
+                    <span class="dot" onclick="currentSlide(1)"></span>
+                    <span class="dot" onclick="currentSlide(2)"></span>
+                    <span class="dot" onclick="currentSlide(3)"></span>
+                    <span class="dot" onclick="currentSlide(4)"></span>
+                    <span class="dot" onclick="currentSlide(5)"></span>
+                  </div>
+                </div>
+                <div class="slide">
+                  <img src="assets/gallery/slide2.png">
+                  <div class="slide-nav">
+                    <span class="dot" onclick="currentSlide(1)"></span>
+                    <span class="dot" onclick="currentSlide(2)"></span>
+                    <span class="dot" onclick="currentSlide(3)"></span>
+                    <span class="dot" onclick="currentSlide(4)"></span>
+                    <span class="dot" onclick="currentSlide(5)"></span>
+                  </div>
+                </div>
+                <div class="slide">
+                  <img src="assets/gallery/slide3.png">
+                  <div class="slide-nav">
+                    <span class="dot" onclick="currentSlide(1)"></span>
+                    <span class="dot" onclick="currentSlide(2)"></span>
+                    <span class="dot" onclick="currentSlide(3)"></span>
+                    <span class="dot" onclick="currentSlide(4)"></span>
+                    <span class="dot" onclick="currentSlide(5)"></span>
+                  </div>
+                </div>
+                <div class="slide">
+                  <img src="assets/gallery/slide4.png">
+                  <div class="slide-nav">
+                    <span class="dot" onclick="currentSlide(1)"></span>
+                    <span class="dot" onclick="currentSlide(2)"></span>
+                    <span class="dot" onclick="currentSlide(3)"></span>
+                    <span class="dot" onclick="currentSlide(4)"></span>
+                    <span class="dot" onclick="currentSlide(5)"></span>
+                  </div>
+                </div>
+                <div class="slide">
+                  <img src="assets/gallery/slide5.png">
+                  <div class="slide-nav">
+                    <span class="dot" onclick="currentSlide(1)"></span>
+                    <span class="dot" onclick="currentSlide(2)"></span>
+                    <span class="dot" onclick="currentSlide(3)"></span>
+                    <span class="dot" onclick="currentSlide(4)"></span>
+                    <span class="dot" onclick="currentSlide(5)"></span>
+                  </div>
+                </div>
+              </div>
+            </div>
+        </details>
+        <details class="dropdown-contact">
+            <summary class="interactive-element"><h3>Contact</h3></summary>
+            <div class="dropdown-content">
+                <p>Email: placeholder@example.com</p>
+                <p>Discord: p0kks#0000</p>
+                <p>GitHub: <a href="https://github.com/p0kks" class="interactive-element">p0kks</a></p>
+            </div>
+        </details>
     </section>
 
     <section id="projects" class="page">
       <div class="filter-buttons">
-        <button class="filter-btn active" data-filter="all">All</button>
-        <button class="filter-btn" data-filter="code">code</button>
-        <button class="filter-btn" data-filter="audio">audio</button>
-        <button class="filter-btn" data-filter="other">other</button>
+        <button class="filter-btn active interactive-element" data-filter="all">all</button>
+        <button class="filter-btn interactive-element" data-filter="code">code</button>
+        <button class="filter-btn interactive-element" data-filter="audio">audio</button>
+        <button class="filter-btn interactive-element" data-filter="other">other</button>
       </div>
       <div class="project-container">
-        <div class="project-card" data-category="code">
-          <div class="project-header">
-            <div class="project-title">p0kks.me</div>
-            <div class="project-date">2023-10-26</div>
-          </div>
-          <div class="project-description">This portfolio website. Built with plain HTML, CSS and JavaScript.</div>
-          <div class="project-links">
-            <a href="https://github.com/p0kks/p0kks.github.io" class="project-link" title="source" target="_blank" rel="noopener noreferrer">📁 source</a>
-            <a href="#" class="project-link" title="visit">👣 visit site</a>
-          </div>
-        </div>
-        <div class="project-card" data-category="code">
-          <div class="project-header">
-            <div class="project-title">Discord Bot</div>
-            <div class="project-date">2022-01-01</div>
-          </div>
-          <div class="project-description">A custom Discord bot for a community server, built with Node.js. It provides various utility commands, moderation tools, and fun features.</div>
-          <div class="project-links">
-            <a href="#" class="project-link" title="source">📁 source</a>
-            <a href="#" class="project-link" title="visit">👣 visit server</a>
-          </div>
-        </div>
-        <div class="project-card" data-category="audio">
-          <div class="project-header">
-            <div class="project-title">Ambient Music</div>
-            <div class="project-date">2023-05-20</div>
-          </div>
-          <div class="project-description">A collection of short, experimental ambient tracks. Exploring textures and soundscapes.</div>
-          <div class="project-links">
-            <a href="#" class="project-link" title="source">📁 source</a>
-            <a href="#" class="project-link" title="listen">🔊 listen</a>
-          </div>
-        </div>
-        <div class="project-card" data-category="other">
-          <div class="project-header">
-            <div class="project-title">Reaper Configuration</div>
-            <div class="project-date">2023-01-15</div>
-          </div>
-          <div class="project-description">My personal configuration for the Reaper DAW, including themes, scripts, and settings.</div>
-          <div class="project-links">
-            <a href="#" class="project-link" title="source">📁 source</a>
-            <a href="#" class="project-link" title="download">💾 download</a>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section id="about" class="page">
-        <div class="profile-container">
-            <img src="assets\pfp.p0kks.png" alt="Profile Picture" class="profile-picture">
-            <div class="meta-data">
-                <h3>p0kks</h3>
-                <p class="meta-subtitle">Exploring code and sound</p>
-                <p class="meta-details">1993 · Norway · INTP · Type 8</p>
+        <details class="dropdown-project" data-category="code">
+          <summary class="interactive-element">
+            <div class="project-header">
+              <div class="project-title">p0kks.me</div>
+              <div class="project-subtitle">2025</div>
             </div>
-        </div>
-        <br>
-        <hr class="fade-hr">
-        <h3>Bio</h3>
-        <p>Coding demands my logic, playing music demands my intuition. Embracing disorder and imperfection that music brings fuels my curiosity, growth, and the pursuit of maybe finding true healing. Mostly self-taught, I completed two degrees, but that changed nothing. Understanding my past changed everything.</p>
-        <br>
-        <hr class="fade-hr">
-        <h3>Tech</h3>
-        <p>
-        I enjoy working with a variety of technologies, always eager to learn and experiment. My main interests are in web development, audio programming, and creative coding. I'm proficient in JavaScript, HTML, and CSS, and I'm currently exploring Rust and GLSL.
-        </p>
-        <br>
-        <hr class="fade-hr">
-        <h3>Gallery</h3>
-        <div class="slideshow-container">
-          <div class="slide">
-            <img src="assets/gallery/slide1.png">
+          </summary>
+          <div class="dropdown-content">
+            <div class="project-description">This portfolio website. Built with plain HTML, CSS and JavaScript.</div>
+            <div class="project-links">
+              <a href="https://github.com/p0kks/p0kks.github.io" class="project-link interactive-element" title="source" target="_blank" rel="noopener noreferrer">source</a>
+              <a href="#" class="project-link interactive-element" title="visit">visit</a>
+            </div>
           </div>
-          <div class="slide">
-            <img src="assets/gallery/slide2.png">
+        </details>
+        <details class="dropdown-project" data-category="code">
+          <summary class="interactive-element">
+            <div class="project-header">
+              <div class="project-title">Discord Bot</div>
+              <div class="project-subtitle">2025</div>
+            </div>
+          </summary>
+          <div class="dropdown-content">
+            <div class="project-description">A custom Discord bot for a community server, built with Node.js. It provides various utility commands, moderation tools, and fun features.</div>
+            <div class="project-links">
+              <a href="#" class="project-link interactive-element" title="source">source</a>
+              <a href="#" class="project-link interactive-element" title="visit">visit</a>
+            </div>
           </div>
-          <div class="slide">
-            <img src="assets/gallery/slide3.png">
+        </details>
+        <details class="dropdown-project" data-category="audio">
+          <summary class="interactive-element">
+            <div class="project-header">
+              <div class="project-title">Ambient Music</div>
+              <div class="project-subtitle">2025</div>
+            </div>
+          </summary>
+          <div class="dropdown-content">
+            <div class="project-description">A collection of short, experimental ambient tracks. Exploring textures and soundscapes.</div>
+            <div class="project-links">
+              <a href="#" class="project-link interactive-element" title="source">source</a>
+              <a href="#" class="project-link interactive-element" title="listen">listen</a>
+            </div>
           </div>
-          <div class="slide">
-            <img src="assets/gallery/slide4.png">
+        </details>
+        <details class="dropdown-project" data-category="other">
+          <summary class="interactive-element">
+            <div class="project-header">
+              <div class="project-title">Reaper Configuration</div>
+              <div class="project-subtitle">2025</div>
+            </div>
+          </summary>
+          <div class="dropdown-content">
+            <div class="project-description">My personal configuration for the Reaper DAW, including themes, scripts, and settings.</div>
+            <div class="project-links">
+              <a href="#" class="project-link interactive-element" title="source">source</a>
+              <a href="#" class="project-link interactive-element" title="download">download</a>
+            </div>
           </div>
-          <div class="slide">
-            <img src="assets/gallery/slide5.png">
-          </div>
-          <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
-          <a class="next" onclick="plusSlides(1)">&#10095;</a>
-        </div>
+        </details>
+      </div>
     </section>
   </main>
 </div>
 
 <footer>
   <div class="footer-inner">
-    <div>p0kks © 2023</div>
+    <div>p0kks</div>
+    <div>© 2023</div>
   </div>
 </footer>
 
-<script src="assets/script.js"></script>
+<script src="script.js"></script>
 </body>
 </html>
