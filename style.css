@@ -240,7 +240,24 @@ nav a {
     display: grid;
     left: 0%;
     grid-template-columns: 1fr 1fr;
-    gap: 0; /* ensures no spacing between grid items */
+    gap: 10px; /* adds spacing between grid items */
+}
+
+.bookmark-desc {
+    font-size: 0.75em;
+    font-family: var(--font-family);
+    color: var(--primary-text-color);
+    opacity: 0.8;
+    display: block;
+    margin-top: 2px;
+}
+
+.contact-links {
+    font-family: var(--font-interactive);
+}
+
+.contact-link {
+    margin-bottom: 8px;
 }
 
 .bookmarks-grid p {
