@@ -5,21 +5,22 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="description" content="tl;dr: p0kks' portfolio website. A showcase of code and music.">
 <title>p0kks.me Portfolio Website Of Code And Music</title>
-<link rel="icon" href="assets/favicon.png">
+<link rel="icon" href="assets/images/favicon.png">
 
 
 
-<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="src/css/style.css">
 </head>
 <body>
 <header class="header">
 <div class="header-inner">
 <div class="topbar">
   <a href="#home" data-target="home" class="site-title">
-    <img src="assets/p0kks logo/p0kks.logo 256px.png" alt="p0kks logo" class="site-logo" loading="lazy">
+    <img src="assets/logos/p0kks.logo 256px.png" alt="p0kks logo" class="site-logo" loading="lazy">
   </a>
   <nav>
     <a href="#home" data-target="home" class="active interactive-element">index</a>
+    <a href="#notes" data-target="notes" class="interactive-element">notes</a>
     <a href="#projects" data-target="projects" class="interactive-element">projects</a>
   </nav>
 </div>
@@ -58,90 +59,9 @@
                 </div>
             </div>
         </details>
-        <details class="dropdown-hardware">
-            <summary class="interactive-element"><h3>Hardware</h3></summary>
-            <div class="dropdown-content">
-                <p><strong>Current Setup:</strong></p>
-                <ul>
-                    <li>Custom PC - Ryzen 7, RTX 3070</li>
-                    <li>Mechanical Keyboard - Custom build</li>
-                    <li>Audio Interface - Focusrite Scarlett</li>
-                    <li>Monitors - Dual 27" IPS displays</li>
-                </ul>
-                <p><strong>Projects:</strong></p>
-                <ul>
-                    <li>Custom PCB design</li>
-                    <li>Raspberry Pi home server</li>
-                    <li>3D printed accessories</li>
-                </ul>
-            </div>
-        </details>
-        <details class="dropdown-gallery">
-            <summary class="interactive-element"><h3>Gallery</h3></summary>
-            <div class="dropdown-content">
-              <div class="slideshow-container">
-                <div class="slide">
-                  <img src="assets/gallery/slide1.png" loading="lazy">
-                  <div class="slide-nav">
-                    <span class="dot" onclick="currentSlide(1)"></span>
-                    <span class="dot" onclick="currentSlide(2)"></span>
-                    <span class="dot" onclick="currentSlide(3)"></span>
-                    <span class="dot" onclick="currentSlide(4)"></span>
-                    <span class="dot" onclick="currentSlide(5)"></span>
-                  </div>
-                </div>
-                <div class="slide">
-                  <img src="assets/gallery/slide2.png" loading="lazy">
-                  <div class="slide-nav">
-                    <span class="dot" onclick="currentSlide(1)"></span>
-                    <span class="dot" onclick="currentSlide(2)"></span>
-                    <span class="dot" onclick="currentSlide(3)"></span>
-                    <span class="dot" onclick="currentSlide(4)"></span>
-                    <span class="dot" onclick="currentSlide(5)"></span>
-                  </div>
-                </div>
-                <div class="slide">
-                  <img src="assets/gallery/slide3.png" loading="lazy">
-                  <div class="slide-nav">
-                    <span class="dot" onclick="currentSlide(1)"></span>
-                    <span class="dot" onclick="currentSlide(2)"></span>
-                    <span class="dot" onclick="currentSlide(3)"></span>
-                    <span class="dot" onclick="currentSlide(4)"></span>
-                    <span class="dot" onclick="currentSlide(5)"></span>
-                  </div>
-                </div>
-                <div class="slide">
-                  <img src="assets/gallery/slide4.png" loading="lazy">
-                  <div class="slide-nav">
-                    <span class="dot" onclick="currentSlide(1)"></span>
-                    <span class="dot" onclick="currentSlide(2)"></span>
-                    <span class="dot" onclick="currentSlide(3)"></span>
-                    <span class="dot" onclick="currentSlide(4)"></span>
-                    <span class="dot" onclick="currentSlide(5)"></span>
-                  </div>
-                </div>
-                <div class="slide">
-                  <img src="assets/gallery/slide5.png" loading="lazy">
-                  <div class="slide-nav">
-                    <span class="dot" onclick="currentSlide(1)"></span>
-                    <span class="dot" onclick="currentSlide(2)"></span>
-                    <span class="dot" onclick="currentSlide(3)"></span>
-                    <span class="dot" onclick="currentSlide(4)"></span>
-                    <span class="dot" onclick="currentSlide(5)"></span>
-                  </div>
-                </div>
-              </div>
-            </div>
-        </details>
-        <details class="dropdown-contact">
-            <summary class="interactive-element"><h3>Contact</h3></summary>
-            <div class="dropdown-content contact-links">
-                <p class="contact-link"><a href="https://x.com/p0kks" class="interactive-element"><span class="link-icon">🔗</span> Twitter</a></p>
-                <p class="contact-link"><a href="https://t.me/p0kks" class="interactive-element"><span class="link-icon">🔗</span> Telegram</a></p>
-                <p class="contact-link"><a href="https://www.discord.gg/CVG27QpcRZ" class="interactive-element"><span class="link-icon">🔗</span> Discord</a></p>
-                <p class="contact-link"><a href="https://github.com/p0kks" class="interactive-element"><span class="link-icon">🔗</span> GitHub</a></p>
-            </div>
-        </details>
+
+
+
     </section>
 
     <section id="projects" class="page">
@@ -214,16 +134,32 @@
         </details>
       </div>
     </section>
+
+    <section id="notes" class="page">
+      <div class="notes-header">
+        <h2>Notes</h2>
+        <p class="notes-subtitle">Weekly thoughts and updates</p>
+      </div>
+      <div class="notes-container" id="notes-content">
+        <!-- Notes will be loaded dynamically -->
+      </div>
+    </section>
   </main>
 </div>
 
 <footer>
   <div class="footer-inner">
     <div>p0kks</div>
+    <div class="footer-links">
+      <a href="https://x.com/p0kks" class="interactive-element" target="_blank" rel="noopener noreferrer">Twitter</a>
+      <a href="https://t.me/p0kks" class="interactive-element" target="_blank" rel="noopener noreferrer">Telegram</a>
+      <a href="https://www.discord.gg/CVG27QpcRZ" class="interactive-element" target="_blank" rel="noopener noreferrer">Discord</a>
+      <a href="https://github.com/p0kks" class="interactive-element" target="_blank" rel="noopener noreferrer">GitHub</a>
+    </div>
     <div>© <span id="current-year">2025</span></div>
   </div>
 </footer>
 
-<script src="script.js"></script>
+<script src="src/js/script.js"></script>
 </body>
 </html>
