@@ -1,33 +1,39 @@
 /*General styles*/
 :root {
-  --background-color: #0e0e0e;
-  --primary-text-color: #979797;
-  --secondary-text-color: #ffffff;
-  --accent-color: #3f3f3f;
-  --container-background: #161616;
+  --background-color: #0d1117;
+  --primary-text-color: #b4b4b4;
+  --secondary-text-color: #dddddd;
+  --accent-color: #bbbbbb;
+  --container-background: rgba(37, 42, 63, 0.205);
   --header-background: none;
   --link-color: var(--primary-text-color);
   --link-hover-color: var(--accent-color);
-  --border-color: #414141;
+  --border-color: #3b3b3b7e;
   --font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans', Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji';
   --font-mono: 'SFMono-Regular', 'Consolas', 'Liberation Mono', 'Menlo', monospace;
   --font-interactive: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
 
+  /* Shared spacing variables */
+  --spacing-xs: 5px;
+  --spacing-sm: 10px;
+  --spacing-md: 15px;
+  --spacing-lg: 20px;
+  --spacing-xl: 30px;
+  --spacing-xxl: 40px;
+  
+  /* Container spacing */
+  --container-padding-horizontal: 20px;
+  --container-padding-vertical: var(--spacing-md);
 }
 
 body {
   max-width: 680px;
-  background: radial-gradient(ellipse at 50% 100%, var(--background-color) 0%, #1e1e1e 100%) fixed;
-  background-size: cover;
+  height: 20px;
+  background: var(--background-color);
   color: var(--primary-text-color);
   font-family: var(--font-family);
-  padding: 10px;
-  overflow-x: hidden;
-  scrollbar-width: none; /* Firefox */
-  -ms-overflow-style: none;  /* IE and Edge */
+  padding: 0;
   margin: 0 auto;
-  padding-bottom: 60px;
-
 }
 
 body::-webkit-scrollbar {
@@ -36,7 +42,7 @@ body::-webkit-scrollbar {
 
 .container {
   max-width: 680px;
-  padding: 15px 10px;
+  padding: var(--container-padding-vertical) var(--container-padding-horizontal);
   margin: 0 auto;
   background-color: var(--container-background);
 }
@@ -63,7 +69,7 @@ body::-webkit-scrollbar {
   justify-content: space-between;
   align-items: center;
   width: 100%;
-  padding: 10px;
+  padding: 10px 10px 10px 10px;
   color: var(--primary-text-color);
 }
 
@@ -82,7 +88,7 @@ nav a {
 .dropdown-gallery,
 .dropdown-project,
 .dropdown-contact {
-  padding: 15px 20px;
+  padding: 0px;
   margin-bottom: 10px;
 }
 
@@ -94,9 +100,12 @@ nav a {
 .dropdown-contact summary {
   cursor: pointer;
   list-style: none;
+  padding: 15px 20px;
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   justify-content: space-between;
+  border-bottom: 1px solid var(--border-color);
+  flex-direction: column;
 }
 
 .dropdown-about summary::-webkit-details-marker,
@@ -108,16 +117,6 @@ nav a {
   display: none;
 }
 
-.dropdown-about summary h3,
-.dropdown-bookmarks summary h3,
-.dropdown-hardware summary h3,
-.dropdown-gallery summary h3,
-.dropdown-project summary h3,
-.dropdown-contact summary h3 {
-  margin: 0;
-  display: inline;
-  border-bottom: none;
-}
 
 .dropdown-about summary:hover h3,
 .dropdown-bookmarks summary:hover h3,
@@ -133,12 +132,8 @@ nav a {
 .dropdown-gallery summary::after,
 .dropdown-project summary::after,
 .dropdown-contact summary::after {
-  content: '+';
-  display: inline-block;
-  visibility: visible;
-  font-family: var(--font-family);
-  font-size: x-large;
-  font-weight: bold;
+  content: '';
+  display: none;
 }
 
 .dropdown-about[open] summary::after,
@@ -147,25 +142,17 @@ nav a {
 .dropdown-gallery[open] summary::after,
 .dropdown-project[open] summary::after,
 .dropdown-contact[open] summary::after {
-  content: '-';
-  font-size: x-large;
-  font-weight: bold;
-  font-family: var(--font-family);
+  content: '';
+  display: none;
 }
 
-.dropdown-about .dropdown-content,
-.dropdown-bookmarks .dropdown-content,
-.dropdown-hardware .dropdown-content,
-.dropdown-gallery .dropdown-content,
-.dropdown-project .dropdown-content,
-.dropdown-contact .dropdown-content {
-  padding-top: 10px;
-  padding-bottom: 10px;
-  border-top: 1px solid var(--border-color);
-  margin-top: 0px;
+
+
+.dropdown-project .dropdown-content {
+  padding: 0 20px 15px 20px;
 }
 
-/* Project-specific styling */
+/* Project-specific styling - now identical to notes */
 .dropdown-project .project-header {
   display: flex;
   flex-direction: column;
@@ -177,7 +164,10 @@ nav a {
   order: 2; /* Title comes after subtitle */
   font-size: 1.2em;
   font-weight: bold;
-  color: #c9c9c9;
+  color: var(--primary-text-color);
+  display: block;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji";
+  unicode-bidi: isolate;
 }
 
 .dropdown-project summary:hover .project-title {
@@ -185,30 +175,43 @@ nav a {
 }
 
 .dropdown-project .project-subtitle {
-  order: 1; /* Subtitle comes before title */
+  order: 1; /* Year comes before title */
   font-size: 0.75em;
   color: var(--primary-text-color);
-  margin-bottom: 5px;
+  opacity: 0.75;
+  margin-bottom: 3px;
+  display: block;
 }
 
 .dropdown-project summary:hover .project-subtitle {
   color: var(--secondary-text-color);
+  opacity: 1;
 }
 
 .dropdown-project summary {
+  cursor: pointer;
+  list-style: none;
+  padding: 15px 20px;
   display: flex;
-  justify-content: space-between;
   align-items: flex-start;
-  width: 100%;
+  justify-content: space-between;
+  border-bottom: 1px solid var(--border-color);
+  flex-direction: column;
 }
 
-.dropdown-project summary .project-header {
-  flex: 1;
+.dropdown-project summary::-webkit-details-marker {
+  display: none;
 }
 
-.dropdown-project summary::after {
-  align-self: flex-start;
-  margin-top: 0.5em;
+.dropdown-project summary h3 {
+  margin: 0;
+  display: inline;
+  border-bottom: none;
+  color: var(--primary-text-color);
+}
+
+.dropdown-project summary:hover h3 {
+  color: var(--secondary-text-color);
 }
 
 .dropdown-gallery .dropdown-content {
@@ -297,11 +300,13 @@ h3 {
   display: flex;
   justify-content: center;
   background: none;
-  gap: 10px;
+  margin-bottom: var(--spacing-lg);
+  gap: var(--spacing-md);
 }
 
 .project-container {
-  display: block;
+  margin-top: var(--spacing-md);
+  margin-bottom: var(--spacing-xl);
 }
 
 .filter-btn.interactive-element::after {
@@ -319,7 +324,6 @@ h3 {
   cursor: pointer;
   font-size: 0.9em;
   font-family: var(--font-family);
-  padding: 20px 0;
   align-items: center;
 }
   
@@ -406,8 +410,8 @@ footer {
   right: 0;
   max-width: 680px;
   margin: 0 auto;
-  padding-top: 10px;
-  padding-bottom: 30px;
+  padding-top: 3px;
+  padding-bottom: 40px;
   color: var(--primary-text-color);
   font-family: var(--font-interactive);
   font-size: 0.9em;
@@ -417,60 +421,67 @@ footer {
 
 .footer-inner {
     display: flex;
+    flex-direction: row;
     justify-content: space-between;
-    align-items: center;
+    align-items: flex-start;
 }
 
-.toggle-buttons {
-  color: var(--primary-text-color);
-  text-decoration-line: none;
-  display: flex;
-  justify-content: center;
-  background: none;
-  gap: 10px;
+.footer-links {
+    display: flex;
+    flex-direction: column;
+    text-align: left;
 }
 
-.toggle-btn {
+.footer-copyright {
+    margin: 0;
+}
+
+#welcome {
+  padding: 20px;
+}
+
+.welcome-header {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.welcome-header h2 {
+  color: var(--secondary-text-color);
+  margin-bottom: 0.5rem;
+  border-bottom: none;
+}
+
+.welcome-subtitle {
   color: var(--primary-text-color);
-  background: none;
-  border: none;
-  cursor: pointer;
+  opacity: 0.8;
   font-size: 0.9em;
-  font-family: var(--font-family);
-  padding: 20px 0;
-  align-items: center;
+  margin: 0;
 }
 
 .toggle-btn.interactive-element::after {
   content: none;
 }
 
-/* Notes section */
-#notes {
-  padding: 20px;
-}
-
-.notes-header {
+.page-header {
   text-align: center;
   margin-bottom: 2rem;
 }
 
-.notes-header h2 {
+.page-header h2 {
   color: var(--secondary-text-color);
   margin-bottom: 0.5rem;
   border-bottom: none;
 }
 
-.notes-subtitle {
+.page-subtitle {
   color: var(--primary-text-color);
   opacity: 0.8;
   font-size: 0.9em;
+  margin: 0 0 var(--spacing-lg) 0;
 }
 
 .dropdown-note {
   margin-bottom: 1.5rem;
-  border: 1px solid var(--border-color);
-  border-radius: 4px;
 }
 
 .dropdown-note summary {
@@ -478,9 +489,20 @@ footer {
   list-style: none;
   padding: 15px 20px;
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   justify-content: space-between;
+  border-bottom: 1px solid var(--border-color);
 }
+
+.about-arrow {
+  font-size: 0.75em;
+  opacity: 0.9;
+  margin-left: 4px;
+  display: inline-block;
+  letter-spacing: -0.5px;
+}
+
+
 
 .dropdown-note summary::-webkit-details-marker {
   display: none;
@@ -497,29 +519,18 @@ footer {
   color: var(--secondary-text-color);
 }
 
-.dropdown-note summary::after {
-  content: '+';
-  display: inline-block;
-  font-family: var(--font-family);
-  font-size: x-large;
-  font-weight: bold;
-}
-
-.dropdown-note[open] summary::after {
-  content: '-';
-}
-
 .dropdown-note .dropdown-content {
-  padding: 15px 20px;
-  border-top: 1px solid var(--border-color);
+  padding: 0 20px 15px 20px;
 }
 
-.note-content {
+.note-content,
+.project-description {
   line-height: 1.6;
   margin-bottom: 1rem;
 }
 
-.note-content p {
+.note-content p,
+.project-description p {
   margin-bottom: 1rem;
 }
 
@@ -528,7 +539,13 @@ footer {
 .note-content h3,
 .note-content h4,
 .note-content h5,
-.note-content h6 {
+.note-content h6,
+.project-description h1,
+.project-description h2,
+.project-description h3,
+.project-description h4,
+.project-description h5,
+.project-description h6 {
   color: var(--secondary-text-color);
   margin: 1.5rem 0 0.5rem 0;
   border-bottom: 1px solid var(--border-color);
@@ -542,7 +559,8 @@ footer {
 .note-content h5 { font-size: 1em; }
 .note-content h6 { font-size: 0.9em; }
 
-.note-content code {
+.note-content code,
+.project-description code {
   background-color: var(--container-background);
   padding: 0.2em 0.4em;
   border-radius: 3px;
@@ -550,7 +568,8 @@ footer {
   font-size: 0.9em;
 }
 
-.note-content pre {
+.note-content pre,
+.project-description pre {
   background-color: var(--container-background);
   padding: 1rem;
   border-radius: 4px;
@@ -559,22 +578,27 @@ footer {
   font-family: var(--font-mono);
 }
 
-.note-content pre code {
+.note-content pre code,
+.project-description pre code {
   background: none;
   padding: 0;
 }
 
 .note-content ul,
-.note-content ol {
+.note-content ol,
+.project-description ul,
+.project-description ol {
   margin: 1rem 0;
   padding-left: 2rem;
 }
 
-.note-content li {
+.note-content li,
+.project-description li {
   margin: 0.3rem 0;
 }
 
-.note-content blockquote {
+.note-content blockquote,
+.project-description blockquote {
   border-left: 3px solid var(--accent-color);
   padding-left: 1rem;
   margin: 1rem 0;
@@ -623,16 +647,19 @@ footer {
   letter-spacing: 0.5px;
 }
 
-.note-content a {
+.note-content a,
+.project-description a {
   color: var(--link-color);
   text-decoration: underline;
 }
 
-.note-content a:hover {
+.note-content a:hover,
+.project-description a:hover {
   color: var(--secondary-text-color);
 }
 
-.note-content img {
+.note-content img,
+.project-description img {
   max-width: 100%;
   height: auto;
   border-radius: 4px;
@@ -665,4 +692,23 @@ footer {
 .notes-error small {
   font-size: 0.8em;
   opacity: 0.6;
+}
+
+/* Note date and title styling */
+.note-date {
+  font-size: 0.75em;
+  opacity: 0.75;
+  margin-bottom: 3px;
+  display: block;
+}
+
+.dropdown-note summary {
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+/* Universal page container */
+.page-container {
+  margin-top: var(--spacing-md);
+  margin-bottom: var(--spacing-xl);
 }
