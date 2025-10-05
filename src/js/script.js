@@ -144,11 +144,7 @@ async function loadNotes() {
                 </summary>
                 <div class="dropdown-content">
                     <div class="note-content">${renderMarkdown(note.body)}</div>
-                    <div class="note-footer">
-                        <a href="${note.html_url}" target="_blank" rel="noopener noreferrer" class="note-link interactive-element">
-                            View on GitHub
-                        </a>
-                    </div>
+
                 </div>
             `;
             notesContainer.appendChild(noteEl);
@@ -305,11 +301,6 @@ function getFallbackProjectsHTML() {
             </summary>
             <div class="dropdown-content">
                 <div class="project-description">This portfolio website. Built with plain HTML, CSS and JavaScript.</div>
-                <div class="note-footer">
-                    <a href="https://github.com/p0kks/p0kks.github.io" target="_blank" rel="noopener noreferrer" class="note-link interactive-element">
-                        View on GitHub
-                    </a>
-                </div>
             </div>
         </details>
         <details class="dropdown-project" data-category="code">
@@ -319,11 +310,6 @@ function getFallbackProjectsHTML() {
             </summary>
             <div class="dropdown-content">
                 <div class="project-description">A custom Discord bot for a community server, built with Node.js. It provides various utility commands, moderation tools, and fun features.</div>
-                <div class="note-footer">
-                    <a href="#" target="_blank" rel="noopener noreferrer" class="note-link interactive-element">
-                        View on GitHub
-                    </a>
-                </div>
             </div>
         </details>
         <details class="dropdown-project" data-category="audio">
@@ -333,11 +319,6 @@ function getFallbackProjectsHTML() {
             </summary>
             <div class="dropdown-content">
                 <div class="project-description">A collection of short, experimental ambient tracks. Exploring textures and soundscapes.</div>
-                <div class="note-footer">
-                    <a href="#" target="_blank" rel="noopener noreferrer" class="note-link interactive-element">
-                        View on GitHub
-                    </a>
-                </div>
             </div>
         </details>
         <details class="dropdown-project" data-category="other">
@@ -347,11 +328,6 @@ function getFallbackProjectsHTML() {
             </summary>
             <div class="dropdown-content">
                 <div class="project-description">My personal configuration for the Reaper DAW, including themes, scripts, and settings.</div>
-                <div class="note-footer">
-                    <a href="#" target="_blank" rel="noopener noreferrer" class="note-link interactive-element">
-                        View on GitHub
-                    </a>
-                </div>
             </div>
         </details>
     `;
