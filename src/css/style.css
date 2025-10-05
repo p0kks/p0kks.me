@@ -149,7 +149,7 @@ nav a {
 
 
 .dropdown-project .dropdown-content {
-  padding: 0 20px 15px 20px;
+  padding: 0 15px 10px 15px;
 }
 
 /* Project-specific styling - now identical to notes */
@@ -191,7 +191,7 @@ nav a {
 .dropdown-project summary {
   cursor: pointer;
   list-style: none;
-  padding: 15px 20px;
+  padding: 10px 15px;
   display: flex;
   align-items: flex-start;
   justify-content: space-between;
@@ -351,11 +351,7 @@ h3 {
   margin-bottom: 20px;
 }
 
-.project-links a {
-  color: var(--primary-text-color);
-  text-decoration: none;
-  margin-right: 15px;
-}
+
 
 /* Slideshow container */
 .slideshow-container {
@@ -481,13 +477,13 @@ footer {
 }
 
 .dropdown-note {
-  margin-bottom: 1.5rem;
+  margin-bottom: 1rem;
 }
 
 .dropdown-note summary {
   cursor: pointer;
   list-style: none;
-  padding: 15px 20px;
+  padding: 10px 15px;
   display: flex;
   align-items: flex-start;
   justify-content: space-between;
@@ -520,7 +516,7 @@ footer {
 }
 
 .dropdown-note .dropdown-content {
-  padding: 0 20px 15px 20px;
+  padding: 0 15px 10px 15px;
 }
 
 .note-content,
@@ -532,6 +528,7 @@ footer {
 .note-content p,
 .project-description p {
   margin-bottom: 1rem;
+  padding-top: 0%;
 }
 
 .note-content h1,
@@ -550,6 +547,7 @@ footer {
   margin: 1.5rem 0 0.5rem 0;
   border-bottom: 1px solid var(--border-color);
   padding-bottom: 0.3rem;
+  padding-top: 5px;
 }
 
 .note-content h1 { font-size: 1.5em; }
@@ -588,8 +586,8 @@ footer {
 .note-content ol,
 .project-description ul,
 .project-description ol {
-  margin: 1rem 0;
-  padding-left: 2rem;
+  margin: 0.3rem 0;
+  padding-left: 1.5rem;
 }
 
 .note-content li,

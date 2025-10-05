@@ -253,11 +253,7 @@ async function loadProjects() {
                 </summary>
                 <div class="dropdown-content">
                     <div class="project-description">${renderMarkdown(project.body)}</div>
-                    <div class="project-links">
-                        <a href="${project.html_url}" class="interactive-element" target="_blank" rel="noopener">source</a>
-                        ${project.labels.some(label => label.name === 'live') ? 
-                            `<a href="${extractLiveUrl(project.body)}" class="interactive-element" target="_blank" rel="noopener">visit</a>` : ''}
-                    </div>
+
                 </div>
             `;
             projectsContainer.appendChild(projectEl);
