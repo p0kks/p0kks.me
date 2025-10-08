@@ -2,7 +2,7 @@
 
 **Live Site:** [p0kks.me](https://p0kks.me)
 
-A minimalist portfolio website showcasing code projects and audio work. Features a clean dark theme, responsive design, and dynamic content loading from GitHub. Includes project filtering, interactive sections, and weekly notes updates.
+*A minimalist portfolio website showcasing code projects and audio work. Features a clean dark theme, responsive design, and dynamic content loading from GitHub. Includes project filtering, interactive sections, and weekly notes updates.*
 
 ## Features
 - Clean, dark-themed design
@@ -18,23 +18,5 @@ A minimalist portfolio website showcasing code projects and audio work. Features
 - **No frameworks or dependencies** - pure vanilla implementation
 - **GitHub Pages** hosting with CNAME configuration
 - **GitHub API integration** for dynamic project and content loading
-
-## Sections
-- **About** - Brief introduction
-- **Bookmarks** - Quick links collection
-- **Hardware** - Current setup and projects
-- **Gallery** - Visual showcase
-- **Projects** - Filterable portfolio (Code, Audio, Other)
-- **Contact** - Connection methods
-
-## Development
-```bash
-# Local preview
-python -m http.server 8000
-```
-
-Open http://localhost:8000 to view the site locally.
-
----
-
-Built with ❤️ by p0kks
+##
+**Built with ❤️ by p0kks**

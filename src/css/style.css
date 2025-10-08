@@ -4,7 +4,7 @@
   --primary-text-color: #b4b4b4;
   --secondary-text-color: #dddddd;
   --accent-color: #bbbbbb;
-  --container-background: rgba(37, 42, 63, 0.205);
+  --container-background: rgba(37, 42, 63, 0.089);
   --header-background: none;
   --link-color: var(--primary-text-color);
   --link-hover-color: var(--accent-color);
@@ -47,7 +47,7 @@ body::-webkit-scrollbar {
   background-color: var(--container-background);
 }
 
-/* Header */
+/* ===== HEADER ===== */
 .header {
   max-width: 680px;
   background-color: var(--header-background);
@@ -82,74 +82,27 @@ nav a {
   text-align: right;
 }
 
-.dropdown-about,
-.dropdown-bookmarks,
-.dropdown-hardware,
-.dropdown-gallery,
-.dropdown-project,
-.dropdown-contact {
+.dropdown-project {
   padding: 0px;
   margin-bottom: 10px;
 }
 
-.dropdown-about summary,
-.dropdown-bookmarks summary,
-.dropdown-hardware summary,
-.dropdown-gallery summary,
-.dropdown-project summary,
-.dropdown-contact summary {
+.dropdown-project summary {
   cursor: pointer;
   list-style: none;
-  padding: 15px 20px;
+  padding: 10px 15px;
   display: flex;
   align-items: flex-start;
   justify-content: space-between;
   border-bottom: 1px solid var(--border-color);
-  flex-direction: column;
 }
 
-.dropdown-about summary::-webkit-details-marker,
-.dropdown-bookmarks summary::-webkit-details-marker,
-.dropdown-hardware summary::-webkit-details-marker,
-.dropdown-gallery summary::-webkit-details-marker,
-.dropdown-project summary::-webkit-details-marker,
-.dropdown-contact summary::-webkit-details-marker {
+.dropdown-project summary::-webkit-details-marker {
   display: none;
 }
-
-
-.dropdown-about summary:hover h3,
-.dropdown-bookmarks summary:hover h3,
-.dropdown-hardware summary:hover h3,
-.dropdown-gallery summary:hover h3,
-.dropdown-contact summary:hover h3 {
-  color: var(--secondary-text-color);
-}
-
-.dropdown-about summary::after,
-.dropdown-bookmarks summary::after,
-.dropdown-hardware summary::after,
-.dropdown-gallery summary::after,
-.dropdown-project summary::after,
-.dropdown-contact summary::after {
-  content: '';
-  display: none;
-}
-
-.dropdown-about[open] summary::after,
-.dropdown-bookmarks[open] summary::after,
-.dropdown-hardware[open] summary::after,
-.dropdown-gallery[open] summary::after,
-.dropdown-project[open] summary::after,
-.dropdown-contact[open] summary::after {
-  content: '';
-  display: none;
-}
-
-
 
 .dropdown-project .dropdown-content {
-  padding: 0 15px 10px 15px;
+  padding: 10px 15px 0 15px;
 }
 
 /* Project-specific styling - now identical to notes */
@@ -183,43 +136,6 @@ nav a {
   display: block;
 }
 
-.dropdown-project summary:hover .project-subtitle {
-  color: var(--secondary-text-color);
-  opacity: 1;
-}
-
-.dropdown-project summary {
-  cursor: pointer;
-  list-style: none;
-  padding: 10px 15px;
-  display: flex;
-  align-items: flex-start;
-  justify-content: space-between;
-  border-bottom: 1px solid var(--border-color);
-  flex-direction: column;
-}
-
-.dropdown-project summary::-webkit-details-marker {
-  display: none;
-}
-
-.dropdown-project summary h3 {
-  margin: 0;
-  display: inline;
-  border-bottom: none;
-  color: var(--primary-text-color);
-}
-
-.dropdown-project summary:hover h3 {
-  color: var(--secondary-text-color);
-}
-
-.dropdown-gallery .dropdown-content {
-  padding-left: 0;
-  padding-right: 0;
-  margin-bottom: -30px;
-}
-
 .site-logo {
   height: 75px; /* Adjust as needed */
   width: auto;
@@ -240,45 +156,13 @@ nav a {
     color: var(--secondary-text-color);
 }
 
-.bookmarks-grid {
-    display: grid;
-    left: 0%;
-    grid-template-columns: 1fr 1fr;
-    gap: 10px; /* adds spacing between grid items */
+.page-subtitle a {
+    color: #3f84e4;
 }
 
-.bookmark-desc {
-    font-size: 0.75em;
-    font-family: var(--font-family);
-    color: var(--primary-text-color);
-    opacity: 0.8;
-    display: block;
-    margin-top: 2px;
+.page-subtitle a:hover {
+    color: var(--secondary-text-color);
 }
-
-.contact-links {
-    font-family: var(--font-interactive);
-}
-
-.contact-link {
-    margin-bottom: 8px;
-}
-
-.bookmarks-grid p {
-    margin: 0; /* removes default paragraph margins */
-}
-
-.link-icon {
-    font-size: 0.75em; /* adjust size */
-    vertical-align: middle; /* aligns nicely with text */
-    opacity: 0.5; /* slightly faded */
-}
-
-.link {
-  color: var(--link-color);
-  text-decoration: none;
-}
-
 
 .page {
   display: none;
@@ -293,7 +177,7 @@ h3 {
   border-bottom: 1px solid var(--border-color);
 }
 
-/* Projects section */
+/* ===== PROJECTS SECTION ===== */
 .filter-buttons {
   color: var(--primary-text-color);
   text-decoration-line: none;
@@ -318,7 +202,7 @@ h3 {
 }
 
 .filter-btn {
-  color: var(--primary-text-color);
+  color: #3f84e4;
   background: none;
   border: none;
   cursor: pointer;
@@ -348,57 +232,10 @@ h3 {
 }
 
 .project-description {
-  margin-bottom: 20px;
+  margin-bottom: 10px;
 }
 
-
-
-/* Slideshow container */
-.slideshow-container {
-  width: calc(100% + 60px);
-  position: relative;
-  margin-left: -30px;
-  margin-right: -10px;
-  margin-top: -9px;
-}
-
-.slide {
-  display: none;
-}
-
-.slide {
-  position: relative;
-}
-
-.slide img {
-  width: 100%;
-  display: block;
-}
-
-.slide-nav {
-  position: absolute;
-  bottom: 15px;
-  left: 0;
-  right: 0;
-  text-align: center;
-}
-
-.dot {
-  cursor: pointer;
-  height: 15px;
-  width: 15px;
-  background-color: #313131;
-  border-radius: 50%;
-  display: inline-block;
-}
-
-.active-dot, .dot:hover {
-  background-color: var(--secondary-text-color);
-}
-
-
-
-/* Footer */
+/* ===== FOOTER ===== */
 footer {
   position: fixed;
   bottom: 0;
@@ -432,32 +269,6 @@ footer {
     margin: 0;
 }
 
-#welcome {
-  padding: 20px;
-}
-
-.welcome-header {
-  text-align: center;
-  margin-bottom: 2rem;
-}
-
-.welcome-header h2 {
-  color: var(--secondary-text-color);
-  margin-bottom: 0.5rem;
-  border-bottom: none;
-}
-
-.welcome-subtitle {
-  color: var(--primary-text-color);
-  opacity: 0.8;
-  font-size: 0.9em;
-  margin: 0;
-}
-
-.toggle-btn.interactive-element::after {
-  content: none;
-}
-
 .page-header {
   text-align: center;
   margin-bottom: 2rem;
@@ -474,29 +285,28 @@ footer {
   opacity: 0.8;
   font-size: 0.9em;
   margin: 0 0 var(--spacing-lg) 0;
+  padding: 0 20px;
 }
 
 .dropdown-note {
-  margin-bottom: 1rem;
+  margin-bottom: 10px;
 }
 
-.dropdown-note summary {
+.dropdown-note summary, .dropdown-project summary {
   cursor: pointer;
   list-style: none;
-  padding: 10px 15px;
+  padding: 5px 15px;
   display: flex;
-  align-items: flex-start;
+  align-items: center;
   justify-content: space-between;
   border-bottom: 1px solid var(--border-color);
 }
 
-.about-arrow {
-  font-size: 0.75em;
-  opacity: 0.9;
-  margin-left: 4px;
-  display: inline-block;
-  letter-spacing: -0.5px;
+.dropdown-icon {
+  font-weight: bold;
 }
+
+
 
 
 
@@ -516,18 +326,21 @@ footer {
 }
 
 .dropdown-note .dropdown-content {
-  padding: 0 15px 10px 15px;
+  padding: 10px 15px 0 15px;
 }
 
 .note-content,
 .project-description {
-  line-height: 1.6;
-  margin-bottom: 1rem;
+  line-height: 1.4;
+}
+
+.note-content {
+  margin-bottom: 10px;
 }
 
 .note-content p,
 .project-description p {
-  margin-bottom: 1rem;
+  margin-bottom: 0.2rem;
   padding-top: 0%;
 }
 
@@ -586,13 +399,13 @@ footer {
 .note-content ol,
 .project-description ul,
 .project-description ol {
-  margin: 0.3rem 0;
+  margin: 0;
   padding-left: 1.5rem;
 }
 
 .note-content li,
 .project-description li {
-  margin: 0.3rem 0;
+  margin: 0;
 }
 
 .note-content blockquote,
@@ -604,7 +417,7 @@ footer {
   opacity: 0.9;
 }
 
-/* GitHub-style callouts */
+/* ===== MARKDOWN STYLES ===== */
 .callout {
   padding: 1rem;
   margin: 1rem 0;
@@ -701,7 +514,6 @@ footer {
 }
 
 .dropdown-note summary {
-  flex-direction: column;
   align-items: flex-start;
 }
 
@@ -709,4 +521,52 @@ footer {
 .page-container {
   margin-top: var(--spacing-md);
   margin-bottom: var(--spacing-xl);
+}
+
+.about-content {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  padding: 20px 0;
+}
+
+.profile-picture {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  margin-right: 20px;
+  border: 2px solid var(--border-color);
+}
+
+.meta-info {
+  flex: 1;
+}
+
+.meta-info h3 {
+  margin: 0;
+  border-bottom: none;
+}
+
+.history {
+  width: 100%;
+  margin-top: 20px;
+}
+
+.social-links {
+  width: 100%;
+  margin-top: 20px;
+  display: flex;
+  gap: 15px;
+}
+
+.tools-content {
+  display: flex;
+  justify-content: space-between;
+  padding: 20px 0;
+}
+
+.hardware-column,
+.software-column,
+.audio-hardware-column {
+  width: 32%;
 }
