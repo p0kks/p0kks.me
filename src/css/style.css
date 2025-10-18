@@ -28,7 +28,6 @@
 
 body {
   max-width: 680px;
-  height: 20px;
   background: var(--background-color);
   color: var(--primary-text-color);
   font-family: var(--font-family);
@@ -157,7 +156,7 @@ nav a {
 }
 
 .page-subtitle a {
-    color: #3f84e4;
+    color: var(--link-color);
 }
 
 .page-subtitle a:hover {
@@ -202,7 +201,7 @@ h3 {
 }
 
 .filter-btn {
-  color: #3f84e4;
+  color: var(--link-color);
   background: none;
   border: none;
   cursor: pointer;
@@ -233,6 +232,10 @@ h3 {
 
 .project-description {
   margin-bottom: 10px;
+}
+
+.project-links {
+  margin-top: 10px;
 }
 
 /* ===== FOOTER ===== */
@@ -511,6 +514,10 @@ footer {
   opacity: 0.75;
   margin-bottom: 3px;
   display: block;
+}
+
+.note-title {
+  font-weight: bold;
 }
 
 .dropdown-note summary {

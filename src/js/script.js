@@ -60,7 +60,7 @@ async function loadNotes() {
                             month: '2-digit', 
                             year: 'numeric' 
                         })}</div>
-                        ${escapeHtml(note.title)}
+                        <span class="note-title">${escapeHtml(note.title)}</span>
                     </div>
                     <span class="dropdown-icon">+</span>
                 </summary>
@@ -119,19 +119,16 @@ function renderMarkdown(text) {
     // Images
     html = html.replace(/!\[([^\[]+)\]\(([^\)]+)\)/gim, '<img src="$2" alt="$1" loading="lazy">');
 
-    // Line breaks and paragraphs
-    html = html.replace(/\n\n/g, '</p><p>');
-    html = html.replace(/\n/g, '<br>');
-
-    // Lists
+    // Lists (improved)
     html = html.replace(/^\* (.*$)/gim, '<li>$1</li>');
-    html = html.replace(/<li>[\s\S]*?<\/li>/gim, matches => `<ul>${matches}</ul>`);
+    html = html.replace(/(<li>.*<\/li>)/gis, '<ul>$1</ul>');
+    html = html.replace(/<\/ul>\n<ul>/g, '');
 
-    // Wrap in paragraph if no other block elements
-    html = html.replace(/^(?!<[h|ul|ol|pre|blockquote|div])([\s\S]*?)$/gim, '<p>$1</p>');
-
-    // Remove leading and trailing <br> tags
-    html = html.replace(/^<p><br>/, '<p>').replace(/<br><\/p>$/, '<\/p>');
+    // Paragraphs
+    html = html.split('\n\n').map(p => {
+        if (p.startsWith('<') && p.endsWith('>')) return p;
+        return `<p>${p.replace(/\n/g, '<br>')}</p>`;
+    }).join('');
 
     return html;
 }
@@ -173,13 +170,16 @@ async function loadProjects() {
             projectEl.innerHTML = `
                 <summary class="interactive-element">
                     <div>
-                        <div class="project-subtitle">${new Date(project.created_at).getFullYear()}</div>
+                        <div class="project-subtitle">${new Date(project.created_at).toLocaleDateString('en-GB', { day: '2-digit', month: '2-digit', year: 'numeric' })}</div>
                         <span class="project-title">${escapeHtml(project.title)}</span>
                     </div>
                     <span class="dropdown-icon">+</span>
                 </summary>
                 <div class="dropdown-content">
                     <div class="project-description">${renderMarkdown(project.body)}</div>
+                    <div class="project-links">
+                        <a href="${project.html_url}" class="interactive-element" target="_blank" rel="noopener noreferrer">View on GitHub</a>
+                    </div>
 
                 </div>
             `;
@@ -221,12 +221,13 @@ function showFallbackProjects() {
 }
 
 function getFallbackProjectsHTML() {
+    const today = new Date().toLocaleDateString('en-GB', { day: '2-digit', month: '2-digit', year: 'numeric' });
     return `
         <details class="dropdown-project" data-category="code">
             <summary class="interactive-element">
                 <div>
-                    <div class="project-subtitle">03/10/2025</div>
-                    p0kks.me
+                    <div class="project-subtitle">${today}</div>
+                    <span class="project-title">p0kks.me</span>
                 </div>
                 <span class="dropdown-icon">+</span>
             </summary>
@@ -237,8 +238,8 @@ function getFallbackProjectsHTML() {
         <details class="dropdown-project" data-category="code">
             <summary class="interactive-element">
                 <div>
-                    <div class="project-subtitle">03/10/2025</div>
-                    Discord Bot
+                    <div class="project-subtitle">${today}</div>
+                    <span class="project-title">Discord Bot</span>
                 </div>
                 <span class="dropdown-icon">+</span>
             </summary>
@@ -249,8 +250,8 @@ function getFallbackProjectsHTML() {
         <details class="dropdown-project" data-category="audio">
             <summary class="interactive-element">
                 <div>
-                    <div class="project-subtitle">03/10/2025</div>
-                    Ambient Music
+                    <div class="project-subtitle">${today}</div>
+                    <span class="project-title">Ambient Music</span>
                 </div>
                 <span class="dropdown-icon">+</span>
             </summary>
@@ -261,8 +262,8 @@ function getFallbackProjectsHTML() {
         <details class="dropdown-project" data-category="other">
             <summary class="interactive-element">
                 <div>
-                    <div class="project-subtitle">03/10/2025</div>
-                    Reaper Configuration
+                    <div class="project-subtitle">${today}</div>
+                    <span class="project-title">Reaper Configuration</span>
                 </div>
                 <span class="dropdown-icon">+</span>
             </summary>
@@ -304,8 +305,6 @@ function initNavigation() {
             e.preventDefault();
             const targetId = link.dataset.target;
             const targetPage = document.getElementById(targetId);
-            
-            console.log('Navigation clicked:', targetId);
 
             if (targetPage) {
                 // Update active link
@@ -318,9 +317,7 @@ function initNavigation() {
                 });
 
                 // Scroll to the section
-                setTimeout(() => {
-                    targetPage.scrollIntoView({ behavior: 'smooth' });
-                }, 50);
+                targetPage.scrollIntoView({ behavior: 'smooth' });
             }
         });
     });
@@ -334,17 +331,17 @@ function initHotlinks() {
     hotlinkAudio.addEventListener('click', (e) => {
         e.preventDefault();
         document.querySelector('nav a[data-target="projects"]').click();
-        setTimeout(() => {
+        requestAnimationFrame(() => {
             document.querySelector('.filter-btn[data-filter="audio"]').click();
-        }, 100);
+        });
     });
 
     hotlinkCode.addEventListener('click', (e) => {
         e.preventDefault();
         document.querySelector('nav a[data-target="projects"]').click();
-        setTimeout(() => {
+        requestAnimationFrame(() => {
             document.querySelector('.filter-btn[data-filter="code"]').click();
-        }, 100);
+        });
     });
 
     hotlinkNotes.addEventListener('click', (e) => {
