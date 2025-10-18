@@ -3,219 +3,111 @@ document.addEventListener('DOMContentLoaded', function() {
     // Initialize navigation
     initNavigation();
 
-    // Initialize hotlinks
-    initHotlinks();
-    
-    // Initialize project filtering
-    initProjectFilter();
 
+    
     // Initialize dropdowns
     initDropdowns();
 
     // Notes and Projects system using GitHub Issues
-    loadIssues('note', 'notes-content', 'dropdown-note');
-    loadIssues('project', 'project-container', 'dropdown-project');
+    loadIssues('note', 'notes-content', 'collapsible-item', 'notes');
+    loadIssues('project', 'project-container', 'collapsible-item', 'projects');
+    loadIssues('home', 'home-content', 'collapsible-item', 'home'); // Load home content into home-content div
 });
 
-async function loadNotes() {
+async function loadIssues(label, containerId, itemClass, pageId) {
+    const container = document.getElementById(containerId) || document.querySelector(`.${containerId}`);
+    if (!container) {
+        console.error(`Container with ID or class "${containerId}" not found.`);
+        return;
+    }
+
+    container.innerHTML = `<p class="status-message">Loading ${label}s...</p>`;
+    
     try {
-        const notesContainer = document.getElementById('notes-content');
-        notesContainer.innerHTML = '<p class="loading-notes">Loading notes...</p>';
-        
-        const response = await fetch('https://api.github.com/repos/p0kks/p0kks.me/issues?labels=note&state=open&sort=created&direction=desc');
+        const response = await fetch(`https://api.github.com/repos/p0kks/p0kks.me/issues?labels=${label}&state=open&sort=created&direction=desc`);
         
         if (!response.ok) {
-            throw new Error('Failed to fetch notes');
+            throw new Error(`Failed to fetch ${label}s`);
         }
         
-        const notes = await response.json();
+        const issues = await response.json();
         
-        if (notes.length === 0) {
-            notesContainer.innerHTML = '<p class="no-notes">No notes yet. Check back soon!</p>';
+        if (issues.length === 0) {
+            if (label === 'project') {
+                showFallbackProjects(container); // Use fallback for projects if no issues
+            } else if (label === 'home') {
+                container.innerHTML = `<p class="status-message">No home content found. Create an issue with label 'home'.</p>`;
+            } else {
+                container.innerHTML = `<p class="status-message">No ${label}s yet. Check back soon!</p>`;
+            }
             return;
         }
         
-        notesContainer.innerHTML = '';
+        container.innerHTML = '';
         
-        notes.forEach(note => {
-            const noteDate = new Date(note.created_at);
-            const noteEl = document.createElement('details');
-            noteEl.className = 'dropdown-note';
-            noteEl.dataset.month = noteDate.getMonth();
-            noteEl.innerHTML = `
-                <summary class="interactive-element">
-                    <div>
-                        <div class="note-date">${noteDate.toLocaleDateString('en-GB', { 
-                            day: '2-digit', 
-                            month: '2-digit', 
-                            year: 'numeric' 
-                        })}</div>
-                        <span class="note-title">${escapeHtml(note.title)}</span>
-                    </div>
-                    <span class="dropdown-icon">+</span>
-                </summary>
-                <div class="dropdown-content">
-                    <div class="note-content">${renderMarkdown(note.body)}</div>
-                    <div class="note-footer">
-                        <div class="note-labels">
-                            ${note.labels.map(label => `<span class="issue-label" style="background-color:#${label.color};">${label.name}</span>`).join('')}
-                        </div>
-                    </div>
-                </div>
-            `;
-            notesContainer.appendChild(noteEl);
+        issues.forEach(issue => {
+            const issueDate = new Date(issue.created_at);
+            const issueEl = document.createElement('details');
+            issueEl.className = itemClass;
+            
+            if (label === 'note') {
+                issueEl.dataset.month = issueDate.getMonth();
+            } else if (label === 'project') {
+                const category = issue.labels.find(l => 
+                    ['code', 'audio', 'other'].includes(l.name.toLowerCase())
+                )?.name || 'other';
+                issueEl.dataset.category = category;
+            }
+
+                        let summaryContent = '';
+                        if (label === 'home') {
+                            summaryContent = `<div class="item-content">${marked.parse(issue.body)}</div>`;
+                        } else {
+                            const labelsHtml = issue.labels.map(l => `<span class="tag-label" style="background-color:#${l.color};">${l.name}</span>`).join('');
+                            summaryContent = `
+                                <summary class="interactive-element">
+                                    <div>
+                                        <div class="item-subtitle">${issueDate.toLocaleDateString('en-GB', {
+                                            day: '2-digit',
+                                            month: '2-digit',
+                                            year: 'numeric'
+                                        })}</div>
+                                        <span class="item-title">${escapeHtml(issue.title)}</span>
+                                    </div>
+                                    <span class="dropdown-icon">+</span>
+                                </summary>
+                                <div class="dropdown-content">
+                                    <div class="item-content">${marked.parse(issue.body)}</div>
+                                    <div class="item-footer">
+                                        <div class="item-labels">
+                                            ${labelsHtml}
+                                        </div>
+                                    </div>
+                                </div>
+                            `;
+                        }            issueEl.innerHTML = summaryContent;
+            container.appendChild(issueEl);
         });
 
         initDropdowns();
-        initNoteFilter();
+        if (pageId === 'notes' || pageId === 'projects') {
+            initIssueFilter(pageId, itemClass);
+        }
         
     } catch (error) {
-        console.error('Error loading notes:', error);
-        const notesContainer = document.getElementById('notes-content');
-        notesContainer.innerHTML = `
-            <p class="notes-error">
-                Unable to load notes. <br>
+        console.error(`Error loading ${label}s:`, error);
+        container.innerHTML = `
+            <p class="status-message">
+                Unable to load ${label}s. <br>
                 <small>Make sure the <a href="https://github.com/p0kks/p0kks.me" target="_blank">p0kks.me repository</a> exists.</small>
             </p>
         `;
     }
 }
 
-function initNoteFilter() {
-    const filterButtons = document.querySelectorAll('#notes .filter-btn');
-    const noteCards = document.querySelectorAll('.dropdown-note');
-
-    filterButtons.forEach(button => {
-        button.addEventListener('click', () => {
-            filterButtons.forEach(btn => btn.classList.remove('active'));
-            button.classList.add('active');
-
-            const filter = button.dataset.filter;
-            noteCards.forEach(card => {
-                card.style.display = filter === 'all' || card.dataset.month === filter ? '' : 'none';
-            });
-        });
-    });
-}
-
-function renderMarkdown(text) {
-    if (!text) return '';
-
-    let html = text.trim();
-
-    // GitHub callouts
-    html = html.replace(/^> [!(NOTE|TIP|IMPORTANT|WARNING|CAUTION)]\s*(.*)$/gim,
-        '<div class="callout callout-$1"><strong>$1</strong> $2</div>');
-    html = html.replace(/^> ([^[\]!].*)$/gim, '<blockquote>$1</blockquote>');
-
-    // Headers
-    html = html.replace(/^###### (.*$)/gim, '<h6>$1</h6>');
-    html = html.replace(/^##### (.*$)/gim, '<h5>$1</h5>');
-    html = html.replace(/^#### (.*$)/gim, '<h4>$1</h4>');
-    html = html.replace(/^### (.*$)/gim, '<h3>$1</h3>');
-    html = html.replace(/^## (.*$)/gim, '<h2>$1</h2>');
-    html = html.replace(/^# (.*$)/gim, '<h1>$1</h1>');
-
-    // Bold and italic
-    html = html.replace(/\*\*(.*?)\*\*/gim, '<strong>$1</strong>');
-    html = html.replace(/\*(.*?)\*/gim, '<em>$1</em>');
-    html = html.replace(/_(.*?)_/gim, '<em>$1</em>');
-    html = html.replace(/__(.*?)__/gim, '<strong>$1</strong>');
-
-    // Code blocks and inline code
-    html = html.replace(/```(\w+)?\n([\s\S]*?)```/gim, '<pre><code class="language-$1">$2</code></pre>');
-    html = html.replace(/`([^`]+)`/gim, '<code>$1</code>');
-
-    // Links
-    html = html.replace(/!\[([^\[]+)\]\(([^\]]+)\)/gim, '<a href="$2" target="_blank" rel="noopener noreferrer">$1</a>');
-
-    // Images
-    html = html.replace(/!\[([^\[]+)\]\(([^\]]+)\)/gim, '<img src="$2" alt="$1" loading="lazy">');
-
-    // Lists (improved)
-    html = html.replace(/^\* (.*$)/gim, '<li>$1</li>');
-    html = html.replace(/(<li>.*<\/li>)/gis, '<ul>$1</ul>');
-    html = html.replace(/<\/ul>\n<ul>/g, '');
-
-    // Paragraphs
-    html = html.split('\n\n').map(p => {
-        if (p.startsWith('<') && p.endsWith('>')) return p;
-        return `<p>${p.replace(/\n/g, '<br>')}</p>`;
-    }).join('');
-
-    return html;
-}
-
-// HTML escape function
-function escapeHtml(text) {
-    const div = document.createElement('div');
-    div.textContent = text;
-    return div.innerHTML;
-}
-
-// Projects system using GitHub Issues
-async function loadProjects() {
-    try {
-        const projectsContainer = document.querySelector('.project-container');
-        projectsContainer.innerHTML = '<p class="loading-notes">Loading projects...</p>';
-        
-        const response = await fetch('https://api.github.com/repos/p0kks/p0kks.me/issues?labels=project&state=open&sort=created&direction=desc');
-        
-        if (!response.ok) throw new Error('Failed to fetch projects');
-        
-        const projects = await response.json();
-        
-        if (projects.length === 0) {
-            // Show fallback projects if no GitHub issues found
-            showFallbackProjects();
-            return;
-        }
-        
-        projectsContainer.innerHTML = '';
-        
-        projects.forEach(project => {
-            const category = project.labels.find(label => 
-                ['code', 'audio', 'other'].includes(label.name.toLowerCase())
-            )?.name || 'other';
-            
-            const projectEl = document.createElement('details');
-            projectEl.className = 'dropdown-project';
-            projectEl.dataset.category = category;
-            projectEl.innerHTML = `
-                <summary class="interactive-element">
-                    <div>
-                        <div class="project-subtitle">${new Date(project.created_at).toLocaleDateString('en-GB', { day: '2-digit', month: '2-digit', year: 'numeric' })}</div>
-                        <span class="project-title">${escapeHtml(project.title)}</span>
-                    </div>
-                    <span class="dropdown-icon">+</span>
-                </summary>
-                <div class="dropdown-content">
-                    <div class="project-description">${renderMarkdown(project.body)}</div>
-                    <div class="project-footer">
-                        <div class="project-labels">
-                            ${project.labels.map(label => `<span class="issue-label" style="background-color:#${label.color};">${label.name}</span>`).join('')}
-                        </div>
-                    </div>
-                </div>
-            `;
-            projectsContainer.appendChild(projectEl);
-        });
-
-        initDropdowns();
-        
-        // Re-initialize filter functionality
-        initProjectFilter();
-        
-    } catch (error) {
-        console.error('Error loading projects:', error);
-        showFallbackProjects();
-    }
-}
-
-function showFallbackProjects() {
-    const projectsContainer = document.querySelector('.project-container');
-    projectsContainer.innerHTML = `
-        <p class="no-notes">
+function showFallbackProjects(container) {
+    container.innerHTML = `
+        <p class="status-message">
             No GitHub projects found. <br>
             <small>
                 Create issues with the "project" label in the 
@@ -229,70 +121,74 @@ function showFallbackProjects() {
         </div>
     `;
     
-    // Initialize filter functionality for fallback projects
-    initProjectFilter();
-
-    // Initialize dropdowns for fallback projects
+    initIssueFilter('projects', 'collapsible-item');
     initDropdowns();
 }
 
 function getFallbackProjectsHTML() {
     const today = new Date().toLocaleDateString('en-GB', { day: '2-digit', month: '2-digit', year: 'numeric' });
     return `
-        <details class="dropdown-project" data-category="code">
+        <details class="collapsible-item" data-category="code">
             <summary class="interactive-element">
                 <div>
-                    <div class="project-subtitle">${today}</div>
-                    <span class="project-title">p0kks.me</span>
+                    <div class="item-subtitle">${today}</div>
+                    <span class="item-title">p0kks.me</span>
                 </div>
                 <span class="dropdown-icon">+</span>
             </summary>
             <div class="dropdown-content">
-                <div class="project-description">This portfolio website. Built with plain HTML, CSS and JavaScript.</div>
+                <div class="item-content">This portfolio website. Built with plain HTML, CSS and JavaScript.</div>
             </div>
         </details>
-        <details class="dropdown-project" data-category="code">
+        <details class="collapsible-item" data-category="code">
             <summary class="interactive-element">
                 <div>
-                    <div class="project-subtitle">${today}</div>
-                    <span class="project-title">Discord Bot</span>
+                    <div class="item-subtitle">${today}</div>
+                    <span class="item-title">Discord Bot</span>
                 </div>
                 <span class="dropdown-icon">+</span>
             </summary>
             <div class="dropdown-content">
-                <div class="project-description">A custom Discord bot for a community server, built with Node.js. It provides various utility commands, moderation tools, and fun features.</div>
+                <div class="item-content">A custom Discord bot for a community server, built with Node.js. It provides various utility commands, moderation tools, and fun features.</div>
             </div>
         </details>
-        <details class="dropdown-project" data-category="audio">
+        <details class="collapsible-item" data-category="audio">
             <summary class="interactive-element">
                 <div>
-                    <div class="project-subtitle">${today}</div>
-                    <span class="project-title">Ambient Music</span>
+                    <div class="item-subtitle">${today}</div>
+                    <span class="item-title">Ambient Music</span>
                 </div>
                 <span class="dropdown-icon">+</span>
             </summary>
             <div class="dropdown-content">
-                <div class="project-description">A collection of short, experimental ambient tracks. Exploring textures and soundscapes.</div>
+                <div class="item-content">A collection of short, experimental ambient tracks. Exploring textures and soundscapes.</div>
             </div>
         </details>
-        <details class="dropdown-project" data-category="other">
+        <details class="collapsible-item" data-category="other">
             <summary class="interactive-element">
                 <div>
-                    <div class="project-subtitle">${today}</div>
-                    <span class="project-title">Reaper Configuration</span>
+                    <div class="item-subtitle">${today}</div>
+                    <span class="item-title">Reaper Configuration</span>
                 </div>
                 <span class="dropdown-icon">+</span>
             </summary>
             <div class="dropdown-content">
-                <div class="project-description">My personal configuration for the Reaper DAW, including themes, scripts, and settings.</div>
+                <div class="item-content">My personal configuration for the Reaper DAW, including themes, scripts, and settings.</div>
             </div>
         </details>
     `;
 }
 
-function initProjectFilter() {
-    const filterButtons = document.querySelectorAll('#projects .filter-btn');
-    const projectCards = document.querySelectorAll('.dropdown-project');
+// HTML escape function
+function escapeHtml(text) {
+    const div = document.createElement('div');
+    div.textContent = text;
+    return div.innerHTML;
+}
+
+function initIssueFilter(pageId, itemClass) {
+    const filterButtons = document.querySelectorAll(`#${pageId} .filter-btn`);
+    const issueCards = document.querySelectorAll(`#${pageId} .${itemClass}`);
 
     filterButtons.forEach(button => {
         button.addEventListener('click', () => {
@@ -300,8 +196,14 @@ function initProjectFilter() {
             button.classList.add('active');
 
             const filter = button.dataset.filter;
-            projectCards.forEach(card => {
-                card.style.display = filter === 'all' || card.dataset.category === filter ? '' : 'none';
+            issueCards.forEach(card => {
+                let display = 'none';
+                if (pageId === 'notes') {
+                    display = filter === 'all' || card.dataset.month == filter ? '' : 'none';
+                } else if (pageId === 'projects') {
+                    display = filter === 'all' || card.dataset.category === filter ? '' : 'none';
+                }
+                card.style.display = display;
             });
         });
     });
@@ -328,65 +230,12 @@ function initNavigation() {
                     page.classList.toggle('active', page.id === targetId);
                 });
 
-                // Load content for fullstory page if it's the target
-                if (targetId === 'fullstory') {
-                    loadFullStory();
-                }
+
 
                 // Scroll to the section
                 targetPage.scrollIntoView({ behavior: 'smooth' });
             }
         });
-    });
-}
-
-async function loadFullStory() {
-    const fullStoryContainer = document.getElementById('fullstory');
-    if (fullStoryContainer.dataset.loaded) {
-        return; // Already loaded
-    }
-    try {
-        const response = await fetch('fullstory.html');
-        if (!response.ok) {
-            throw new Error('Failed to load full story content');
-        }
-        const html = await response.text();
-        // Extract only the content within the <main> tag from the fetched HTML
-        const parser = new DOMParser();
-        const doc = parser.parseFromString(html, 'text/html');
-        const mainContent = doc.querySelector('#fullstory .page-container').innerHTML;
-        fullStoryContainer.innerHTML = `<div class="page-header"><h2>The Full Story</h2></div><div class="page-container">${mainContent}</div>`;
-        fullStoryContainer.dataset.loaded = true; // Mark as loaded
-    } catch (error) {
-        console.error('Error loading full story:', error);
-        fullStoryContainer.innerHTML = '<p class="notes-error">Unable to load full story.</p>';
-    }
-}
-
-function initHotlinks() {
-    const hotlinkAudio = document.getElementById('hotlink-audio');
-    const hotlinkCode = document.getElementById('hotlink-code');
-    const hotlinkNotes = document.getElementById('hotlink-notes');
-
-    hotlinkAudio.addEventListener('click', (e) => {
-        e.preventDefault();
-        document.querySelector('nav a[data-target="projects"]').click();
-        requestAnimationFrame(() => {
-            document.querySelector('#projects .filter-btn[data-filter="audio"]').click();
-        });
-    });
-
-    hotlinkCode.addEventListener('click', (e) => {
-        e.preventDefault();
-        document.querySelector('nav a[data-target="projects"]').click();
-        requestAnimationFrame(() => {
-            document.querySelector('#projects .filter-btn[data-filter="code"]').click();
-        });
-    });
-
-    hotlinkNotes.addEventListener('click', (e) => {
-        e.preventDefault();
-        document.querySelector('nav a[data-target="notes"]').click();
     });
 }
 

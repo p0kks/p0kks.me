@@ -10,13 +10,14 @@
 
 
 <link rel="stylesheet" href="src/css/style.css">
+<script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
 </head>
 <body>
 <header class="header">
 <div class="header-inner">
 <div class="topbar">
   <a href="#home" data-target="home" class="site-title">
-    <img src="assets\images\p0kks.logo.png" alt="p0kks logo" class="site-logo" loading="lazy">
+    <img src="assets\images\site-logo.png" alt="p0kks logo" class="site-logo" loading="lazy">
   </a>
   <nav>
     <a href="#home" data-target="home" class="active interactive-element">home</a>
@@ -30,33 +31,11 @@
   <main>
     <section id="home" class="page active">
       <div class="page-header">
-        <h2>Welcome to my tiny webspace</h2>
-         <h5 class="page-subtitle">
-          Logic writes my <a href="#" data-target="projects" data-filter="code" class="interactive-element">code</a><br>
-          Emotion shapes my <a href="#" data-target="projects" data-filter="audio" class="interactive-element">sound</a><br>
-          also check my <a href="#" data-target="projects" data-filter="other" class="interactive-element">other</a> works<br>
-         </h5>
+        <h2>Welcome!</h2>
       </div>
-<div class="page-container">
-  <details class="dropdown-note">
-    <summary class="interactive-element">
-      <div class="item-subtitle">read</div>
-      <span class="item-title">about</span>
-      <span class="dropdown-icon">+</span>
-    </summary>
-    <div class="dropdown-content">
-    <p>p0kks, a passionate developer and musician. This website serves as my personal portfolio where I showcase my projects and share my musical creations. Feel free to explore and connect with me through the social links below!</p>
-  <a href="#fullstory" data-target="fullstory" class="interactive-element">read full story</a><br>
-               <div class="social-links">
-              <a href="https://x.com/p0kks" class="interactive-element" target="_blank" rel="noopener noreferrer"><img src="assets/icons/twitter.png" class="social-icon"></a>
-              <a href="https://t.me/p0kks" class="interactive-element" target="_blank" rel="noopener noreferrer"><img src="assets/icons/telegram.png" class="social-icon"></a>
-              <a href="https://www.discord.gg/CVG27QpcRZ" class="interactive-element" target="_blank" rel="noopener noreferrer"><img src="assets/icons/discord.png" class="social-icon"></a>
-              <a href="https://github.com/p0kks" class="interactive-element" target="_blank" rel="noopener noreferrer"><img src="assets/icons/github.png" class="social-icon"></a>
-              <a href="https://www.bandlab.com/p0kks" class="interactive-element" target="_blank" rel="noopener noreferrer"><img src="assets/icons/bandlab.png" class="social-icon"></a>
-            </div>
-  </div>
-  </details>
-</div>
+      <div class="page-container" id="home-content">
+        <!-- Home content will be loaded dynamically from GitHub Issues -->
+      </div>
     </section>
 
     <section id="projects" class="page">
@@ -100,7 +79,41 @@
     </section>
 
     <section id="fullstory" class="page">
-      <!-- Content for full story will be loaded here by script.js -->
+      <div class="page-header">
+        <h2>The Full Story</h2>
+      </div>
+      <div class="page-container">
+        <div class="timeline">
+          <div class="timeline-item">
+            <h3>Born (Year)</h3>
+            <div class="item-content"><p>Placeholder for early life and childhood experiences.</p></div>
+          </div>
+          <div class="timeline-item">
+            <h3>Early Interests (Year)</h3>
+            <div class="item-content"><p>Placeholder for developing interests in technology, music, or other fields.</p></div>
+          </div>
+          <div class="timeline-item">
+            <h3>First Code/Music Project (Year)</h3>
+            <div class="item-content"><p>Placeholder for initial ventures into coding or music production.</p></div>
+          </div>
+          <div class="timeline-item">
+            <h3>Key Learning Experience (Year)</h3>
+            <div class="item-content"><p>Placeholder for a significant educational or self-taught milestone.</p></div>
+          </div>
+          <div class="timeline-item">
+            <h3>Professional Beginnings (Year)</h3>
+            <div class="item-content"><p>Placeholder for entry into a professional career or significant project.</p></div>
+          </div>
+          <div class="timeline-item">
+            <h3>Major Project/Achievement (Year)</h3>
+            <div class="item-content"><p>Placeholder for a notable accomplishment in coding or music.</p></div>
+          </div>
+          <div class="timeline-item">
+            <h3>Current Focus (Year)</h3>
+            <div class="item-content"><p>Placeholder for present-day activities, interests, and goals.</p></div>
+          </div>
+        </div>
+      </div>
     </section>
   </main>
 </div>
