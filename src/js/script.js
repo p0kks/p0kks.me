@@ -177,9 +177,6 @@ async function loadProjects() {
                 </summary>
                 <div class="dropdown-content">
                     <div class="project-description">${renderMarkdown(project.body)}</div>
-                    <div class="project-links">
-                        <a href="${project.html_url}" class="interactive-element" target="_blank" rel="noopener noreferrer">View on GitHub</a>
-                    </div>
 
                 </div>
             `;
