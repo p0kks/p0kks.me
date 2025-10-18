@@ -9,6 +9,9 @@ document.addEventListener('DOMContentLoaded', function() {
     // Initialize project filtering
     initProjectFilter();
 
+    // Initialize note filtering
+    initNoteFilter();
+
     // Initialize dropdowns
     initDropdowns();
 
@@ -50,12 +53,14 @@ async function loadNotes() {
         notesContainer.innerHTML = '';
         
         notes.forEach(note => {
+            const noteDate = new Date(note.created_at);
             const noteEl = document.createElement('details');
             noteEl.className = 'dropdown-note';
+            noteEl.dataset.month = noteDate.getMonth();
             noteEl.innerHTML = `
                 <summary class="interactive-element">
                     <div>
-                        <div class="note-date">${new Date(note.created_at).toLocaleDateString('en-GB', { 
+                        <div class="note-date">${noteDate.toLocaleDateString('en-GB', { 
                             day: '2-digit', 
                             month: '2-digit', 
                             year: 'numeric' 
@@ -66,13 +71,18 @@ async function loadNotes() {
                 </summary>
                 <div class="dropdown-content">
                     <div class="note-content">${renderMarkdown(note.body)}</div>
-
+                    <div class="note-footer">
+                        <div class="note-labels">
+                            ${note.labels.map(label => `<span class="issue-label" style="background-color:#${label.color};">${label.name}</span>`).join('')}
+                        </div>
+                    </div>
                 </div>
             `;
             notesContainer.appendChild(noteEl);
         });
 
         initDropdowns();
+        initNoteFilter();
         
     } catch (error) {
         console.error('Error loading notes:', error);
@@ -85,7 +95,22 @@ async function loadNotes() {
     }
 }
 
-function renderMarkdown(text) {
+function initNoteFilter() {
+    const filterButtons = document.querySelectorAll('#notes .filter-btn');
+    const noteCards = document.querySelectorAll('.dropdown-note');
+
+    filterButtons.forEach(button => {
+        button.addEventListener('click', () => {
+            filterButtons.forEach(btn => btn.classList.remove('active'));
+            button.classList.add('active');
+
+            const filter = button.dataset.filter;
+            noteCards.forEach(card => {
+                card.style.display = filter === 'all' || card.dataset.month === filter ? '' : 'none';
+            });
+        });
+    });
+}
     if (!text) return '';
 
     let html = text.trim();
@@ -177,7 +202,11 @@ async function loadProjects() {
                 </summary>
                 <div class="dropdown-content">
                     <div class="project-description">${renderMarkdown(project.body)}</div>
-
+                    <div class="project-footer">
+                        <div class="project-labels">
+                            ${project.labels.map(label => `<span class="issue-label" style="background-color:#${label.color};">${label.name}</span>`).join('')}
+                        </div>
+                    </div>
                 </div>
             `;
             projectsContainer.appendChild(projectEl);
@@ -274,7 +303,7 @@ function getFallbackProjectsHTML() {
 
 
 function initProjectFilter() {
-    const filterButtons = document.querySelectorAll('.filter-btn');
+    const filterButtons = document.querySelectorAll('#projects .filter-btn');
     const projectCards = document.querySelectorAll('.dropdown-project');
 
     filterButtons.forEach(button => {
@@ -329,7 +358,7 @@ function initHotlinks() {
         e.preventDefault();
         document.querySelector('nav a[data-target="projects"]').click();
         requestAnimationFrame(() => {
-            document.querySelector('.filter-btn[data-filter="audio"]').click();
+            document.querySelector('#projects .filter-btn[data-filter="audio"]').click();
         });
     });
 
@@ -337,7 +366,7 @@ function initHotlinks() {
         e.preventDefault();
         document.querySelector('nav a[data-target="projects"]').click();
         requestAnimationFrame(() => {
-            document.querySelector('.filter-btn[data-filter="code"]').click();
+            document.querySelector('#projects .filter-btn[data-filter="code"]').click();
         });
     });
 
