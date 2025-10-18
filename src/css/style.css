@@ -225,7 +225,7 @@ footer {
 }
 
 .page-subtitle {
-  text-align: left;
+  text-align: center;
   color: var(--primary-text-color);
   opacity: 0.8;
   font-size: 0.9em;
