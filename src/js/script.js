@@ -62,20 +62,22 @@ async function loadIssues(label, containerId, itemClass, pageId) {
                         const labelsHtml = issue.labels.map(l => `<span class="tag-label" style="background-color:#${l.color};">${l.name}</span>`).join('');
                         summaryContent = `
                             <summary class="interactive-element">
-                                <div>
-                                    <div class="item-subtitle">${issueDate.toLocaleDateString('en-GB', {
-                                        day: '2-digit',
-                                        month: '2-digit',
-                                        year: 'numeric'
-                                    })}</div>
-                                    <span class="item-title">${escapeHtml(issue.title)}</span>
+                                <div class="summary-content-wrapper">
+                                    <div class="item-details">
+                                        <div class="item-subtitle">${issueDate.toLocaleDateString('en-GB', {
+                                            day: '2-digit',
+                                            month: '2-digit',
+                                            year: 'numeric'
+                                        })}</div>
+                                        <span class="item-title">${escapeHtml(issue.title)}</span>
+                                    </div>
+                                    <div class="item-labels-summary">
+                                        ${labelsHtml}
+                                    </div>
                                 </div>
                                 <span class="dropdown-icon">+</span>
                             </summary>
                             <div class="dropdown-content">
-                                <div class="item-labels">
-                                    ${labelsHtml}
-                                </div>
                                 <div class="item-content">${marked.parse(issue.body)}</div>
                             </div>
                         `;

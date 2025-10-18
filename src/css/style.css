@@ -447,12 +447,22 @@ footer {
     font-weight: 500;
 }
 
-.item-labels {
-  position: absolute;
-  top: 10px;
-  left: 15px;
+.collapsible-item summary .summary-content-wrapper {
+  display: flex;
+  justify-content: space-between; /* Pushes item-details to left and item-labels-summary to right */
+  align-items: center;
+  flex-grow: 1; /* Allows the wrapper to take available space */
+}
+
+.collapsible-item summary .item-details {
+  display: flex;
+  flex-direction: column;
+}
+
+.collapsible-item summary .item-labels-summary {
   display: flex; /* To make tags display in a row */
   gap: 5px; /* Space between tags */
+  margin-left: 10px; /* Add some space between title and labels */
 }
 
 .social-links {
