@@ -9,9 +9,6 @@ document.addEventListener('DOMContentLoaded', function() {
     // Initialize project filtering
     initProjectFilter();
 
-    // Initialize note filtering
-    initNoteFilter();
-
     // Initialize dropdowns
     initDropdowns();
 
@@ -32,9 +29,11 @@ document.addEventListener('DOMContentLoaded', function() {
     if (projectsContainer) {
         loadProjects();
     }
+});
 
 async function loadNotes() {
     try {
+        const notesContainer = document.getElementById('notes-content');
         notesContainer.innerHTML = '<p class="loading-notes">Loading notes...</p>';
         
         const response = await fetch('https://api.github.com/repos/p0kks/p0kks.me/issues?labels=note&state=open&sort=created&direction=desc');
@@ -86,6 +85,7 @@ async function loadNotes() {
         
     } catch (error) {
         console.error('Error loading notes:', error);
+        const notesContainer = document.getElementById('notes-content');
         notesContainer.innerHTML = `
             <p class="notes-error">
                 Unable to load notes. <br>
@@ -111,14 +111,16 @@ function initNoteFilter() {
         });
     });
 }
+
+function renderMarkdown(text) {
     if (!text) return '';
 
     let html = text.trim();
 
     // GitHub callouts
-    html = html.replace(/^> \[!(NOTE|TIP|IMPORTANT|WARNING|CAUTION)\]\s*(.*)$/gim,
+    html = html.replace(/^> [!(NOTE|TIP|IMPORTANT|WARNING|CAUTION)]\s*(.*)$/gim,
         '<div class="callout callout-$1"><strong>$1</strong> $2</div>');
-    html = html.replace(/^> ([^\[!].*)$/gim, '<blockquote>$1</blockquote>');
+    html = html.replace(/^> ([^[\]!].*)$/gim, '<blockquote>$1</blockquote>');
 
     // Headers
     html = html.replace(/^###### (.*$)/gim, '<h6>$1</h6>');
@@ -139,10 +141,10 @@ function initNoteFilter() {
     html = html.replace(/`([^`]+)`/gim, '<code>$1</code>');
 
     // Links
-    html = html.replace(/\[([^\[]+)\]\(([^\)]+)\)/gim, '<a href="$2" target="_blank" rel="noopener noreferrer">$1</a>');
+    html = html.replace(/!\[([^\[]+)\]\(([^\]]+)\)/gim, '<a href="$2" target="_blank" rel="noopener noreferrer">$1</a>');
 
     // Images
-    html = html.replace(/!\[([^\[]+)\]\(([^\)]+)\)/gim, '<img src="$2" alt="$1" loading="lazy">');
+    html = html.replace(/!\[([^\[]+)\]\(([^\]]+)\)/gim, '<img src="$2" alt="$1" loading="lazy">');
 
     // Lists (improved)
     html = html.replace(/^\* (.*$)/gim, '<li>$1</li>');
@@ -168,6 +170,7 @@ function escapeHtml(text) {
 // Projects system using GitHub Issues
 async function loadProjects() {
     try {
+        const projectsContainer = document.querySelector('.project-container');
         projectsContainer.innerHTML = '<p class="loading-notes">Loading projects...</p>';
         
         const response = await fetch('https://api.github.com/repos/p0kks/p0kks.me/issues?labels=project&state=open&sort=created&direction=desc');
@@ -224,6 +227,7 @@ async function loadProjects() {
 }
 
 function showFallbackProjects() {
+    const projectsContainer = document.querySelector('.project-container');
     projectsContainer.innerHTML = `
         <p class="no-notes">
             No GitHub projects found. <br>
@@ -300,8 +304,6 @@ function getFallbackProjectsHTML() {
     `;
 }
 
-
-
 function initProjectFilter() {
     const filterButtons = document.querySelectorAll('#projects .filter-btn');
     const projectCards = document.querySelectorAll('.dropdown-project');
@@ -318,8 +320,6 @@ function initProjectFilter() {
         });
     });
 }
-
-});
 
 // ===== NAVIGATION FUNCTIONS =====
 function initNavigation() {
