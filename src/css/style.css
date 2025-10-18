@@ -84,8 +84,6 @@ nav a {
 
 
 
-/* Project-specific styling - now identical to notes */
-
 .collapsible-item summary::-webkit-details-marker {
   display: none;
 }
@@ -249,7 +247,6 @@ footer {
 
 
 
-.item-content,
 .item-content {
   line-height: 1.4;
 }

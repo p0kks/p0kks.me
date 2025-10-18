@@ -2,9 +2,6 @@
 document.addEventListener('DOMContentLoaded', function() {
     // Initialize navigation
     initNavigation();
-
-
-    
     // Initialize dropdowns
     initDropdowns();
 
@@ -24,7 +21,11 @@ async function loadIssues(label, containerId, itemClass, pageId) {
     container.innerHTML = `<p class="status-message">Loading ${label}s...</p>`;
     
     try {
-        const response = await fetch(`https://api.github.com/repos/p0kks/p0kks.me/issues?labels=${label}&state=open&sort=created&direction=desc`);
+        const response = await fetch(`https://api.github.com/repos/p0kks/p0kks.me/issues?labels=${label}&state=open&sort=created&direction=desc`, {
+            headers: {
+                'User-Agent': 'p0kks.me-portfolio'
+            }
+        });
         
         if (!response.ok) {
             throw new Error(`Failed to fetch ${label}s`);
@@ -189,7 +190,6 @@ function getFallbackProjectsHTML() {
     `;
 }
 
-// HTML escape function
 function escapeHtml(text) {
     const div = document.createElement('div');
     div.textContent = text;
