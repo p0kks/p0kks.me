@@ -88,12 +88,10 @@ async function loadIssues(label, containerId, itemClass, pageId) {
                                     <span class="dropdown-icon">+</span>
                                 </summary>
                                 <div class="dropdown-content">
-                                    <div class="item-content">${marked.parse(issue.body)}</div>
-                                    <div class="item-footer">
-                                        <div class="item-labels">
-                                            ${labelsHtml}
-                                        </div>
+                                    <div class="item-labels">
+                                        ${labelsHtml}
                                     </div>
+                                    <div class="item-content">${marked.parse(issue.body)}</div>
                                 </div>
                             `;
                         }            issueEl.innerHTML = summaryContent;

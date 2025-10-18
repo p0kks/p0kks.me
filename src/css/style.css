@@ -1,8 +1,8 @@
 /*General styles*/
 :root {
   --background-color: #0d1117;
-  --primary-text-color: #cfcfcf;
-  --secondary-text-color: #a3a3a3;
+  --primary-text-color: #e2e2e2;
+  --secondary-text-color: #949393;
   --accent-color: #0366d6;
   --container-background: rgba(37, 42, 63, 0.089);
   --header-background: none;
@@ -89,7 +89,8 @@ nav a {
 }
 
 .collapsible-item .dropdown-content {
-  padding: 10px 15px 0 15px;
+  padding: 30px 15px 0 15px; /* Increased top padding to make space for labels */
+  position: relative;
 }
 
 .site-logo {
@@ -440,6 +441,14 @@ footer {
     margin-right: 5px;
     text-shadow: none;
     font-weight: 500;
+}
+
+.item-labels {
+  position: absolute;
+  top: 10px;
+  left: 15px;
+  display: flex; /* To make tags display in a row */
+  gap: 5px; /* Space between tags */
 }
 
 .social-links {
