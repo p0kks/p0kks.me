@@ -1,8 +1,8 @@
 /*General styles*/
 :root {
   --background-color: #0d1117;
-  --primary-text-color: #e2e2e2;
-  --secondary-text-color: #949393;
+  --primary-text-color: #aaaaaa;
+  --secondary-text-color: #eeeeee;
   --accent-color: #0366d6;
   --container-background: rgba(26, 26, 54, 0.13);
   --header-background: none;
@@ -91,7 +91,7 @@ nav a {
 }
 
 .collapsible-item .dropdown-content {
-  padding: 30px 15px 0 15px; /* Increased top padding to make space for labels */
+  padding: 0px 30px 60px; /* Increased top padding to make space for labels */
   position: relative;
 }
 
@@ -368,12 +368,12 @@ footer {
 }
 
 .item-content a {
-  color: var(--link-color);
-  text-decoration: underline;
+  color: #0366d6;
+  text-decoration: none;
 }
 
 .item-content a:hover {
-  color: var(--secondary-text-color);
+  color: var(--accent-color);
 }
 
 .item-content img {
@@ -469,6 +469,10 @@ footer {
 }
 
 .tag-label[data-label="poetry"] {
+    color: yellow;
+}
+
+.tag-label[data-label="lyrics"] {
     color: yellow;
 }
 
