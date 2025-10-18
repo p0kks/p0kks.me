@@ -23,6 +23,7 @@
     <a href="#home" data-target="home" class="active interactive-element">home</a>
     <a href="#projects" data-target="projects" class="interactive-element">projects</a>
     <a href="#notes" data-target="notes" class="interactive-element">notes</a>
+    <a href="#fullstory" data-target="fullstory" class="interactive-element">fullstory</a>
   </nav>
 </div>
 </header>
@@ -35,6 +36,12 @@
       <div class="page-subtitle">
         <p>coding with logic</p>
       </div>
+              <div class="filter-buttons">
+          <button class="filter-btn active interactive-element" data-filter="all">all</button>
+          <button class="filter-btn interactive-element" data-filter="code">code</button>
+          <button class="filter-btn interactive-element" data-filter="audio">audio</button>
+          <button class="filter-btn interactive-element" data-filter="other">other</button>
+        </div>
       <div class="page-container" id="home-content">
         <!-- Home content will be loaded dynamically from GitHub Issues -->
       </div>
@@ -86,11 +93,12 @@
       </div>
     </section>
 
+
     <section id="fullstory" class="page">
       <div class="page-header">
         <h2>The Full Story</h2>
       </div>
-      <div class="page-container">
+      <div class="page-container" id="fullstory-content">
         <div class="timeline">
           <div class="timeline-item">
             <h3>Born (Year)</h3>

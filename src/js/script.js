@@ -240,8 +240,6 @@ function initNavigation() {
                     page.classList.toggle('active', page.id === targetId);
                 });
 
-
-
                 // Scroll to the section
                 targetPage.scrollIntoView({ behavior: 'smooth' });
             }

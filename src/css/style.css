@@ -95,10 +95,10 @@ nav a {
 }
 
 .site-logo {
-  height: 150px; /* Adjust as needed */
+  height: 128px; /* Adjust as needed */
   width: auto;
   vertical-align: middle;
-  margin-bottom: -75px;
+  margin-bottom: -10px;
 }
 
 .interactive-element {
@@ -256,6 +256,7 @@ footer {
 
 .item-content {
   margin-bottom: 10px;
+  text-align: left;
 }
 
 .item-content p {
