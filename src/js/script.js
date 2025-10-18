@@ -61,7 +61,17 @@ async function loadIssues(label, containerId, itemClass, pageId) {
 
                         let summaryContent = '';
                         if (label === 'home') {
-                            summaryContent = `<div class="item-content">${marked.parse(issue.body)}</div>`;
+                            summaryContent = `
+                                <summary class="interactive-element">
+                                    <div>
+                                        <span class="item-title">${escapeHtml(issue.title)}</span>
+                                    </div>
+                                    <span class="dropdown-icon">+</span>
+                                </summary>
+                                <div class="dropdown-content">
+                                    <div class="item-content">${marked.parse(issue.body)}</div>
+                                </div>
+                            `;
                         } else {
                             const labelsHtml = issue.labels.map(l => `<span class="tag-label" style="background-color:#${l.color};">${l.name}</span>`).join('');
                             summaryContent = `
