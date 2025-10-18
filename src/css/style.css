@@ -439,12 +439,37 @@ footer {
 .tag-label {
     display: inline-block;
     padding: 3px 8px;
-    border-radius: 0px;
     font-size: 12px;
-    color: #000;
+    color: #000; /* This will be overridden by specific data-label styles */
     margin-right: 5px;
-    text-shadow: none;
     font-weight: 500;
+    background-color: transparent;
+    border: none;
+}
+
+/* Specific color rules based on data-label */
+.tag-label[data-label="project"] {
+    color: #0366d6;
+}
+
+.tag-label[data-label="audio"] {
+    color: #CC0000;
+}
+
+.tag-label[data-label="code"] {
+    color: green;
+}
+
+.tag-label[data-label="other"] {
+    color: grey;
+}
+
+.tag-label[data-label="note"] {
+    color: yellow;
+}
+
+.tag-label[data-label="poetry"] {
+    color: yellow;
 }
 
 .collapsible-item summary .summary-content-wrapper {

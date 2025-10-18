@@ -58,29 +58,36 @@ async function loadIssues(label, containerId, itemClass, pageId) {
                 issueEl.dataset.category = category;
             }
 
-                        let summaryContent = '';
-                        const labelsHtml = issue.labels.map(l => `<span class="tag-label" style="background-color:#${l.color};">${l.name}</span>`).join('');
-                        summaryContent = `
-                            <summary class="interactive-element">
-                                <div class="summary-content-wrapper">
-                                    <div class="item-details">
-                                        <div class="item-subtitle">${issueDate.toLocaleDateString('en-GB', {
-                                            day: '2-digit',
-                                            month: '2-digit',
-                                            year: 'numeric'
-                                        })}</div>
-                                        <span class="item-title">${escapeHtml(issue.title)}</span>
-                                    </div>
-                                    <div class="item-labels-summary">
-                                        ${labelsHtml}
-                                    </div>
-                                </div>
-                                <span class="dropdown-icon">+</span>
-                            </summary>
-                            <div class="dropdown-content">
-                                <div class="item-content">${marked.parse(issue.body)}</div>
-                            </div>
-                        `;
+            let itemSubtitle = '';
+            if (label === 'project') {
+                const firstLine = issue.body.split('\n')[0];
+                itemSubtitle = firstLine.substring(0, 50) + (firstLine.length > 50 ? '...' : '');
+            } else {
+                itemSubtitle = issueDate.toLocaleDateString('en-GB', {
+                    month: 'long',
+                    year: 'numeric'
+                });
+            }
+
+            let summaryContent = '';
+            const labelsHtml = issue.labels.map(l => `<span class="tag-label" data-label="${l.name.toLowerCase()}">${l.name}</span>`).join('');
+            summaryContent = `
+                <summary class="interactive-element">
+                    <div class="summary-content-wrapper">
+                        <div class="item-details">
+                            <div class="item-subtitle">${itemSubtitle}</div>
+                            <span class="item-title">${escapeHtml(issue.title)}</span>
+                        </div>
+                        <div class="item-labels-summary">
+                            ${labelsHtml}
+                        </div>
+                    </div>
+                    <span class="dropdown-icon">+</span>
+                </summary>
+                <div class="dropdown-content">
+                    <div class="item-content">${marked.parse(issue.body)}</div>
+                </div>
+            `;
             issueEl.innerHTML = summaryContent;
             container.appendChild(issueEl);
         });
@@ -126,9 +133,14 @@ function getFallbackProjectsHTML() {
     return `
         <details class="collapsible-item" data-category="code">
             <summary class="interactive-element">
-                <div>
-                    <div class="item-subtitle">${today}</div>
-                    <span class="item-title">p0kks.me</span>
+                <div class="summary-content-wrapper">
+                    <div class="item-details">
+                        <div class="item-subtitle">This portfolio website. Built with plain HTML, CSS and JavaScript.</div>
+                        <span class="item-title">p0kks.me</span>
+                    </div>
+                    <div class="item-labels-summary">
+                        <span class="tag-label" data-label="code">code</span>
+                    </div>
                 </div>
                 <span class="dropdown-icon">+</span>
             </summary>
@@ -138,9 +150,14 @@ function getFallbackProjectsHTML() {
         </details>
         <details class="collapsible-item" data-category="code">
             <summary class="interactive-element">
-                <div>
-                    <div class="item-subtitle">${today}</div>
-                    <span class="item-title">Discord Bot</span>
+                <div class="summary-content-wrapper">
+                    <div class="item-details">
+                        <div class="item-subtitle">A custom Discord bot for a community server, built with Node.js.</div>
+                        <span class="item-title">Discord Bot</span>
+                    </div>
+                    <div class="item-labels-summary">
+                        <span class="tag-label" data-label="code">code</span>
+                    </div>
                 </div>
                 <span class="dropdown-icon">+</span>
             </summary>
@@ -150,9 +167,14 @@ function getFallbackProjectsHTML() {
         </details>
         <details class="collapsible-item" data-category="audio">
             <summary class="interactive-element">
-                <div>
-                    <div class="item-subtitle">${today}</div>
-                    <span class="item-title">Ambient Music</span>
+                <div class="summary-content-wrapper">
+                    <div class="item-details">
+                        <div class="item-subtitle">A collection of short, experimental ambient tracks.</div>
+                        <span class="item-title">Ambient Music</span>
+                    </div>
+                    <div class="item-labels-summary">
+                        <span class="tag-label" data-label="audio">audio</span>
+                    </div>
                 </div>
                 <span class="dropdown-icon">+</span>
             </summary>
@@ -162,9 +184,13 @@ function getFallbackProjectsHTML() {
         </details>
         <details class="collapsible-item" data-category="other">
             <summary class="interactive-element">
-                <div>
-                    <div class="item-subtitle">${today}</div>
-                    <span class="item-title">Reaper Configuration</span>
+                <div class="summary-content-wrapper">
+                    <div class="item-details">
+                        <div class="item-subtitle">My personal configuration for the Reaper DAW, including themes, scripts, and settings.</div>
+                    </div>
+                    <div class="item-labels-summary">
+                        <span class="tag-label" data-label="other">other</span>
+                    </div>
                 </div>
                 <span class="dropdown-icon">+</span>
             </summary>
