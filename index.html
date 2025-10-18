@@ -30,26 +30,23 @@
   <main>
     <section id="home" class="page active">
       <div class="page-header">
-        <h2>Welcome to my little webspace</h2>
-         <p class="page-subtitle">
-          Logic writes my <a href="#" id="hotlink-code" class="interactive-element">code</a><br>
-          Emotion shapes my <a href="#" id="hotlink-audio" class="interactive-element">sound</a><br>
-          also check my <a href="#" id="hotlink-audio" class="interactive-element">other</a> works<br><br>
-        </p>
+        <h2>Welcome to my tiny webspace</h2>
+         <h5 class="page-subtitle">
+          Logic writes my <a href="#" data-target="projects" data-filter="code" class="interactive-element">code</a><br>
+          Emotion shapes my <a href="#" data-target="projects" data-filter="audio" class="interactive-element">sound</a><br>
+          also check my <a href="#" data-target="projects" data-filter="other" class="interactive-element">other</a> works<br>
+         </h5>
       </div>
 <div class="page-container">
   <details class="dropdown-note">
     <summary class="interactive-element">
-      <div class="summary-text">
-        <div class="project-subtitle">read</div>
-        <span class="project-title">about</span>
-      </div>
+      <div class="item-subtitle">read</div>
+      <span class="item-title">about</span>
       <span class="dropdown-icon">+</span>
     </summary>
     <div class="dropdown-content">
-      <h2>tl;dr</h2>
     <p>p0kks, a passionate developer and musician. This website serves as my personal portfolio where I showcase my projects and share my musical creations. Feel free to explore and connect with me through the social links below!</p>
-  <a href="#" id="full story" class="interactive-element">read full story</a><br>
+  <a href="#fullstory" data-target="fullstory" class="interactive-element">read full story</a><br>
                <div class="social-links">
               <a href="https://x.com/p0kks" class="interactive-element" target="_blank" rel="noopener noreferrer"><img src="assets/icons/twitter.png" class="social-icon"></a>
               <a href="https://t.me/p0kks" class="interactive-element" target="_blank" rel="noopener noreferrer"><img src="assets/icons/telegram.png" class="social-icon"></a>
@@ -101,13 +98,17 @@
         <!-- Notes will be loaded dynamically -->
       </div>
     </section>
+
+    <section id="fullstory" class="page">
+      <!-- Content for full story will be loaded here by script.js -->
+    </section>
   </main>
 </div>
 
 <footer>
         <div class="footer-inner">
             <div class="footer-links">
-                <p class="footer-copyright">© 2024 p0kks.me</p>
+                <p class="footer-copyright">© p0kks.me</p>
             </div>
             <div class="social-links">
                 <a href="https://bandlab.com/p0kks" target="_blank" aria-label="BandLab"><img src="assets/icons/bandlab.png" alt="BandLab" class="social-icon"></a>

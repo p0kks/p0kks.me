@@ -12,23 +12,9 @@ document.addEventListener('DOMContentLoaded', function() {
     // Initialize dropdowns
     initDropdowns();
 
-    // Update current year in footer
-    const yearElement = document.getElementById('current-year');
-    if (yearElement) {
-        yearElement.textContent = new Date().getFullYear();
-    }
-
-    // Notes system using GitHub Issues
-    const notesContainer = document.getElementById('notes-content');
-    if (notesContainer) {
-        loadNotes();
-    }
-
-    // Projects system using GitHub Issues
-    const projectsContainer = document.querySelector('.project-container');
-    if (projectsContainer) {
-        loadProjects();
-    }
+    // Notes and Projects system using GitHub Issues
+    loadIssues('note', 'notes-content', 'dropdown-note');
+    loadIssues('project', 'project-container', 'dropdown-project');
 });
 
 async function loadNotes() {
@@ -342,11 +328,39 @@ function initNavigation() {
                     page.classList.toggle('active', page.id === targetId);
                 });
 
+                // Load content for fullstory page if it's the target
+                if (targetId === 'fullstory') {
+                    loadFullStory();
+                }
+
                 // Scroll to the section
                 targetPage.scrollIntoView({ behavior: 'smooth' });
             }
         });
     });
+}
+
+async function loadFullStory() {
+    const fullStoryContainer = document.getElementById('fullstory');
+    if (fullStoryContainer.dataset.loaded) {
+        return; // Already loaded
+    }
+    try {
+        const response = await fetch('fullstory.html');
+        if (!response.ok) {
+            throw new Error('Failed to load full story content');
+        }
+        const html = await response.text();
+        // Extract only the content within the <main> tag from the fetched HTML
+        const parser = new DOMParser();
+        const doc = parser.parseFromString(html, 'text/html');
+        const mainContent = doc.querySelector('#fullstory .page-container').innerHTML;
+        fullStoryContainer.innerHTML = `<div class="page-header"><h2>The Full Story</h2></div><div class="page-container">${mainContent}</div>`;
+        fullStoryContainer.dataset.loaded = true; // Mark as loaded
+    } catch (error) {
+        console.error('Error loading full story:', error);
+        fullStoryContainer.innerHTML = '<p class="notes-error">Unable to load full story.</p>';
+    }
 }
 
 function initHotlinks() {
