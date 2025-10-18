@@ -70,11 +70,13 @@ body {
 
 nav {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
+  gap: 25px; /* Add some space between nav links */
+  margin-bottom: -110px;
 }
 
 nav a {
-  text-align: right;
+  /* text-align: right; removed */
 }
 
 .collapsible-item {
@@ -193,6 +195,8 @@ footer {
   font-size: 0.9em;
   border-top: 1px solid var(--border-color);
   background-color: var(--header-background);
+  opacity: 0.3;
+
 }
 
 .footer-inner {

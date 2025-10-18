@@ -8,7 +8,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // Notes and Projects system using GitHub Issues
     loadIssues('note', 'notes-content', 'collapsible-item', 'notes');
     loadIssues('project', 'project-container', 'collapsible-item', 'projects');
-    loadIssues('home', 'home-content', 'collapsible-item', 'home'); // Load home content into home-content div
+
 });
 
 async function loadIssues(label, containerId, itemClass, pageId) {
@@ -36,8 +36,6 @@ async function loadIssues(label, containerId, itemClass, pageId) {
         if (issues.length === 0) {
             if (label === 'project') {
                 showFallbackProjects(container); // Use fallback for projects if no issues
-            } else if (label === 'home') {
-                container.innerHTML = `<p class="status-message">No home content found. Create an issue with label 'home'.</p>`;
             } else {
                 container.innerHTML = `<p class="status-message">No ${label}s yet. Check back soon!</p>`;
             }
@@ -61,40 +59,27 @@ async function loadIssues(label, containerId, itemClass, pageId) {
             }
 
                         let summaryContent = '';
-                        if (label === 'home') {
-                            summaryContent = `
-                                <summary class="interactive-element">
-                                    <div>
-                                        <span class="item-title">${escapeHtml(issue.title)}</span>
-                                    </div>
-                                    <span class="dropdown-icon">+</span>
-                                </summary>
-                                <div class="dropdown-content">
-                                    <div class="item-content">${marked.parse(issue.body)}</div>
+                        const labelsHtml = issue.labels.map(l => `<span class="tag-label" style="background-color:#${l.color};">${l.name}</span>`).join('');
+                        summaryContent = `
+                            <summary class="interactive-element">
+                                <div>
+                                    <div class="item-subtitle">${issueDate.toLocaleDateString('en-GB', {
+                                        day: '2-digit',
+                                        month: '2-digit',
+                                        year: 'numeric'
+                                    })}</div>
+                                    <span class="item-title">${escapeHtml(issue.title)}</span>
                                 </div>
-                            `;
-                        } else {
-                            const labelsHtml = issue.labels.map(l => `<span class="tag-label" style="background-color:#${l.color};">${l.name}</span>`).join('');
-                            summaryContent = `
-                                <summary class="interactive-element">
-                                    <div>
-                                        <div class="item-subtitle">${issueDate.toLocaleDateString('en-GB', {
-                                            day: '2-digit',
-                                            month: '2-digit',
-                                            year: 'numeric'
-                                        })}</div>
-                                        <span class="item-title">${escapeHtml(issue.title)}</span>
-                                    </div>
-                                    <span class="dropdown-icon">+</span>
-                                </summary>
-                                <div class="dropdown-content">
-                                    <div class="item-labels">
-                                        ${labelsHtml}
-                                    </div>
-                                    <div class="item-content">${marked.parse(issue.body)}</div>
+                                <span class="dropdown-icon">+</span>
+                            </summary>
+                            <div class="dropdown-content">
+                                <div class="item-labels">
+                                    ${labelsHtml}
                                 </div>
-                            `;
-                        }            issueEl.innerHTML = summaryContent;
+                                <div class="item-content">${marked.parse(issue.body)}</div>
+                            </div>
+                        `;
+            issueEl.innerHTML = summaryContent;
             container.appendChild(issueEl);
         });
 
