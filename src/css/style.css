@@ -27,6 +27,7 @@ body {
 .container {
   max-width: 680px;
   margin: 0 auto;
+  padding: 15px 0px;
   background-color: rgba(73, 34, 136, 0);
 }
 
@@ -42,9 +43,6 @@ body {
 .header-inner {
   max-width: 680px;
   margin: 0 auto;
-  display: flex;
-  /* flex-direction: column; removed */
-  /* align-items: center; removed */
 }
 
 .topbar {
@@ -204,8 +202,7 @@ footer {
   font-size: 0.9em;
   border-top: 1px solid var(--border-color);
   background-color: var(--header-background);
-  opacity: 0.8;
-
+  opacity: 1;
 }
 
 .footer-inner {
