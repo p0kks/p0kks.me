@@ -1,102 +1,96 @@
 // ===== MAIN INITIALIZATION =====
 document.addEventListener('DOMContentLoaded', function() {
-    // Initialize navigation
+    // initTheme(); // Removed theme initialization
     initNavigation();
-    // Initialize dropdowns
-    initDropdowns();
-
-    // Notes and Projects system using GitHub Issues
-    loadIssues('note', 'notes-content', 'collapsible-item', 'notes');
-    loadIssues('project', 'project-container', 'collapsible-item', 'projects');
-
+    // Load content for projects and notes, but only display when their section is active
+    loadContent('project', 'project-container');
+    loadContent('note', 'notes-container');
 });
 
-async function loadIssues(label, containerId, itemClass, pageId) {
-    const container = document.getElementById(containerId) || document.querySelector(`.${containerId}`);
+/* ===== THEME: light -> dark -> deep ===== */
+// Removed theme functions: initTheme, nextTheme, applyTheme
+
+// ===== NAVIGATION FUNCTIONS =====
+function initNavigation() {
+    const navButtons = document.querySelectorAll('.main-nav .nav-btn');
+    // const homeNavCards = document.querySelectorAll('.home-nav-cards .nav-card'); // Removed
+    const pages = document.querySelectorAll('.page');
+
+    function activatePage(targetId) {
+        pages.forEach(page => {
+            page.classList.remove('active');
+            if (page.id === targetId) {
+                page.classList.add('active');
+            }
+        });
+
+        navButtons.forEach(btn => {
+            btn.classList.remove('active');
+            if (btn.dataset.target === targetId) {
+                btn.classList.add('active');
+            }
+        });
+    }
+
+    navButtons.forEach(button => {
+        button.addEventListener('click', (e) => {
+            const targetId = e.target.dataset.target;
+            activatePage(targetId);
+        });
+    });
+
+    // Removed event listeners for homeNavCards
+    /*
+    homeNavCards.forEach(card => {
+        card.addEventListener('click', (e) => {
+            const targetId = e.currentTarget.dataset.target; // Use currentTarget for delegated events
+            activatePage(targetId);
+        });
+    });
+    */
+}
+
+
+// ===== DYNAMIC CONTENT LOADING =====
+async function loadContent(label, containerId) {
+    const container = document.getElementById(containerId);
     if (!container) {
-        console.error(`Container with ID or class "${containerId}" not found.`);
+        console.error(`Container with ID "${containerId}" not found.`);
         return;
     }
 
     container.innerHTML = `<p class="status-message">Loading ${label}s...</p>`;
-    
+
     try {
         const response = await fetch(`https://api.github.com/repos/p0kks/p0kks.me/issues?labels=${label}&state=open&sort=created&direction=desc`, {
             headers: {
                 'User-Agent': 'p0kks.me-portfolio'
             }
         });
-        
+
         if (!response.ok) {
             throw new Error(`Failed to fetch ${label}s`);
         }
-        
+
         const issues = await response.json();
-        
+
         if (issues.length === 0) {
             if (label === 'project') {
-                showFallbackProjects(container); // Use fallback for projects if no issues
+                showFallbackProjects(container);
             } else {
                 container.innerHTML = `<p class="status-message">No ${label}s yet. Check back soon!</p>`;
             }
             return;
         }
-        
+
         container.innerHTML = '';
-        
         issues.forEach(issue => {
-            const issueDate = new Date(issue.created_at);
-            const issueEl = document.createElement('details');
-            issueEl.className = itemClass;
-            
-            if (label === 'note') {
-                issueEl.dataset.month = issueDate.getMonth();
-            } else if (label === 'project') {
-                const category = issue.labels.find(l => 
-                    ['code', 'audio', 'other'].includes(l.name.toLowerCase())
-                )?.name || 'other';
-                issueEl.dataset.category = category;
-            }
-
-            let itemSubtitle = '';
-            if (label === 'project') {
-                const firstLine = issue.body.split('\n')[0];
-                itemSubtitle = firstLine.substring(0, 50) + (firstLine.length > 50 ? '...' : '');
-            } else {
-                itemSubtitle = issueDate.toLocaleDateString('en-GB', {
-                    month: 'long',
-                    year: 'numeric'
-                });
-            }
-
-            let summaryContent = '';
-            const labelsHtml = issue.labels.map(l => `<span class="tag-label" data-label="${l.name.toLowerCase()}">${l.name}</span>`).join('');
-            summaryContent = `
-                <summary class="interactive-element">
-                    <div class="summary-content-wrapper">
-                        <div class="item-details">
-                            <div class="item-subtitle">${itemSubtitle}</div>
-                            <span class="item-title">${escapeHtml(issue.title)}</span>
-                        </div>
-                        <div class="item-labels-summary">
-                            ${labelsHtml}
-                        </div>
-                    </div>
-                    <span class="dropdown-icon">+</span>
-                </summary>
-                <div class="dropdown-content">
-                    <div class="item-content">${marked.parse(issue.body)}</div>
-                </div>
-            `;
-            issueEl.innerHTML = summaryContent;
-            container.appendChild(issueEl);
+            const card = createCard(issue, label);
+            container.appendChild(card);
         });
 
-        initDropdowns();
-        if (pageId === 'notes' || pageId === 'projects') {
-            initIssueFilter(pageId, itemClass);
-        }
-        
+        initFilterButtons(label);
+
     } catch (error) {
         console.error(`Error loading ${label}s:`, error);
         container.innerHTML = `
@@ -108,28 +102,61 @@ async function loadIssues(label, containerId, itemClass, pageId) {
     }
 }
 
-function showFallbackProjects(container) {
-    container.innerHTML = `
-        <p class="status-message">
-            No GitHub projects found. <br>
-            <small>
-                Create issues with the "project" label in the 
-                <a href="https://github.com/p0kks/p0kks.me" target="_blank">p0kks.me repository</a>.
-                <br>Use labels: "code", "audio", "other" for categories, "live" for live projects.
-            </small>
-        </p>
-        <div style="margin-top: 2rem;">
-            <p style="text-align: center; opacity: 0.7; margin-bottom: 1rem;">Example projects:</p>
-            ${getFallbackProjectsHTML()}
-        </div>
+function createCard(issue, label) {
+    const card = document.createElement('div');
+    card.className = 'card';
+
+    const issueDate = new Date(issue.created_at);
+    let subtitle = '';
+    let category = '';
+
+    if (label === 'project') {
+        const firstLine = issue.body.split('\n')[0];
+        subtitle = firstLine.substring(0, 100) + (firstLine.length > 100 ? '...' : '');
+        category = issue.labels.find(l =>
+            ['code', 'audio', 'other'].includes(l.name.toLowerCase())
+        )?.name || 'other';
+        card.dataset.category = category;
+    } else if (label === 'note') {
+        subtitle = issueDate.toLocaleDateString('en-GB', {
+            month: 'long',
+            year: 'numeric'
+        });
+        card.dataset.month = issueDate.getMonth();
+    }
+
+    const tagsHtml = issue.labels.map(l => `<span class="tag-label">${l.name}</span>`).join('');
+
+    const fullContent = marked.parse(issue.body);
+    const truncatedContent = fullContent.substring(0, 200) + (fullContent.length > 200 ? '...' : '');
+
+    card.innerHTML = `
+        <h3 class="card-title">${escapeHtml(issue.title)}</h3>
+        <p class="card-subtitle">${subtitle}</p>
+        <div class="card-content collapsed">${truncatedContent}</div>
+        ${fullContent.length > 200 ? '<button class="read-more-btn">Read More</button>' : ''}
+        <div class="card-tags">${tagsHtml}</div>
     `;
-    
-    initIssueFilter('projects', 'collapsible-item');
-    initDropdowns();
+
+    const readMoreBtn = card.querySelector('.read-more-btn');
+    if (readMoreBtn) {
+        readMoreBtn.addEventListener('click', () => {
+            const contentDiv = card.querySelector('.card-content');
+            contentDiv.classList.toggle('collapsed');
+            if (contentDiv.classList.contains('collapsed')) {
+                contentDiv.innerHTML = truncatedContent;
+                readMoreBtn.textContent = 'Read More';
+            } else {
+                contentDiv.innerHTML = fullContent;
+                readMoreBtn.textContent = 'Show Less';
+            }
+        });
+    }
+
+    return card;
 }
 
-function getFallbackProjectsHTML() {
-    
+function showFallbackProjects(container) {
     const fallbackProjects = [
         {
             category: 'code',
@@ -158,34 +185,36 @@ function getFallbackProjectsHTML() {
         }
     ];
 
-    let projectsHtml = '';
-    fallbackProjects.forEach(project => {
-        const firstLine = project.content.split('\n')[0];
-        const itemSubtitle = firstLine.substring(0, 50) + (firstLine.length > 50 ? '...' : '');
-
-        projectsHtml += `
-            <details class="collapsible-item" data-category="${project.category}">
-                <summary class="interactive-element">
-                    <div class="summary-content-wrapper">
-                        <div class="item-details">
-                            <div class="item-subtitle">${itemSubtitle}</div>
-                            <span class="item-title">${project.title}</span>
-                        </div>
-                        <div class="item-labels-summary">
-                            <span class="tag-label" data-label="${project.category}">${project.category}</span>
-                        </div>
-                    </div>
-                    <span class="dropdown-icon">+</span>
-                </summary>
-                <div class="dropdown-content">
-                    <div class="item-content">${project.content}</div>
-                </div>
-            </details>
-        `;
-    });
-
-    return projectsHtml;
+    container.innerHTML = `
+        <p class="status-message">
+            No GitHub projects found. <br>
+            <small>
+                Create issues with the "project" label in the
+                <a href="https://github.com/p0kks/p0kks.me" target="_blank">p0kks.me repository</a>.
+                <br>Use labels: "code", "audio", "other" for categories, "live" for live projects.
+            </small>
+        </p>
+        <div style="margin-top: 2rem;">
+            <p style="text-align: center; opacity: 0.7; margin-bottom: 1rem;">Example projects:</p>
+            <div class="card-grid">
+                ${fallbackProjects.map(project => {
+                    const card = document.createElement('div');
+                    card.className = 'card';
+                    card.dataset.category = project.category;
+                    card.innerHTML = `
+                        <h3 class="card-title">${escapeHtml(project.title)}</h3>
+                        <p class="card-subtitle">${project.content.split('\n')[0].substring(0, 100) + (project.content.split('\n')[0].length > 100 ? '...' : '' )}</p>
+                        <div class="card-content">${marked.parse(project.content)}</div>
+                        <div class="card-tags"><span class="tag-label">${project.category}</span></div>
+                    `;
+                    return card.outerHTML;
+                }).join('')}
+            </div>
+        </div>
+    `;
+    initFilterButtons('project');
 }
+
 
 function escapeHtml(text) {
     const div = document.createElement('div');
@@ -193,9 +222,9 @@ function escapeHtml(text) {
     return div.innerHTML;
 }
 
-function initIssueFilter(pageId, itemClass) {
-    const filterButtons = document.querySelectorAll(`#${pageId} .filter-btn`);
-    const issueCards = document.querySelectorAll(`#${pageId} .${itemClass}`);
+function initFilterButtons(section) {
+    const filterButtons = document.querySelectorAll(`.filter-buttons button[data-section="${section}"]`);
+    const cards = document.querySelectorAll(`#${section}-container .card`);
 
     filterButtons.forEach(button => {
         button.addEventListener('click', () => {
@@ -203,55 +232,15 @@ function initIssueFilter(pageId, itemClass) {
             button.classList.add('active');
 
             const filter = button.dataset.filter;
-            issueCards.forEach(card => {
+            cards.forEach(card => {
                 let display = 'none';
-                if (pageId === 'notes') {
-                    display = filter === 'all' || card.dataset.month == filter ? '' : 'none';
-                } else if (pageId === 'projects') {
-                    display = filter === 'all' || card.dataset.category === filter ? '' : 'none';
+                if (section === 'project') {
+                    display = (filter === 'all' || card.dataset.category === filter) ? 'flex' : 'none';
+                } else if (section === 'note') {
+                    display = (filter === 'all' || card.dataset.month == filter) ? 'flex' : 'none';
                 }
                 card.style.display = display;
             });
-        });
-    });
-}
-
-// ===== NAVIGATION FUNCTIONS =====
-function initNavigation() {
-    const navLinks = document.querySelectorAll('nav a');
-    const pages = document.querySelectorAll('.page');
-
-    navLinks.forEach(link => {
-        link.addEventListener('click', (e) => {
-            e.preventDefault();
-            const targetId = link.dataset.target;
-            const targetPage = document.getElementById(targetId);
-
-            if (targetPage) {
-                // Update active link
-                navLinks.forEach(navLink => navLink.classList.remove('active'));
-                link.classList.add('active');
-
-                // Update active page
-                pages.forEach(page => {
-                    page.classList.toggle('active', page.id === targetId);
-                });
-
-                // Scroll to the section
-                targetPage.scrollIntoView({ behavior: 'smooth' });
-            }
-        });
-    });
-}
-
-function initDropdowns() {
-    const detailsElements = document.querySelectorAll('details');
-    detailsElements.forEach(details => {
-        details.addEventListener('toggle', () => {
-            const icon = details.querySelector('.dropdown-icon');
-            if (icon) {
-                icon.textContent = details.open ? '-' : '+';
-            }
         });
     });
 }

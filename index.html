@@ -1,167 +1,101 @@
 <!doctype html>
 <html lang="en">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="description" content="tl;dr: p0kks' portfolio website. A showcase of code and music.">
-<title>p0kks.me</title>
-<link rel="icon" href="assets/images/favicon.png">
-<link rel="stylesheet" href="src/css/style.css">
-<script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="description" content="p0kks — minimalist portfolio showcasing code projects and audio work.">
+  <title>p0kks</title>
+  <link rel="icon" href="assets/images/favicon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Roboto+Mono:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="src/css/style.css">
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+  <script defer src="src/js/script.js"></script>
+  <meta name="robots" content="index,follow">
 </head>
 <body>
-<header class="header">
-<div class="header-inner">
-<div class="topbar">
-  <a href="#home" data-target="home" class="site-title">
-    <img src="assets\images\site-logo.png" alt="p0kks logo" class="site-logo" loading="lazy">
-  </a>
-  <nav>
-    <a href="#home" data-target="home" class="active interactive-element">home</a>
-    <a href="#projects" data-target="projects" class="interactive-element">projects</a>
-    <a href="#notes" data-target="notes" class="interactive-element">notes</a>
-  </nav>
-</div>
-</header>
+  <main class="container">
+    <header class="header">
+      <div class="header-top">
+        <h1 class="site-title">p0kks</h1>
+      </div>
+      <p class="tagline">Developer | Musician | Creator</p>
+      <div class="social-links header-social">
+        <a href="https://github.com/p0kks" target="_blank" rel="noopener" class="social-link">
+          <img src="assets/icons/github.png" alt="GitHub" class="social-icon">
+        </a>
+        <a href="https://twitter.com/p0kks" target="_blank" rel="noopener" class="social-link">
+          <img src="assets/icons/twitter.png" alt="Twitter" class="social-icon">
+        </a>
+        <a href="https://t.me/p0kks" target="_blank" rel="noopener" class="social-link">
+          <img src="assets/icons/telegram.png" alt="Telegram" class="social-icon">
+        </a>
+        <a href="https://bandlab.com/p0kks" target="_blank" rel="noopener" class="social-link">
+          <img src="assets/icons/bandlab.png" alt="BandLab" class="social-icon">
+        </a>
+        <a href="https://discord.com/users/p0kks" target="_blank" rel="noopener" class="social-link">
+          <img src="assets/icons/discord.png" alt="Discord" class="social-icon">
+        </a>
+      </div>
+    </header>
 
-<div class="container">
-  <main>
+    <nav class="main-nav">
+      <button class="nav-btn active" data-target="home">Home</button>
+      <button class="nav-btn" data-target="projects">Projects</button>
+      <button class="nav-btn" data-target="notes">Notes</button>
+    </nav>
+
     <section id="home" class="page active">
-      <div class="page-header">
-        <div class="page-subtitle">
-       <p>A minimalist archive of what I build and become</p>
-      </div>
-      <div class="page-container">
-        <details class="collapsible-item">
-            <summary class="interactive-element">
-                <div>
-                    <span class="item-title">About</span>
-                </div>
-                <span class="dropdown-icon">+</span>
-            </summary>
-            <div class="dropdown-content">
-                <div class="item-content">
-                    <p>Welcome to my personal archive. Here you'll find a collection of my projects, notes, and thoughts on various topics.</p>
-                    <p>I'm passionate about coding, music, and exploring new ideas. This website serves as a digital journal of my journey.</p>
-                    <p>Feel free to explore my projects and read through my notes. If you have any questions or want to connect, don't hesitate to reach out!</p>
-                    <p><a href="#fullstory" class="interactive-element">The Full Story</a></p>
-                </div>
-            </div>
-        </details>
-        <details class="collapsible-item">
-            <summary class="interactive-element">
-                <div>
-                    <span class="item-title">Bookmarks</span>
-                </div>
-                <span class="dropdown-icon">+</span>
-            </summary>
-            <div class="dropdown-content">
-                <div class="item-content">
-                    <p>A collection of interesting links and resources.</p>
-                    <!-- Add your bookmarks here -->
-                </div>
-            </div>
-        </details>
-        <details class="collapsible-item">
-            <summary class="interactive-element">
-                <div>
-                    <span class="item-title">History</span>
-                </div>
-                <span class="dropdown-icon">+</span>
-            </summary>
-            <div class="dropdown-content">
-                <div class="item-content">
-                    <p>A timeline of significant events and milestones.</p>
-                    <!-- Add your history content here -->
-                </div>
-            </div>
-        </details>
-      </div>
+      <!-- Dropdowns moved here, outside home-content but inside #home -->
+      <details class="home-dropdown">
+        <summary class="home-dropdown-summary">About</summary>
+        <div class="home-dropdown-content">
+          <p>Hello! I'm p0kks, a developer, musician, and creator passionate about building interesting things and exploring new ideas. This site serves as a hub for my various projects and notes.</p>
+        </div>
+      </details>
+
+      <details class="home-dropdown">
+        <summary class="home-dropdown-summary">Bookmarks</summary>
+        <div class="home-dropdown-content">
+          <ul>
+            <li><a href="https://github.com/p0kks" target="_blank" rel="noopener">My GitHub</a> - Where I share my code projects.</li>
+            <li><a href="https://bandlab.com/p0kks" target="_blank" rel="noopener">My BandLab</a> - Listen to my music and audio experiments.</li>
+            <li><a href="https://example.com/favorite-tool" target="_blank" rel="noopener">Favorite Dev Tool</a> - A tool I frequently use.</li>
+            </ul>
+        </div>
+      </details>
+
+      <details class="home-dropdown">
+        <summary class="home-dropdown-summary">History</summary>
+        <div class="home-dropdown-content">
+          <p>Started coding in 2018, focusing on web development and automation. Began exploring music production in 2020. Always learning and experimenting with new technologies and creative outlets.</p>
+        </div>
+      </details>
+
     </section>
 
     <section id="projects" class="page">
-      <div class="page-header">
-        <div class="filter-buttons">
-          <button class="filter-btn active interactive-element" data-filter="all">all</button>
-          <button class="filter-btn interactive-element" data-filter="code">code</button>
-          <button class="filter-btn interactive-element" data-filter="audio">audio</button>
-          <button class="filter-btn interactive-element" data-filter="other">other</button>
-        </div>
+      <div class="filter-buttons">
+        <button class="filter-btn active" data-filter="all" data-section="projects">All</button>
+        <button class="filter-btn" data-filter="code" data-section="projects">Code</button>
+        <button class="filter-btn" data-filter="audio" data-section="projects">Audio</button>
+        <button class="filter-btn" data-filter="other" data-section="projects">Other</button>
       </div>
-      <div class="page-container">
-        <div class="project-container">
-        </div>
-      </div>
+      <div id="project-container" class="card-grid"></div>
     </section>
 
     <section id="notes" class="page">
-      <div class="page-header">
-        <div class="filter-buttons">
-          <button class="filter-btn active interactive-element" data-filter="all">all</button>
-          <button class="filter-btn interactive-element" data-filter="9">october</button>
-        </div>
+      <div class="filter-buttons">
+        <button class="filter-btn active" data-filter="all" data-section="notes">All</button>
+        <button class="filter-btn" data-filter="9" data-section="notes">October</button>
       </div>
-      <div class="notes-container" id="notes-content">
-        <!-- Notes will be loaded dynamically -->
-      </div>
+      <div id="notes-container" class="card-grid"></div>
     </section>
 
-
-    <section id="fullstory" class="page">
-      <div class="page-header">
-        <h2>The Full Story</h2>
-      </div>
-      <div class="page-container" id="fullstory-content">
-        <div class="timeline">
-          <div class="timeline-item">
-            <h3>Born (Year)</h3>
-            <div class="item-content"><p>Placeholder for early life and childhood experiences.</p></div>
-          </div>
-          <div class="timeline-item">
-            <h3>Early Interests (Year)</h3>
-            <div class="item-content"><p>Placeholder for developing interests in technology, music, or other fields.</p></div>
-          </div>
-          <div class="timeline-item">
-            <h3>First Code/Music Project (Year)</h3>
-            <div class="item-content"><p>Placeholder for initial ventures into coding or music production.</p></div>
-          </div>
-          <div class="timeline-item">
-            <h3>Key Learning Experience (Year)</h3>
-            <div class="item-content"><p>Placeholder for a significant educational or self-taught milestone.</p></div>
-          </div>
-          <div class="timeline-item">
-            <h3>Professional Beginnings (Year)</h3>
-            <div class="item-content"><p>Placeholder for entry into a professional career or significant project.</p></div>
-          </div>
-          <div class="timeline-item">
-            <h3>Major Project/Achievement (Year)</h3>
-            <div class="item-content"><p>Placeholder for a notable accomplishment in coding or music.</p></div>
-          </div>
-          <div class="timeline-item">
-            <h3>Current Focus (Year)</h3>
-            <div class="item-content"><p>Placeholder for present-day activities, interests, and goals.</p></div>
-          </div>
-        </div>
-      </div>
-    </section>
+    <footer class="footer">
+      <p>&copy; 2025 p0kks. All rights reserved.</p>
+    </footer>
   </main>
-</div>
-
-<footer>
-        <div class="footer-inner">
-            <div class="footer-links">
-                <p class="footer-copyright">© p0kks.me</p>
-            </div>
-            <div class="social-links">
-                <a href="https://bandlab.com/p0kks" target="_blank" aria-label="BandLab"><img src="assets/icons/bandlab.png" alt="BandLab" class="social-icon"></a>
-                <a href="https://discord.com/users/p0kks" target="_blank" aria-label="Discord"><img src="assets/icons/discord.png" alt="Discord" class="social-icon"></a>
-                <a href="https://github.com/p0kks" target="_blank" aria-label="GitHub"><img src="assets/icons/github.png" alt="GitHub" class="social-icon"></a>
-                <a href="https://t.me/p0kks" target="_blank" aria-label="Telegram"><img src="assets/icons/telegram.png" alt="Telegram" class="social-icon"></a>
-                <a href="https://twitter.com/p0kks" target="_blank" aria-label="Twitter"><img src="assets/icons/twitter.png" alt="Twitter" class="social-icon"></a>
-            </div>
-        </div>
-</footer>
-
-<script src="src/js/script.js"></script>
 </body>
 </html>
