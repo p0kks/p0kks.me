@@ -335,7 +335,7 @@ body {
 }
 
 .card {
-  background-color: var(--card-bg);
+  background-color: #1d1d1d;
   border: 1px solid var(--border-color);
   border-radius: 8px;
   box-shadow: 0 3px 8px var(--shadow-color);
@@ -394,7 +394,7 @@ body {
   background-color: var(--accent-color);
   border: none;
   border-radius: 4px;
-  color: #ffffff;
+  color: #cccccc;
   cursor: pointer;
   display: block;
   margin-top: 12px;
