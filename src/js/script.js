@@ -100,19 +100,69 @@ function createCard(issue, label) {
         card.dataset.month = issueDate.getMonth();
     }
 
-    const tagsHtml = issue.labels.map(l => `<span class="tag-label">${l.name}</span>`).join('');
-    const fullContent = marked.parse(issue.body);
+    const cardHeader = document.createElement('div');
+    cardHeader.className = 'card-header';
 
-    card.innerHTML = `
-        <h3 class="card-title">${escapeHtml(issue.title)}</h3>
-        <div class="card-tags">${tagsHtml}</div>
-        <div class="card-content hidden">${fullContent}</div>
-    `;
+    const cardTitle = document.createElement('h3');
+    cardTitle.className = 'card-title';
+    cardTitle.textContent = issue.title;
+    cardHeader.appendChild(cardTitle);
+
+    const cardContent = document.createElement('div');
+    cardContent.className = 'card-content hidden';
+    cardContent.innerHTML = marked.parse(issue.body);
+
+    const cardFooter = document.createElement('div');
+    cardFooter.className = 'card-footer';
+
+    const cardTags = document.createElement('div');
+    cardTags.className = 'card-tags';
+    issue.labels.forEach(l => {
+        const tagLabel = document.createElement('span');
+        tagLabel.className = 'tag-label';
+        tagLabel.textContent = l.name;
+        cardTags.appendChild(tagLabel);
+    });
+    cardFooter.appendChild(cardTags);
+
+    if (label === 'project') {
+        const cardLinks = document.createElement('div');
+        cardLinks.className = 'card-links';
+
+        if (issue.github) {
+            const githubLink = document.createElement('a');
+            githubLink.href = issue.github;
+            githubLink.target = '_blank';
+            githubLink.rel = 'noopener';
+            githubLink.innerHTML = '<img src="assets/icons/github.png" alt="GitHub" class="card-icon">';
+            cardLinks.appendChild(githubLink);
+        }
+        if (issue.live) {
+            const liveLink = document.createElement('a');
+            liveLink.href = issue.live;
+            liveLink.target = '_blank';
+            liveLink.rel = 'noopener';
+            liveLink.innerHTML = '<img src="assets/icons/githubpages.png" alt="Live Demo" class="card-icon">';
+            cardLinks.appendChild(liveLink);
+        }
+        if (cardLinks.children.length > 0) {
+            cardFooter.appendChild(cardLinks);
+        }
+    } else if (label === 'note') {
+        const cardDate = document.createElement('span');
+        cardDate.className = 'card-date';
+        const issueDate = new Date(issue.created_at);
+        cardDate.textContent = issueDate.toLocaleDateString(); // Format date nicely
+        cardFooter.appendChild(cardDate);
+    }
+
+    card.appendChild(cardHeader);
+    card.appendChild(cardContent);
+    card.appendChild(cardFooter);
 
     card.addEventListener('click', () => {
         card.classList.toggle('expanded');
-        const contentDiv = card.querySelector('.card-content');
-        contentDiv.classList.toggle('hidden');
+        cardContent.classList.toggle('hidden');
     });
 
     return card;
@@ -163,15 +213,35 @@ function showFallbackProjects(container) {
                     const card = document.createElement('div');
                     card.className = 'card';
                     card.dataset.category = project.category;
-                    card.innerHTML = `
-                        <h3 class="card-title">${escapeHtml(project.title)}</h3>
-                        <div class="card-tags"><span class="tag-label">${project.category}</span></div>
-                        <div class="card-content hidden">${marked.parse(project.content)}</div>
-                    `;
+
+                    const cardHeader = document.createElement('div');
+                    cardHeader.className = 'card-header';
+                    const cardTitle = document.createElement('h3');
+                    cardTitle.className = 'card-title';
+                    cardTitle.textContent = project.title;
+                    cardHeader.appendChild(cardTitle);
+
+                    const cardContent = document.createElement('div');
+                    cardContent.className = 'card-content hidden';
+                    cardContent.innerHTML = marked.parse(project.content);
+
+                    const cardFooter = document.createElement('div');
+                    cardFooter.className = 'card-footer';
+                    const cardTags = document.createElement('div');
+                    cardTags.className = 'card-tags';
+                    const tagLabel = document.createElement('span');
+                    tagLabel.className = 'tag-label';
+                    tagLabel.textContent = project.category;
+                    cardTags.appendChild(tagLabel);
+                    cardFooter.appendChild(cardTags);
+
+                    card.appendChild(cardHeader);
+                    card.appendChild(cardContent);
+                    card.appendChild(cardFooter);
+
                     card.addEventListener('click', () => {
                         card.classList.toggle('expanded');
-                        const contentDiv = card.querySelector('.card-content');
-                        contentDiv.classList.toggle('hidden');
+                        cardContent.classList.toggle('hidden');
                     });
                     return card.outerHTML;
                 }).join('')}

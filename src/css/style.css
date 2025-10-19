@@ -189,6 +189,7 @@ body {
   display: flex;
   font-family: var(--font-heading);
   font-size: 1.2em;
+  font-weight: 500; /* Less bold */
   justify-content: space-between;
   list-style: none; /* Remove default marker */
   padding: 15px 20px;
@@ -220,6 +221,7 @@ body {
   color: var(--muted-text-color);
   font-size: 0.95em;
   padding: 0 20px 15px; /* Padding for content */
+  text-align: left;
 }
 
 .home-dropdown-content p {
@@ -277,6 +279,53 @@ body {
   font-weight: 600;
 }
 
+/* Specific filter button colors */
+.filter-btn[data-filter="code"] {
+  background: linear-gradient(to right, #00aaff, #007bff); /* Light blue gradient */
+  color: #ffffff;
+}
+
+.filter-btn[data-filter="code"]:hover:not(.active) {
+  background: linear-gradient(to right, #007bff, #00aaff);
+  color: #ffffff;
+}
+
+.filter-btn[data-filter="code"].active {
+  background: linear-gradient(to right, #007bff, #00aaff);
+  color: #ffffff;
+}
+
+.filter-btn[data-filter="audio"] {
+  background: linear-gradient(to right, #ff4d4d, #cc0000); /* Red gradient */
+  color: #ffffff;
+}
+
+.filter-btn[data-filter="audio"]:hover:not(.active) {
+  background: linear-gradient(to right, #cc0000, #ff4d4d);
+  color: #ffffff;
+}
+
+.filter-btn[data-filter="audio"].active {
+  background: linear-gradient(to right, #cc0000, #ff4d4d);
+  color: #ffffff;
+}
+
+.filter-btn[data-filter="other"] {
+  background: linear-gradient(to right, #66bb6a, #388e3c); /* Green gradient */
+  color: #ffffff;
+}
+
+.filter-btn[data-filter="other"]:hover:not(.active) {
+  background: linear-gradient(to right, #388e3c, #66bb6a);
+  color: #ffffff;
+}
+
+.filter-btn[data-filter="other"].active {
+  background: linear-gradient(to right, #388e3c, #66bb6a);
+  color: #ffffff;
+}
+
+
 .card-grid {
   display: grid;
   gap: 20px;
@@ -293,10 +342,10 @@ body {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  max-height: 140px; /* Small fixed height for collapsed card */
+  margin-bottom: 20px; /* Added empty space between cards */
+  max-height: 100px; /* Small fixed height for collapsed card */
   max-width: 500px;
   overflow: hidden; /* Hide overflowing content */
-  padding: 18px;
   transition: max-height 0.3s ease-out, box-shadow 0.2s ease, background-color 0.2s ease; /* Transition max-height */
   width: 100%;
 }
@@ -312,18 +361,28 @@ body {
   transform: translateY(-3px);
 }
 
+.card-header {
+  border-bottom: 1px solid var(--border-color);
+  padding: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center; /* Center the title */
+}
+
 .card-title {
   color: var(--text-color);
-  font-size: 1.3em;
-  margin-bottom: 8px;
+  font-family: var(--font-heading);
+  font-size: 1.2em;
+  font-weight: 500; /* Less bold */
 }
 
 .card-content {
   color: var(--text-color);
-  font-size: 0.95em;
   flex-grow: 1;
+  font-size: 0.95em;
   line-height: 1.5;
   margin-bottom: 12px;
+  padding: 10px;
   position: relative;
 }
 
@@ -349,13 +408,30 @@ body {
   color: var(--accent-color);
 }
 
-.card-tags {
+.card-footer {
   border-top: 1px solid var(--border-color);
+  padding: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.card-tags {
   display: flex;
   flex-wrap: wrap;
   gap: 6px;
-  margin-top: auto;
-  padding-top: 12px;
+}
+
+.card-links {
+  display: flex;
+  gap: 10px;
+}
+
+.card-date {
+  color: var(--muted-text-color);
+  font-size: 0.85em;
 }
 
 .tag-label {
@@ -364,7 +440,7 @@ body {
   border-radius: 4px;
   color: var(--muted-text-color);
   font-size: 0.75em;
-  padding: 4px 8px;
+  padding: 5px 8px; /* Adjusted padding */
 }
 
 .footer {
@@ -390,8 +466,8 @@ body {
     flex-wrap: wrap;
   }
 
-  .site-title {
-    font-size: 1.6em;
+  .home-content {
+    gap: 25px;
   }
 
   .social-link {
@@ -406,8 +482,8 @@ body {
 
   .nav-card {
     flex-direction: column;
-    gap: 10px;
     text-align: center;
+    gap: 10px;
   }
 
   .nav-card-icon {
