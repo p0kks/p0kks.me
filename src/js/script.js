@@ -1,19 +1,13 @@
 // ===== MAIN INITIALIZATION =====
 document.addEventListener('DOMContentLoaded', function() {
-    // initTheme(); // Removed theme initialization
     initNavigation();
-    // Load content for projects and notes, but only display when their section is active
     loadContent('project', 'project-container');
     loadContent('note', 'notes-container');
 });
 
-/* ===== THEME: light -> dark -> deep ===== */
-// Removed theme functions: initTheme, nextTheme, applyTheme
-
 // ===== NAVIGATION FUNCTIONS =====
 function initNavigation() {
     const navButtons = document.querySelectorAll('.main-nav .nav-btn');
-    // const homeNavCards = document.querySelectorAll('.home-nav-cards .nav-card'); // Removed
     const pages = document.querySelectorAll('.page');
 
     function activatePage(targetId) {
@@ -38,18 +32,7 @@ function initNavigation() {
             activatePage(targetId);
         });
     });
-
-    // Removed event listeners for homeNavCards
-    /*
-    homeNavCards.forEach(card => {
-        card.addEventListener('click', (e) => {
-            const targetId = e.currentTarget.dataset.target; // Use currentTarget for delegated events
-            activatePage(targetId);
-        });
-    });
-    */
 }
-
 
 // ===== DYNAMIC CONTENT LOADING =====
 async function loadContent(label, containerId) {
@@ -106,52 +89,31 @@ function createCard(issue, label) {
     const card = document.createElement('div');
     card.className = 'card';
 
-    const issueDate = new Date(issue.created_at);
-    let subtitle = '';
     let category = '';
-
     if (label === 'project') {
-        const firstLine = issue.body.split('\n')[0];
-        subtitle = firstLine.substring(0, 100) + (firstLine.length > 100 ? '...' : '');
         category = issue.labels.find(l =>
             ['code', 'audio', 'other'].includes(l.name.toLowerCase())
         )?.name || 'other';
         card.dataset.category = category;
     } else if (label === 'note') {
-        subtitle = issueDate.toLocaleDateString('en-GB', {
-            month: 'long',
-            year: 'numeric'
-        });
+        const issueDate = new Date(issue.created_at);
         card.dataset.month = issueDate.getMonth();
     }
 
     const tagsHtml = issue.labels.map(l => `<span class="tag-label">${l.name}</span>`).join('');
-
     const fullContent = marked.parse(issue.body);
-    const truncatedContent = fullContent.substring(0, 200) + (fullContent.length > 200 ? '...' : '');
 
     card.innerHTML = `
         <h3 class="card-title">${escapeHtml(issue.title)}</h3>
-        <p class="card-subtitle">${subtitle}</p>
-        <div class="card-content collapsed">${truncatedContent}</div>
-        ${fullContent.length > 200 ? '<button class="read-more-btn">Read More</button>' : ''}
         <div class="card-tags">${tagsHtml}</div>
+        <div class="card-content hidden">${fullContent}</div>
     `;
 
-    const readMoreBtn = card.querySelector('.read-more-btn');
-    if (readMoreBtn) {
-        readMoreBtn.addEventListener('click', () => {
-            const contentDiv = card.querySelector('.card-content');
-            contentDiv.classList.toggle('collapsed');
-            if (contentDiv.classList.contains('collapsed')) {
-                contentDiv.innerHTML = truncatedContent;
-                readMoreBtn.textContent = 'Read More';
-            } else {
-                contentDiv.innerHTML = fullContent;
-                readMoreBtn.textContent = 'Show Less';
-            }
-        });
-    }
+    card.addEventListener('click', () => {
+        card.classList.toggle('expanded');
+        const contentDiv = card.querySelector('.card-content');
+        contentDiv.classList.toggle('hidden');
+    });
 
     return card;
 }
@@ -203,10 +165,14 @@ function showFallbackProjects(container) {
                     card.dataset.category = project.category;
                     card.innerHTML = `
                         <h3 class="card-title">${escapeHtml(project.title)}</h3>
-                        <p class="card-subtitle">${project.content.split('\n')[0].substring(0, 100) + (project.content.split('\n')[0].length > 100 ? '...' : '' )}</p>
-                        <div class="card-content">${marked.parse(project.content)}</div>
                         <div class="card-tags"><span class="tag-label">${project.category}</span></div>
+                        <div class="card-content hidden">${marked.parse(project.content)}</div>
                     `;
+                    card.addEventListener('click', () => {
+                        card.classList.toggle('expanded');
+                        const contentDiv = card.querySelector('.card-content');
+                        contentDiv.classList.toggle('hidden');
+                    });
                     return card.outerHTML;
                 }).join('')}
             </div>
