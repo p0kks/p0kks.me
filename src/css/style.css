@@ -8,7 +8,7 @@
   --header-background: none;
   --link-color: #0366d6;
   --link-hover-color: var(--accent-color);
-  --border-color: #e1e4e818;
+  --border-color: #e1e4e80c;
   --font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
   --font-mono: Menlo, Consolas, Monaco, monospace;
   --font-interactive: -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
@@ -91,8 +91,9 @@ nav a {
 }
 
 .collapsible-item .dropdown-content {
-  padding: 0px 30px 60px; /* Increased top padding to make space for labels */
+  padding: 5px 15px 30px 15px; /* Increased top padding to make space for labels */
   position: relative;
+  background-color: rgba(26, 26, 54, 0.25);
 }
 
 .site-logo {
@@ -246,6 +247,10 @@ footer {
   border-bottom: 1px solid var(--border-color);
 }
 
+details[open] summary.interactive-element {
+  background-color: rgba(26, 26, 54, 0.25);
+}
+
 .dropdown-icon {
   font-weight: bold;
 }
@@ -368,12 +373,12 @@ footer {
 }
 
 .item-content a {
-  color: #0366d6;
+  color: var(--primary-text-color);
   text-decoration: none;
 }
 
 .item-content a:hover {
-  color: var(--accent-color);
+  color: var(--secondary-text-color);
 }
 
 .item-content img {
@@ -473,6 +478,10 @@ footer {
 }
 
 .tag-label[data-label="lyrics"] {
+    color: yellow;
+}
+
+.tag-label[data-label="thoughts"] {
     color: yellow;
 }
 

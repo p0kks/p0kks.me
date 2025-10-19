@@ -2,21 +2,25 @@
 
 **Live Site:** [p0kks.me](https://p0kks.me)
 
-*A minimalist portfolio website showcasing code projects and audio work. Features a clean dark theme, responsive design, and dynamic content loading from GitHub. Includes project filtering, interactive sections, and weekly notes updates.*
+A minimalist portfolio showcasing my code projects and audio work. Designed with a clean dark theme, responsive layout, and dynamic content powered by GitHub. Explore my interactive projects, filter through my creations, and discover weekly notes.
 
 ## Features
-- Clean, dark-themed design
-- Responsive layout
-- Project filtering system
-- Interactive dropdown sections
-- Smooth navigation
+- **Sleek Design:** Clean, dark-themed interface for an optimal viewing experience.
+- **Responsive Layout:** Seamlessly adapts to any screen size.
+- **Dynamic Content:** Projects and notes loaded directly from GitHub issues.
+- **Interactive Filtering:** Easily sort projects and notes by category or month.
+- **Smooth Navigation:** Intuitive and fluid user experience.
 
 ## Tech Stack
-- **HTML5**: Semantic markup with modern elements
-- **CSS3**: Custom properties (variables), Flexbox/Grid layouts, responsive design
-- **Vanilla JavaScript**: ES6+ features, async/await for GitHub API integration
-- **No frameworks or dependencies** - pure vanilla implementation
-- **GitHub Pages** hosting with CNAME configuration
-- **GitHub API integration** for dynamic project and content loading
-##
+- **HTML5:** Semantic and accessible markup.
+- **CSS3:** Modern styling with custom properties, Flexbox, and Grid for responsive design.
+- **Vanilla JavaScript:** Efficient, dependency-free interactivity and GitHub API integration (ES6+).
+- **GitHub Pages:** Reliable hosting with custom domain (CNAME).
+
+## How to View
+Simply visit the [live site](https://p0kks.me) to explore the portfolio.
+
+## License
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
 **Built with ❤️ by p0kks**
