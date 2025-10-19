@@ -1,29 +1,18 @@
 /*General styles*/
 :root {
-  --background-color: #0d1117;
-  --primary-text-color: #aaaaaa;
-  --secondary-text-color: #eeeeee;
-  --accent-color: #0366d6;
-  --container-background: rgba(26, 26, 54, 0.13);
+  --background-color: #0a0a1a;
+  --primary-text-color: #d0d0d0;
+  --secondary-text-color: #808080;
+  --accent-color: #0099ff;
+  --container-background: #1a1a2a;
+  --active-container-background: #2a2a3a;
   --header-background: none;
-  --link-color: #0366d6;
+  --link-color: var(--accent-color);
   --link-hover-color: var(--accent-color);
-  --border-color: #e1e4e80c;
+  --border-color: #3a3a4a;
   --font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
   --font-mono: Menlo, Consolas, Monaco, monospace;
-  --font-interactive: -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
-
-  /* Shared spacing variables */
-  --spacing-xs: 5px;
-  --spacing-sm: 10px;
-  --spacing-md: 15px;
-  --spacing-lg: 20px;
-  --spacing-xl: 30px;
-  --spacing-xxl: 40px;
-  
-  /* Container spacing */
-  --container-padding-horizontal: 20px;
-  --container-padding-vertical: var(--spacing-md);
+  --font-interactive: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
 }
 
 body {
@@ -56,15 +45,15 @@ body {
   margin: 0 auto;
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: center; /* Center items horizontally */
 }
 
 .topbar {
   display: flex;
-  justify-content: space-between;
+  justify-content: center; /* Center the logo/title */
   align-items: center;
   width: 100%;
-  padding: 10px 10px 10px 10px;
+  padding: 10px 10px 0 10px; /* Adjust padding as needed */
   color: var(--primary-text-color);
 }
 
@@ -72,11 +61,29 @@ nav {
   display: flex;
   flex-direction: row;
   gap: 25px; /* Add some space between nav links */
-  margin-bottom: -110px;
+  margin-bottom: 0; /* Remove negative margin */
+  padding: 10px 0; /* Add some vertical padding */
 }
 
 nav a {
-  /* text-align: right; removed */
+  position: relative; /* For underline effect */
+  padding-bottom: 5px; /* Space for underline */
+}
+
+nav a::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 0;
+  height: 2px;
+  background-color: var(--accent-color); /* Underline color */
+  transition: width 0.3s ease-in-out;
+}
+
+nav a:hover::after,
+nav a.active::after {
+  width: 100%;
 }
 
 .collapsible-item {
@@ -91,9 +98,9 @@ nav a {
 }
 
 .collapsible-item .dropdown-content {
-  padding: 5px 15px 30px 15px; /* Increased top padding to make space for labels */
+  padding: 15px 15px 30px 15px; /* Adjusted top padding */
   position: relative;
-  background-color: rgba(26, 26, 54, 0.25);
+  background-color: var(--container-background);
 }
 
 .site-logo {
@@ -135,6 +142,7 @@ nav a {
 h3 {
   color: var(--primary-text-color);
   border-bottom: 1px solid var(--border-color);
+  font-family: 'Bebas Neue', sans-serif;
 }
 
 .filter-buttons {
@@ -229,6 +237,11 @@ footer {
   border-bottom: none;
 }
 
+h3 {
+  color: var(--primary-text-color);
+  border-bottom: 1px solid var(--border-color);
+}
+
 .page-subtitle {
   text-align: center;
   color: var(--primary-text-color);
@@ -249,7 +262,7 @@ footer {
 }
 
 details[open] summary.interactive-element {
-  background-color: rgba(26, 26, 54, 0.25);
+  background-color: var(--active-container-background);
 }
 
 .dropdown-icon {
@@ -268,8 +281,8 @@ details[open] summary.interactive-element {
 }
 
 .item-content p {
-  margin-bottom: 0.2rem;
-  padding-top: 0%;
+  margin-bottom: 0.8rem;
+  padding-top: 0;
 }
 
 .item-content h1,
@@ -279,57 +292,35 @@ details[open] summary.interactive-element {
 .item-content h5,
 .item-content h6 {
   color: var(--secondary-text-color);
-  margin: 1.5rem 0 0.5rem 0;
+  margin: 1.8rem 0 0.8rem 0;
   border-bottom: 1px solid var(--border-color);
-  padding-bottom: 0.3rem;
-  padding-top: 5px;
+  padding-bottom: 0.5rem;
+  padding-top: 0;
 }
 
-.item-content h1 { font-size: 1.5em; }
-.item-content h2 { font-size: 1.3em; }
-.item-content h3 { font-size: 1.2em; }
-.item-content h4 { font-size: 1.1em; }
-.item-content h5 { font-size: 1em; }
-.item-content h6 { font-size: 0.9em; }
-
-.item-content code {
-  background-color: var(--container-background);
-  padding: 0.2em 0.4em;
-  border-radius: 3px;
-  font-family: var(--font-mono);
-  font-size: 0.9em;
-}
-
-.item-content pre {
-  background-color: var(--container-background);
-  padding: 1rem;
-  border-radius: 4px;
-  overflow-x: auto;
-  margin: 1rem 0;
-  font-family: var(--font-mono);
-}
-
-.item-content pre code {
-  background: none;
-  padding: 0;
-}
+.item-content h1 { font-size: 1.8em; }
+.item-content h2 { font-size: 1.6em; }
+.item-content h3 { font-size: 1.4em; }
+.item-content h4 { font-size: 1.2em; }
+.item-content h5 { font-size: 1.1em; }
+.item-content h6 { font-size: 1em; }
 
 .item-content ul,
 .item-content ol {
-  margin: 0;
-  padding-left: 1.5rem;
+  margin: 0 0 0.8rem 0;
+  padding-left: 1.8rem;
 }
 
 .item-content li {
-  margin: 0;
+  margin-bottom: 0.4rem;
 }
 
 .item-content blockquote {
-  border-left: 3px solid var(--accent-color);
-  padding-left: 1rem;
-  margin: 1rem 0;
+  border-left: 4px solid var(--accent-color);
+  padding-left: 1.2rem;
+  margin: 1.5rem 0;
   color: var(--primary-text-color);
-  opacity: 0.9;
+  opacity: 0.95;
 }
 
 /* ===== MARKDOWN STYLES ===== */
@@ -455,39 +446,27 @@ details[open] summary.interactive-element {
 
 /* Specific color rules based on data-label */
 .tag-label[data-label="project"] {
-    color: #0366d6;
+    color: #0066cc;
 }
 
 .tag-label[data-label="audio"] {
-    color: #CC0000;
+    color: #990000;
 }
 
 .tag-label[data-label="code"] {
-    color: green;
+    color: #009900;
 }
 
 .tag-label[data-label="other"] {
-    color: grey;
+    color: #606060;
 }
 
-.tag-label[data-label="note"] {
-    color: yellow;
-}
-
-.tag-label[data-label="poetry"] {
-    color: yellow;
-}
-
-.tag-label[data-label="lyrics"] {
-    color: yellow;
-}
-
-.tag-label[data-label="thoughts"] {
-    color: yellow;
-}
-
+.tag-label[data-label="note"],
+.tag-label[data-label="poetry"],
+.tag-label[data-label="lyrics"],
+.tag-label[data-label="thoughts"],
 .tag-label[data-label="insight"] {
-    color: yellow;
+    color: #cc9900;
 }
 
 .collapsible-item summary .summary-content-wrapper {
@@ -514,7 +493,7 @@ details[open] summary.interactive-element {
 
 .item-title {
   display: block;
-  font-weight: bold;
+  font-weight: 500;
   text-align: left;
 }
 

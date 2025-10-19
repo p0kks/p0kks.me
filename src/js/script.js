@@ -129,7 +129,6 @@ function showFallbackProjects(container) {
 }
 
 function getFallbackProjectsHTML() {
-    const today = new Date().toLocaleDateString('en-GB', { day: '2-digit', month: '2-digit', year: 'numeric' });
     
     const fallbackProjects = [
         {
