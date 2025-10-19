@@ -135,7 +135,7 @@ function getFallbackProjectsHTML() {
             <summary class="interactive-element">
                 <div class="summary-content-wrapper">
                     <div class="item-details">
-                        <div class="item-subtitle">This portfolio website. Built with plain HTML, CSS and JavaScript.</div>
+                        <div class="item-subtitle">This portfolio website. Built with plain HTML, CSS and JavaScript...</div>
                         <span class="item-title">p0kks.me</span>
                     </div>
                     <div class="item-labels-summary">
@@ -152,7 +152,7 @@ function getFallbackProjectsHTML() {
             <summary class="interactive-element">
                 <div class="summary-content-wrapper">
                     <div class="item-details">
-                        <div class="item-subtitle">A custom Discord bot for a community server, built with Node.js.</div>
+                        <div class="item-subtitle">A custom Discord bot for a community server, built with Node.js...</div>
                         <span class="item-title">Discord Bot</span>
                     </div>
                     <div class="item-labels-summary">
@@ -169,7 +169,24 @@ function getFallbackProjectsHTML() {
             <summary class="interactive-element">
                 <div class="summary-content-wrapper">
                     <div class="item-details">
-                        <div class="item-subtitle">A collection of short, experimental ambient tracks.</div>
+                        <div class="item-subtitle">Peder Elias - Cover Song...</div>
+                        <span class="item-title">Cover Song</span>
+                    </div>
+                    <div class="item-labels-summary">
+                        <span class="tag-label" data-label="audio">audio</span>
+                    </div>
+                </div>
+                <span class="dropdown-icon">+</span>
+            </summary>
+            <div class="dropdown-content">
+                <div class="item-content">Peder Elias - Cover Song. A cover song project.</div>
+            </div>
+        </details>
+        <details class="collapsible-item" data-category="audio">
+            <summary class="interactive-element">
+                <div class="summary-content-wrapper">
+                    <div class="item-details">
+                        <div class="item-subtitle">A collection of short, experimental ambient tracks...</div>
                         <span class="item-title">Ambient Music</span>
                     </div>
                     <div class="item-labels-summary">
@@ -186,7 +203,7 @@ function getFallbackProjectsHTML() {
             <summary class="interactive-element">
                 <div class="summary-content-wrapper">
                     <div class="item-details">
-                        <div class="item-subtitle">My personal configuration for the Reaper DAW, including themes, scripts, and settings.</div>
+                        <div class="item-subtitle">My personal configuration for the Reaper DAW, including themes, scripts, and settings...</div>
                     </div>
                     <div class="item-labels-summary">
                         <span class="tag-label" data-label="other">other</span>
