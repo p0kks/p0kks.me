@@ -336,7 +336,7 @@ body {
 
 .card {
   background-color: #1d1d1d;
-  border: 1px solid var(--border-color);
+  border:none;
   border-radius: 8px;
   box-shadow: 0 3px 8px var(--shadow-color);
   display: flex;
@@ -511,4 +511,10 @@ body {
   .site-title {
     font-size: 1.4em;
   }
+}
+
+/* Yellow tint for note cards */
+.card[data-month] {
+  background-color: #333020; /* Darker yellow tint */
+  border-color: #ffcc00; /* Yellow border */
 }
