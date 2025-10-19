@@ -175,6 +175,7 @@ h3 {
 
 .item-subtitle {  font-size: 0.75em;
   color: var(--primary-text-color);
+  margin-bottom: 5px;
 }
 
 .item-description {
@@ -196,7 +197,7 @@ footer {
   font-size: 0.9em;
   border-top: 1px solid var(--border-color);
   background-color: var(--header-background);
-  opacity: 0.3;
+  opacity: 0.8;
 
 }
 
@@ -485,6 +486,10 @@ details[open] summary.interactive-element {
     color: yellow;
 }
 
+.tag-label[data-label="insight"] {
+    color: yellow;
+}
+
 .collapsible-item summary .summary-content-wrapper {
   display: flex;
   justify-content: space-between; /* Pushes item-details to left and item-labels-summary to right */
@@ -495,6 +500,22 @@ details[open] summary.interactive-element {
 .collapsible-item summary .item-details {
   display: flex;
   flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+}
+
+.item-subtitle {
+  display: block;
+  font-size: 0.75em;
+  color: var(--primary-text-color);
+  margin-bottom: 5px;
+  text-align: left;
+}
+
+.item-title {
+  display: block;
+  font-weight: bold;
+  text-align: left;
 }
 
 .collapsible-item summary .item-labels-summary {

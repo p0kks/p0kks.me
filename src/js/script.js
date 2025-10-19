@@ -130,92 +130,62 @@ function showFallbackProjects(container) {
 
 function getFallbackProjectsHTML() {
     const today = new Date().toLocaleDateString('en-GB', { day: '2-digit', month: '2-digit', year: 'numeric' });
-    return `
-        <details class="collapsible-item" data-category="code">
-            <summary class="interactive-element">
-                <div class="summary-content-wrapper">
-                    <div class="item-details">
-                        <div class="item-subtitle">This portfolio website. Built with plain HTML, CSS and JavaScript...</div>
-                        <span class="item-title">p0kks.me</span>
+    
+    const fallbackProjects = [
+        {
+            category: 'code',
+            title: 'p0kks.me',
+            content: 'This portfolio website. Built with plain HTML, CSS and JavaScript.'
+        },
+        {
+            category: 'code',
+            title: 'Discord Bot',
+            content: 'A custom Discord bot for a community server, built with Node.js. It provides various utility commands, moderation tools, and fun features.'
+        },
+        {
+            category: 'audio',
+            title: 'Cover Song',
+            content: 'Peder Elias - Cover Song. A cover song project.'
+        },
+        {
+            category: 'audio',
+            title: 'Ambient Music',
+            content: 'A collection of short, experimental ambient tracks. Exploring textures and soundscapes.'
+        },
+        {
+            category: 'other',
+            title: 'Reaper Configuration',
+            content: 'My personal configuration for the Reaper DAW, including themes, scripts, and settings.'
+        }
+    ];
+
+    let projectsHtml = '';
+    fallbackProjects.forEach(project => {
+        const firstLine = project.content.split('\n')[0];
+        const itemSubtitle = firstLine.substring(0, 50) + (firstLine.length > 50 ? '...' : '');
+
+        projectsHtml += `
+            <details class="collapsible-item" data-category="${project.category}">
+                <summary class="interactive-element">
+                    <div class="summary-content-wrapper">
+                        <div class="item-details">
+                            <div class="item-subtitle">${itemSubtitle}</div>
+                            <span class="item-title">${project.title}</span>
+                        </div>
+                        <div class="item-labels-summary">
+                            <span class="tag-label" data-label="${project.category}">${project.category}</span>
+                        </div>
                     </div>
-                    <div class="item-labels-summary">
-                        <span class="tag-label" data-label="code">code</span>
-                    </div>
+                    <span class="dropdown-icon">+</span>
+                </summary>
+                <div class="dropdown-content">
+                    <div class="item-content">${project.content}</div>
                 </div>
-                <span class="dropdown-icon">+</span>
-            </summary>
-            <div class="dropdown-content">
-                <div class="item-content">This portfolio website. Built with plain HTML, CSS and JavaScript.</div>
-            </div>
-        </details>
-        <details class="collapsible-item" data-category="code">
-            <summary class="interactive-element">
-                <div class="summary-content-wrapper">
-                    <div class="item-details">
-                        <div class="item-subtitle">A custom Discord bot for a community server, built with Node.js...</div>
-                        <span class="item-title">Discord Bot</span>
-                    </div>
-                    <div class="item-labels-summary">
-                        <span class="tag-label" data-label="code">code</span>
-                    </div>
-                </div>
-                <span class="dropdown-icon">+</span>
-            </summary>
-            <div class="dropdown-content">
-                <div class="item-content">A custom Discord bot for a community server, built with Node.js. It provides various utility commands, moderation tools, and fun features.</div>
-            </div>
-        </details>
-        <details class="collapsible-item" data-category="audio">
-            <summary class="interactive-element">
-                <div class="summary-content-wrapper">
-                    <div class="item-details">
-                        <div class="item-subtitle">Peder Elias - Cover Song...</div>
-                        <span class="item-title">Cover Song</span>
-                    </div>
-                    <div class="item-labels-summary">
-                        <span class="tag-label" data-label="audio">audio</span>
-                    </div>
-                </div>
-                <span class="dropdown-icon">+</span>
-            </summary>
-            <div class="dropdown-content">
-                <div class="item-content">Peder Elias - Cover Song. A cover song project.</div>
-            </div>
-        </details>
-        <details class="collapsible-item" data-category="audio">
-            <summary class="interactive-element">
-                <div class="summary-content-wrapper">
-                    <div class="item-details">
-                        <div class="item-subtitle">A collection of short, experimental ambient tracks...</div>
-                        <span class="item-title">Ambient Music</span>
-                    </div>
-                    <div class="item-labels-summary">
-                        <span class="tag-label" data-label="audio">audio</span>
-                    </div>
-                </div>
-                <span class="dropdown-icon">+</span>
-            </summary>
-            <div class="dropdown-content">
-                <div class="item-content">A collection of short, experimental ambient tracks. Exploring textures and soundscapes.</div>
-            </div>
-        </details>
-        <details class="collapsible-item" data-category="other">
-            <summary class="interactive-element">
-                <div class="summary-content-wrapper">
-                    <div class="item-details">
-                        <div class="item-subtitle">My personal configuration for the Reaper DAW, including themes, scripts, and settings...</div>
-                    </div>
-                    <div class="item-labels-summary">
-                        <span class="tag-label" data-label="other">other</span>
-                    </div>
-                </div>
-                <span class="dropdown-icon">+</span>
-            </summary>
-            <div class="dropdown-content">
-                <div class="item-content">My personal configuration for the Reaper DAW, including themes, scripts, and settings.</div>
-            </div>
-        </details>
-    `;
+            </details>
+        `;
+    });
+
+    return projectsHtml;
 }
 
 function escapeHtml(text) {
