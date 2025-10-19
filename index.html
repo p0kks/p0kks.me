@@ -16,19 +16,18 @@
   <a href="#home" data-target="home" class="site-title">
     <img src="assets\images\site-logo.png" alt="p0kks logo" class="site-logo" loading="lazy">
   </a>
+  <nav>
+    <a href="#home" data-target="home" class="active interactive-element">home</a>
+    <a href="#projects" data-target="projects" class="interactive-element">projects</a>
+    <a href="#notes" data-target="notes" class="interactive-element">notes</a>
+  </nav>
 </div>
-<nav>
-  <a href="#home" data-target="home" class="active interactive-element">home</a>
-  <a href="#projects" data-target="projects" class="interactive-element">projects</a>
-  <a href="#notes" data-target="notes" class="interactive-element">notes</a>
-</nav>
 </header>
 
 <div class="container">
   <main>
     <section id="home" class="page active">
       <div class="page-header">
-        <h2>p0kks.me</h2>
         <div class="page-subtitle">
        <p>A minimalist archive of what I build and become</p>
       </div>
@@ -63,12 +62,25 @@
                 </div>
             </div>
         </details>
+        <details class="collapsible-item">
+            <summary class="interactive-element">
+                <div>
+                    <span class="item-title">History</span>
+                </div>
+                <span class="dropdown-icon">+</span>
+            </summary>
+            <div class="dropdown-content">
+                <div class="item-content">
+                    <p>A timeline of significant events and milestones.</p>
+                    <!-- Add your history content here -->
+                </div>
+            </div>
+        </details>
       </div>
     </section>
 
     <section id="projects" class="page">
       <div class="page-header">
-        <h2>Projects</h2>
         <div class="filter-buttons">
           <button class="filter-btn active interactive-element" data-filter="all">all</button>
           <button class="filter-btn interactive-element" data-filter="code">code</button>
@@ -84,7 +96,6 @@
 
     <section id="notes" class="page">
       <div class="page-header">
-        <h2>Notes</h2>
         <div class="filter-buttons">
           <button class="filter-btn active interactive-element" data-filter="all">all</button>
           <button class="filter-btn interactive-element" data-filter="9">October</button>

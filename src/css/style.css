@@ -1,15 +1,15 @@
 /*General styles*/
 :root {
-  --background-color: #0a0a1a;
+  --background-color: #06060e;
   --primary-text-color: #d0d0d0;
   --secondary-text-color: #808080;
   --accent-color: #0099ff;
-  --container-background: #1a1a2a;
-  --active-container-background: #2a2a3a;
+  --container-background: #1a1a2a5e;
+  --active-container-background: #2a2a3a56;
   --header-background: none;
   --link-color: var(--accent-color);
   --link-hover-color: var(--accent-color);
-  --border-color: #3a3a4a;
+  --border-color: #3a3a4a42;
   --font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
   --font-mono: Menlo, Consolas, Monaco, monospace;
   --font-interactive: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
@@ -26,9 +26,8 @@ body {
 
 .container {
   max-width: 680px;
-  padding: var(--container-padding-vertical) var(--container-padding-horizontal);
   margin: 0 auto;
-  background-color: var(--container-background);
+  background-color: rgba(73, 34, 136, 0);
 }
 
 /* ===== HEADER ===== */
@@ -44,13 +43,13 @@ body {
   max-width: 680px;
   margin: 0 auto;
   display: flex;
-  flex-direction: column;
-  align-items: center; /* Center items horizontally */
+  /* flex-direction: column; removed */
+  /* align-items: center; removed */
 }
 
 .topbar {
   display: flex;
-  justify-content: center; /* Center the logo/title */
+  justify-content: space-between; /* Push logo to left and nav to right */
   align-items: center;
   width: 100%;
   padding: 10px 10px 0 10px; /* Adjust padding as needed */
@@ -61,8 +60,8 @@ nav {
   display: flex;
   flex-direction: row;
   gap: 25px; /* Add some space between nav links */
-  margin-bottom: 0; /* Remove negative margin */
-  padding: 10px 0; /* Add some vertical padding */
+  margin-bottom: 0; /* Ensure no negative margin */
+  padding: 0; /* Remove vertical padding */
 }
 
 nav a {
@@ -98,7 +97,7 @@ nav a.active::after {
 }
 
 .collapsible-item .dropdown-content {
-  padding: 15px 15px 30px 15px; /* Adjusted top padding */
+  padding: 5px 15px 30px 15px; /* Adjusted top padding */
   position: relative;
   background-color: var(--container-background);
 }
@@ -316,7 +315,7 @@ details[open] summary.interactive-element {
 }
 
 .item-content blockquote {
-  border-left: 4px solid var(--accent-color);
+  border-left: 4px solid var(--secondary-text-color);
   padding-left: 1.2rem;
   margin: 1.5rem 0;
   color: var(--primary-text-color);
@@ -465,8 +464,8 @@ details[open] summary.interactive-element {
 .tag-label[data-label="poetry"],
 .tag-label[data-label="lyrics"],
 .tag-label[data-label="thoughts"],
-.tag-label[data-label="insight"] {
-    color: #cc9900;
+.tag-label[data-label="insights"] {
+    color: #CCCC00;
 }
 
 .collapsible-item summary .summary-content-wrapper {
