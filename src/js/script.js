@@ -86,12 +86,11 @@ async function loadContent(label, containerId) {
 }
 
 function createCard(issue, label) {
-    const card = document.createElement('div');
-    card.className = 'card';
+    const card = document.createElement('details');
+    card.className = 'home-dropdown';
 
-    let category = '';
     if (label === 'project') {
-        category = issue.labels.find(l =>
+        const category = issue.labels.find(l =>
             ['code', 'audio', 'other'].includes(l.name.toLowerCase())
         )?.name || 'other';
         card.dataset.category = category;
@@ -100,16 +99,14 @@ function createCard(issue, label) {
         card.dataset.month = issueDate.getMonth();
     }
 
-    const cardHeader = document.createElement('div');
-    cardHeader.className = 'card-header';
+    const summary = document.createElement('summary');
+    summary.className = 'home-dropdown-summary';
+    summary.textContent = issue.title;
 
-    const cardTitle = document.createElement('h3');
-    cardTitle.className = 'card-title';
-    cardTitle.textContent = issue.title;
-    cardHeader.appendChild(cardTitle);
+    const contentWrapper = document.createElement('div');
+    contentWrapper.className = 'home-dropdown-content';
 
     const cardContent = document.createElement('div');
-    cardContent.className = 'card-content hidden';
     cardContent.innerHTML = marked.parse(issue.body);
 
     const cardFooter = document.createElement('div');
@@ -129,17 +126,17 @@ function createCard(issue, label) {
         const cardLinks = document.createElement('div');
         cardLinks.className = 'card-links';
 
-        if (issue.github) {
+        if (issue.html_url) {
             const githubLink = document.createElement('a');
-            githubLink.href = issue.github;
+            githubLink.href = issue.html_url;
             githubLink.target = '_blank';
             githubLink.rel = 'noopener';
             githubLink.innerHTML = '<img src="assets/icons/github.png" alt="GitHub" class="card-icon">';
             cardLinks.appendChild(githubLink);
         }
-        if (issue.live) {
+        if (issue.homepage) {
             const liveLink = document.createElement('a');
-            liveLink.href = issue.live;
+            liveLink.href = issue.homepage;
             liveLink.target = '_blank';
             liveLink.rel = 'noopener';
             liveLink.innerHTML = '<img src="assets/icons/githubpages.png" alt="Live Demo" class="card-icon">';
@@ -152,18 +149,15 @@ function createCard(issue, label) {
         const cardDate = document.createElement('span');
         cardDate.className = 'card-date';
         const issueDate = new Date(issue.created_at);
-        cardDate.textContent = issueDate.toLocaleDateString(); // Format date nicely
+        cardDate.textContent = issueDate.toLocaleDateString();
         cardFooter.appendChild(cardDate);
     }
 
-    card.appendChild(cardHeader);
-    card.appendChild(cardContent);
-    card.appendChild(cardFooter);
+    contentWrapper.appendChild(cardContent);
+    contentWrapper.appendChild(cardFooter);
 
-    card.addEventListener('click', () => {
-        card.classList.toggle('expanded');
-        cardContent.classList.toggle('hidden');
-    });
+    card.appendChild(summary);
+    card.appendChild(contentWrapper);
 
     return card;
 }
@@ -210,19 +204,18 @@ function showFallbackProjects(container) {
             <p style="text-align: center; opacity: 0.7; margin-bottom: 1rem;">Example projects:</p>
             <div class="card-grid">
                 ${fallbackProjects.map(project => {
-                    const card = document.createElement('div');
-                    card.className = 'card';
+                    const card = document.createElement('details');
+                    card.className = 'home-dropdown';
                     card.dataset.category = project.category;
 
-                    const cardHeader = document.createElement('div');
-                    cardHeader.className = 'card-header';
-                    const cardTitle = document.createElement('h3');
-                    cardTitle.className = 'card-title';
-                    cardTitle.textContent = project.title;
-                    cardHeader.appendChild(cardTitle);
+                    const summary = document.createElement('summary');
+                    summary.className = 'home-dropdown-summary';
+                    summary.textContent = project.title;
+
+                    const contentWrapper = document.createElement('div');
+                    contentWrapper.className = 'home-dropdown-content';
 
                     const cardContent = document.createElement('div');
-                    cardContent.className = 'card-content hidden';
                     cardContent.innerHTML = marked.parse(project.content);
 
                     const cardFooter = document.createElement('div');
@@ -235,14 +228,12 @@ function showFallbackProjects(container) {
                     cardTags.appendChild(tagLabel);
                     cardFooter.appendChild(cardTags);
 
-                    card.appendChild(cardHeader);
-                    card.appendChild(cardContent);
-                    card.appendChild(cardFooter);
+                    contentWrapper.appendChild(cardContent);
+                    contentWrapper.appendChild(cardFooter);
 
-                    card.addEventListener('click', () => {
-                        card.classList.toggle('expanded');
-                        cardContent.classList.toggle('hidden');
-                    });
+                    card.appendChild(summary);
+                    card.appendChild(contentWrapper);
+
                     return card.outerHTML;
                 }).join('')}
             </div>
@@ -260,7 +251,7 @@ function escapeHtml(text) {
 
 function initFilterButtons(section) {
     const filterButtons = document.querySelectorAll(`.filter-buttons button[data-section="${section}"]`);
-    const cards = document.querySelectorAll(`#${section}-container .card`);
+    const cards = document.querySelectorAll(`#${section}-container .home-dropdown`);
 
     filterButtons.forEach(button => {
         button.addEventListener('click', () => {
@@ -271,9 +262,9 @@ function initFilterButtons(section) {
             cards.forEach(card => {
                 let display = 'none';
                 if (section === 'project') {
-                    display = (filter === 'all' || card.dataset.category === filter) ? 'flex' : 'none';
+                    display = (filter === 'all' || card.dataset.category === filter) ? 'block' : 'none';
                 } else if (section === 'note') {
-                    display = (filter === 'all' || card.dataset.month == filter) ? 'flex' : 'none';
+                    display = (filter === 'all' || card.dataset.month == filter) ? 'block' : 'none';
                 }
                 card.style.display = display;
             });
