@@ -362,10 +362,8 @@ body {
 }
 
 .card-header {
-  border-bottom: 1px solid var(--border-color);
   padding: 10px;
   display: flex;
-  align-items: center;
   justify-content: center; /* Center the title */
 }
 
@@ -373,7 +371,7 @@ body {
   color: var(--text-color);
   font-family: var(--font-heading);
   font-size: 1.2em;
-  font-weight: 500; /* Less bold */
+  font-weight:400; /* Less bold */
 }
 
 .card-content {
@@ -381,8 +379,7 @@ body {
   flex-grow: 1;
   font-size: 0.95em;
   line-height: 1.5;
-  margin-bottom: 12px;
-  padding: 10px;
+  margin: 0px 030px;
   position: relative;
 }
 
@@ -409,7 +406,6 @@ body {
 }
 
 .card-footer {
-  border-top: 1px solid var(--border-color);
   padding: 10px;
   display: flex;
   justify-content: space-between;
