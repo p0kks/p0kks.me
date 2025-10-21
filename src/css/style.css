@@ -2,6 +2,7 @@
 
 :root {
   --accent-color: #1d5069; /* A vibrant, clean blue accent */
+  --nav-button-color: var(--text-color);
   --bg: #0e0e0e; /* Slightly darker background for more contrast */
   --border-color: rgb(68, 68, 68); /* Subtle border */
   --card-bg: #1b1b1b; /* Card background */
@@ -96,28 +97,13 @@ body {
 }
 
 .tagline {
+  color: var(--muted-text-color);
+  font-size: 1.1em;
   text-align: right; /* Align tagline to the right */
   margin: 0; /* Remove margin for grid positioning */
 }
 
-.main-nav {
-  display: flex;
-  gap: 15px;
-  justify-content: flex-end; /* Align navbar to the right */
-}
-
-.header-grid-empty-cell {
-  grid-column: 1 / 3; /* Span both columns */
-  grid-row: 2 / 3; /* Second row */
-}
-
-
-.tagline {
-  color: var(--muted-text-color);
-  font-size: 1.1em;
-}
-
-.social-links.header-social {
+.social-links {
   display: flex;
   gap: 15px;
   justify-content: center;
@@ -156,6 +142,14 @@ body {
   cursor: pointer;
   font-size: 1.25em; /* 25% bigger */
   transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Visible focus styles for keyboard users */
+.nav-btn:focus,
+.filter-btn:focus,
+.social-link:focus {
+  outline: 3px solid rgba(29,80,105,0.25);
+  outline-offset: 3px;
 }
 
 .nav-btn:hover:not(.active) {
@@ -386,15 +380,6 @@ pre code {
   padding: 0;
   border-radius: 0;
   font-size: inherit;
-}
-
-.site-logo-animated {
-  display: block;
-  margin: 0 auto;
-  max-width: 100%;
-  height: auto;
-  width: 300px; /* 50% smaller */
-  margin-bottom: 20px;
 }
 
 .tag-label-yellow {

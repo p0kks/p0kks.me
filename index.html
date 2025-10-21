@@ -14,6 +14,7 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
   <link rel="stylesheet" href="src/css/style.css">
   <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/dompurify@2.4.0/dist/purify.min.js"></script>
   <script defer src="src/js/script.js"></script>
   <meta name="robots" content="index,follow">
 </head>
@@ -21,13 +22,13 @@
   <main class="container">
     <header class="header">
       <div class="header-grid-container">
-        <img src="assets\images\site-logo.webp" alt="p0kks" class="site-logo-animated">
+        <img src="assets/images/site-logo.webp" alt="p0kks" class="site-logo-animated">
         <div class="tagline-nav-wrapper">
           <p class="tagline">Vibe Coder // Bedroom Artist // Creative Works<br>p0kks</p>
-          <nav class="main-nav">
-            <button class="nav-btn active" data-target="home" title="Home" aria-label="Home"><i class="fas fa-home"></i></button>
-            <button class="nav-btn" data-target="projects" title="Projects" aria-label="Projects"><i class="fas fa-folder-open"></i></button>
-            <button class="nav-btn" data-target="notes" title="Notes" aria-label="Notes"><i class="fas fa-file-alt"></i></button>
+          <nav class="main-nav" role="navigation" aria-label="Main navigation">
+            <button class="nav-btn active" data-target="home" title="Home" aria-label="Home" aria-pressed="true"><i class="fas fa-home" aria-hidden="true"></i></button>
+            <button class="nav-btn" data-target="project" title="Projects" aria-label="Projects" aria-pressed="false"><i class="fas fa-folder-open" aria-hidden="true"></i></button>
+            <button class="nav-btn" data-target="note" title="Notes" aria-label="Notes" aria-pressed="false"><i class="fas fa-file-alt" aria-hidden="true"></i></button>
           </nav>
         </div>
         <div class="header-grid-empty-cell"></div> <!-- Empty cell for Row 2, Column 1 -->
@@ -36,7 +37,7 @@
     </header>
 
     <section id="home" class="page active">
-      <!-- Dropdowns moved here, outside home-content but inside #home -->
+
       <details class="home-dropdown">
         <summary class="home-dropdown-summary">
           <div class="dropdown-header-content">
@@ -96,20 +97,20 @@
 
     </section>
 
-    <section id="projects" class="page">
-      <div class="filter-buttons">
-        <button class="filter-btn active" data-filter="all" data-section="projects">All</button>
-        <button class="filter-btn" data-filter="code" data-section="projects">Code</button>
-        <button class="filter-btn" data-filter="audio" data-section="projects">Audio</button>
-        <button class="filter-btn" data-filter="other" data-section="projects">Other</button>
+  <section id="project" class="page">
+      <div class="filter-buttons" role="toolbar" aria-label="Project filters">
+        <button class="filter-btn active" data-filter="all" data-section="project" aria-pressed="true">All</button>
+        <button class="filter-btn" data-filter="code" data-section="project" aria-pressed="false">Code</button>
+        <button class="filter-btn" data-filter="audio" data-section="project" aria-pressed="false">Audio</button>
+        <button class="filter-btn" data-filter="other" data-section="project" aria-pressed="false">Other</button>
       </div>
       <div id="project-container" class="card-grid"></div>
     </section>
 
-    <section id="notes" class="page">
-      <div class="filter-buttons">
-        <button class="filter-btn active" data-filter="all" data-section="notes">All</button>
-        <button class="filter-btn" data-filter="9" data-section="notes">October</button>
+    <section id="note" class="page">
+      <div class="filter-buttons" role="toolbar" aria-label="Note filters">
+        <button class="filter-btn active" data-filter="all" data-section="note" aria-pressed="true">All</button>
+        <button class="filter-btn" data-filter="9" data-section="note" aria-pressed="false">October</button>
       </div>
       <div id="notes-container" class="card-grid"></div>
     </section>

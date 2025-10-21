@@ -16,14 +16,18 @@ function initNavigation() {
         });
 
         navButtons.forEach(btn => {
-            btn.classList.toggle('active', btn.dataset.target === targetId);
+            const isActive = btn.dataset.target === targetId;
+            btn.classList.toggle('active', isActive);
+            btn.setAttribute('aria-pressed', isActive ? 'true' : 'false');
         });
     }
 
     navButtons.forEach(button => {
         button.addEventListener('click', (e) => {
-            const targetId = e.target.dataset.target;
-            activatePage(targetId);
+            // Use the button element as the source (handles clicks on child elements)
+            const btn = e.currentTarget;
+            const targetId = btn.dataset.target;
+            if (targetId) activatePage(targetId);
         });
     });
 }
@@ -41,11 +45,8 @@ async function loadContent(label, containerId) {
     }
 
     try {
-        const response = await fetch(`https://api.github.com/repos/p0kks/p0kks.me/issues?labels=${label}&state=open&sort=created&direction=desc`, {
-            headers: {
-                'User-Agent': 'p0kks.me-portfolio'
-            }
-        });
+        // Browsers block setting a custom User-Agent header, so omit it here.
+        const response = await fetch(`https://api.github.com/repos/p0kks/p0kks.me/issues?labels=${label}&state=open&sort=created&direction=desc`);
 
         if (!response.ok) {
             throw new Error(`Failed to fetch ${label}s`);
@@ -68,6 +69,7 @@ async function loadContent(label, containerId) {
             container.appendChild(card);
         });
 
+        // initFilterButtons expects the section name used in data-section ("project" or "note")
         initFilterButtons(label);
 
     } catch (error) {
@@ -86,12 +88,14 @@ function createCard(issue, label) {
     card.className = 'home-dropdown';
 
     if (label === 'project') {
-        const category = issue.labels.find(l =>
-            ['code', 'audio', 'other'].includes(l.name.toLowerCase())
-        )?.name || 'other';
+        const labels = Array.isArray(issue.labels) ? issue.labels : [];
+        const category = labels.find(l => {
+            const name = (l && l.name) ? l.name.toLowerCase() : '';
+            return ['code', 'audio', 'other'].includes(name);
+        })?.name || 'other';
         card.dataset.category = category;
     } else if (label === 'note') {
-        const issueDate = new Date(issue.created_at);
+        const issueDate = new Date(issue.created_at || Date.now());
         card.dataset.month = issueDate.getMonth();
     }
 
@@ -124,25 +128,35 @@ function createCard(issue, label) {
     contentWrapper.className = 'home-dropdown-content';
 
     const cardContent = document.createElement('div');
-    cardContent.innerHTML = marked.parse(issue.body); // WARNING: Potential XSS vulnerability if issue.body contains untrusted content. Assumed trusted as content comes from own GitHub issues.
+    const bodyText = issue.body || '';
+    // Use marked only if available and bodyText is non-empty. Sanitize the HTML with DOMPurify.
+    if (typeof marked !== 'undefined' && bodyText) {
+        const raw = marked.parse(bodyText);
+        cardContent.innerHTML = (typeof DOMPurify !== 'undefined') ? DOMPurify.sanitize(raw) : raw;
+    } else {
+        cardContent.textContent = bodyText || '';
+    }
 
     const cardFooter = document.createElement('div');
     cardFooter.className = 'card-footer';
 
     const cardTags = document.createElement('div');
     cardTags.className = 'card-tags';
-    issue.labels.forEach(l => {
+    const labelsForTags = Array.isArray(issue.labels) ? issue.labels : [];
+    labelsForTags.forEach(l => {
+        const name = (l && l.name) ? l.name : '';
         const tagLabel = document.createElement('span');
         tagLabel.className = 'tag-label';
-        tagLabel.textContent = l.name;
+        tagLabel.textContent = name;
         // Add specific classes based on label name
-        if (l.name.toLowerCase() === 'note' || l.name.toLowerCase() === 'insights' || l.name.toLowerCase() === 'thoughts') {
+        const lname = name.toLowerCase();
+        if (lname === 'note' || lname === 'insights' || lname === 'thoughts') {
             tagLabel.classList.add('tag-label-yellow');
-        } else if (l.name.toLowerCase() === 'project') {
+        } else if (lname === 'project') {
             tagLabel.classList.add('tag-label-blue');
-        } else if (l.name.toLowerCase() === 'code') {
+        } else if (lname === 'code') {
             tagLabel.classList.add('tag-label-green');
-        } else if (l.name.toLowerCase() === 'audio') {
+        } else if (lname === 'audio') {
             tagLabel.classList.add('tag-label-red');
         }
         cardTags.appendChild(tagLabel);
@@ -250,7 +264,8 @@ function showFallbackProjects(container) {
                     contentWrapper.className = 'home-dropdown-content';
 
                     const cardContent = document.createElement('div');
-                    cardContent.innerHTML = marked.parse(project.content);
+                    const raw = (typeof marked !== 'undefined') ? marked.parse(project.content) : project.content;
+                    cardContent.innerHTML = (typeof DOMPurify !== 'undefined') ? DOMPurify.sanitize(raw) : raw;
 
                     const cardFooter = document.createElement('div');
                     cardFooter.className = 'card-footer';
@@ -286,12 +301,17 @@ function showFallbackProjects(container) {
 
 function initFilterButtons(section) {
     const filterButtons = document.querySelectorAll(`.filter-buttons button[data-section="${section}"]`);
-    const cards = document.querySelectorAll(`#${section}-container .home-dropdown`);
+    // Map logical section name to actual container id in the DOM
+    const containerId = section === 'project' ? 'project-container' : (section === 'note' ? 'notes-container' : `${section}-container`);
+    const cards = document.querySelectorAll(`#${containerId} .home-dropdown`);
 
     filterButtons.forEach(button => {
         button.addEventListener('click', () => {
             filterButtons.forEach(btn => btn.classList.remove('active'));
             button.classList.add('active');
+            // update aria-pressed state for accessibility
+            filterButtons.forEach(btn => btn.setAttribute('aria-pressed', 'false'));
+            button.setAttribute('aria-pressed', 'true');
 
             const filter = button.dataset.filter;
             cards.forEach(card => {

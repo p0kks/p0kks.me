@@ -24,3 +24,12 @@ Simply visit the [live site](https://p0kks.me) to explore the portfolio.
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
 **Built with ❤️ by p0kks**
+
+## Deploy with GitHub Actions
+
+This repository includes a GitHub Actions workflow that publishes the repository contents to the `gh-pages` branch when changes are pushed to `main`. The workflow uses a standard action to commit the built static files (no build step required for this plain static site).
+
+To enable deployment:
+
+- Ensure the repository `Settings > Pages` is set to deploy from the `gh-pages` branch.
+- If you want to deploy under a custom domain, ensure `CNAME` is present at the repository root (already included in this repo).
