@@ -7,6 +7,10 @@
   <title>p0kks</title>
   <link rel="icon" href="assets/images/favicon.png">
 
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;600;700&family=Roboto+Mono:wght@400;700&display=swap" rel="stylesheet">
+
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
   <link rel="stylesheet" href="src/css/style.css">
   <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
@@ -16,16 +20,19 @@
 <body>
   <main class="container">
     <header class="header">
-      <div class="header-title-tagline-wrapper">
-        <img src="assets/images/site-logo-animated.webp" alt="p0kks" class="site-logo-animated">
-        <p class="tagline">Vibe Coder | Bedroom Artist | Creative Works</p>
+      <div class="header-grid-container">
+        <img src="assets\images\site-logo.webp" alt="p0kks" class="site-logo-animated">
+        <div class="tagline-nav-wrapper">
+          <p class="tagline">Vibe Coder // Bedroom Artist // Creative Works<br>p0kks</p>
+          <nav class="main-nav">
+            <button class="nav-btn active" data-target="home" title="Home" aria-label="Home"><i class="fas fa-home"></i></button>
+            <button class="nav-btn" data-target="projects" title="Projects" aria-label="Projects"><i class="fas fa-folder-open"></i></button>
+            <button class="nav-btn" data-target="notes" title="Notes" aria-label="Notes"><i class="fas fa-file-alt"></i></button>
+          </nav>
+        </div>
+        <div class="header-grid-empty-cell"></div> <!-- Empty cell for Row 2, Column 1 -->
+        <div class="header-grid-empty-cell"></div> <!-- Empty cell for Row 2, Column 2 -->
       </div>
-
-      <nav class="main-nav">
-        <button class="nav-btn active" data-target="home" title="Home" aria-label="Home"><i class="fas fa-home"></i></button>
-        <button class="nav-btn" data-target="projects" title="Projects" aria-label="Projects"><i class="fas fa-folder-open"></i></button>
-        <button class="nav-btn" data-target="notes" title="Notes" aria-label="Notes"><i class="fas fa-file-alt"></i></button>
-      </nav>
     </header>
 
     <section id="home" class="page active">

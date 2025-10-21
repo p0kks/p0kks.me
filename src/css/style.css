@@ -5,8 +5,8 @@
   --bg: #0e0e0e; /* Slightly darker background for more contrast */
   --border-color: rgb(68, 68, 68); /* Subtle border */
   --card-bg: #1b1b1b; /* Card background */
-  --font-body: 'Google Sans Text', 'Roboto', sans-serif; /* Changed to Google Sans Text stack */
-  --font-heading: 'Google Sans Text', 'Roboto', sans-serif; /* Changed to Google Sans Text stack */
+  --font-body: 'Roboto', sans-serif; /* Changed to Roboto stack */
+  --font-heading: 'Roboto', sans-serif; /* Changed to Roboto stack */
   --font-mono: 'Roboto Mono', monospace; /* Changed to Roboto Mono stack */
   --muted-text-color: #888888; /* Muted grey */
   --shadow-color: rgba(0, 0, 0, 0.4); /* Refined shadow */
@@ -71,15 +71,44 @@ body {
   border-bottom: 1px solid var(--border-color);
   display: flex;
   flex-direction: column; /* Stack elements vertically */
-  padding: 15px 0;
 }
 
-.header-title-tagline-wrapper {
+.header-grid-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr; /* Two equal columns */
+  grid-template-rows: auto auto; /* Two rows, height determined by content */
+  align-items: center; /* Vertically center items in their cells */
+  margin-bottom: -20px;
+}
+
+.site-logo-animated {
+  grid-column: 1 / 2; /* First column */
+  grid-row: 1 / 2; /* First row */
+  justify-self: start; /* Align to start of cell */
+}
+
+.tagline-nav-wrapper {
+  grid-column: 2 / 3; /* Second column */
+  grid-row: 1 / 2; /* First row */
   display: flex;
-  justify-content: space-between;
-  align-items: center; /* Vertically center title and tagline if they have different heights */
-  width: 100%; /* Ensure it takes full width */
-  margin-bottom: 20px; /* Space below this section */
+  flex-direction: column;
+  width: 100%;
+}
+
+.tagline {
+  text-align: right; /* Align tagline to the right */
+  margin: 0; /* Remove margin for grid positioning */
+}
+
+.main-nav {
+  display: flex;
+  gap: 15px;
+  justify-content: flex-end; /* Align navbar to the right */
+}
+
+.header-grid-empty-cell {
+  grid-column: 1 / 3; /* Span both columns */
+  grid-row: 2 / 3; /* Second row */
 }
 
 
@@ -118,13 +147,6 @@ body {
   width: 16px;
 }
 
-.main-nav {
-  display: flex;
-  gap: 15px;
-  justify-content: center;
-  margin-bottom: 30px;
-  margin: 0 auto;
-}
 
 .main-nav .nav-btn {
   background-color: transparent;
@@ -132,7 +154,7 @@ body {
   border: none;
   padding: 10px 15px;
   cursor: pointer;
-  font-size: 1em;
+  font-size: 1.25em; /* 25% bigger */
   transition: background-color 0.3s ease, color 0.3s ease;
 }
 
@@ -171,18 +193,6 @@ body {
   overflow: hidden;
 }
 
-.home-dropdown-summary {
-  align-items: center;
-  color: var(--text-color);
-  cursor: pointer;
-  display: flex;
-  font-family: var(--font-heading);
-  font-size: 1.2em;
-  font-weight: 500; /* Less bold */
-  justify-content: space-between;
-  list-style: none; /* Remove default marker */
-  padding: 15px 20px;
-}
 
 .home-dropdown-summary::-webkit-details-marker,
 .home-dropdown-summary::marker {
@@ -292,7 +302,8 @@ body {
   flex-wrap: wrap;
   gap: 6px;
   margin-left: auto;
-}
+}
+
 .card-links {
   display: flex;
   gap: 10px;
@@ -382,7 +393,7 @@ pre code {
   margin: 0 auto;
   max-width: 100%;
   height: auto;
-  width: 150px; /* Adjust as needed */
+  width: 300px; /* 50% smaller */
   margin-bottom: 20px;
 }
 
@@ -402,11 +413,6 @@ pre code {
   color: rgba(220, 53, 69, 0.5); /* Dim red */
 }
 
-.home-dropdown-summary {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
 
 .home-dropdown-summary {
   color: var(--text-color);
