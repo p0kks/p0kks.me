@@ -12,17 +12,11 @@ function initNavigation() {
 
     function activatePage(targetId) {
         pages.forEach(page => {
-            page.classList.remove('active');
-            if (page.id === targetId) {
-                page.classList.add('active');
-            }
+            page.classList.toggle('active', page.id === targetId);
         });
 
         navButtons.forEach(btn => {
-            btn.classList.remove('active');
-            if (btn.dataset.target === targetId) {
-                btn.classList.add('active');
-            }
+            btn.classList.toggle('active', btn.dataset.target === targetId);
         });
     }
 
@@ -42,7 +36,9 @@ async function loadContent(label, containerId) {
         return;
     }
 
-    container.innerHTML = `<p class="status-message">Loading ${label}s...</p>`;
+    if (container.innerHTML === '') {
+        container.innerHTML = `<p class="status-message">Loading ${label}s...</p>`;
+    }
 
     try {
         const response = await fetch(`https://api.github.com/repos/p0kks/p0kks.me/issues?labels=${label}&state=open&sort=created&direction=desc`, {
@@ -101,9 +97,28 @@ function createCard(issue, label) {
 
     const summary = document.createElement('summary');
     summary.className = 'home-dropdown-summary';
+
+    const dropdownHeaderContent = document.createElement('div');
+    dropdownHeaderContent.className = 'dropdown-header-content';
+
+    const subtitleSpan = document.createElement('span');
+    subtitleSpan.className = 'dropdown-subtitle';
+
+    if (label === 'project') {
+        const firstLine = issue.body ? issue.body.split('\n')[0] : '';
+        subtitleSpan.textContent = firstLine;
+    } else if (label === 'note') {
+        const issueDate = new Date(issue.created_at);
+        subtitleSpan.textContent = issueDate.toLocaleString('en-us', { month: 'long' }).toLowerCase();
+    }
+    dropdownHeaderContent.appendChild(subtitleSpan);
+
     const titleSpan = document.createElement('span');
+    titleSpan.className = 'dropdown-title';
     titleSpan.textContent = issue.title;
-    summary.appendChild(titleSpan);
+    dropdownHeaderContent.appendChild(titleSpan);
+
+    summary.appendChild(dropdownHeaderContent);
 
     const contentWrapper = document.createElement('div');
     contentWrapper.className = 'home-dropdown-content';
@@ -120,9 +135,19 @@ function createCard(issue, label) {
         const tagLabel = document.createElement('span');
         tagLabel.className = 'tag-label';
         tagLabel.textContent = l.name;
+        // Add specific classes based on label name
+        if (l.name.toLowerCase() === 'note' || l.name.toLowerCase() === 'insights' || l.name.toLowerCase() === 'thoughts') {
+            tagLabel.classList.add('tag-label-yellow');
+        } else if (l.name.toLowerCase() === 'project') {
+            tagLabel.classList.add('tag-label-blue');
+        } else if (l.name.toLowerCase() === 'code') {
+            tagLabel.classList.add('tag-label-green');
+        } else if (l.name.toLowerCase() === 'audio') {
+            tagLabel.classList.add('tag-label-red');
+        }
         cardTags.appendChild(tagLabel);
     });
-    summary.appendChild(cardTags);
+    cardFooter.appendChild(cardTags);
 
     if (label === 'project') {
         const cardLinks = document.createElement('div');
@@ -205,9 +230,21 @@ function showFallbackProjects(container) {
 
                     const summary = document.createElement('summary');
                     summary.className = 'home-dropdown-summary';
+
+                    const dropdownHeaderContent = document.createElement('div');
+                    dropdownHeaderContent.className = 'dropdown-header-content';
+
+                    const subtitleSpan = document.createElement('span');
+                    subtitleSpan.className = 'dropdown-subtitle';
+                    subtitleSpan.textContent = project.content.split('\n')[0];
+                    dropdownHeaderContent.appendChild(subtitleSpan);
+
                     const titleSpan = document.createElement('span');
+                    titleSpan.className = 'dropdown-title';
                     titleSpan.textContent = project.title;
-                    summary.appendChild(titleSpan);
+                    dropdownHeaderContent.appendChild(titleSpan);
+
+                    summary.appendChild(dropdownHeaderContent);
 
                     const contentWrapper = document.createElement('div');
                     contentWrapper.className = 'home-dropdown-content';
@@ -222,8 +259,16 @@ function showFallbackProjects(container) {
                     const tagLabel = document.createElement('span');
                     tagLabel.className = 'tag-label';
                     tagLabel.textContent = project.category;
+                    // Add specific classes based on category name
+                    if (project.category.toLowerCase() === 'code') {
+                        tagLabel.classList.add('tag-label-green');
+                    } else if (project.category.toLowerCase() === 'audio') {
+                        tagLabel.classList.add('tag-label-red');
+                    } else if (project.category.toLowerCase() === 'project') {
+                        tagLabel.classList.add('tag-label-blue');
+                    }
                     cardTags.appendChild(tagLabel);
-                    summary.appendChild(cardTags);
+                    cardFooter.appendChild(cardTags);
                     contentWrapper.appendChild(cardContent);
                     contentWrapper.appendChild(cardFooter);
 

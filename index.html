@@ -6,9 +6,8 @@
   <meta name="description" content="p0kks — minimalist portfolio showcasing code projects and audio work.">
   <title>p0kks</title>
   <link rel="icon" href="assets/images/favicon.png">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Roboto+Mono:wght@400;700&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
   <link rel="stylesheet" href="src/css/style.css">
   <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
   <script defer src="src/js/script.js"></script>
@@ -18,23 +17,26 @@
   <main class="container">
     <header class="header">
       <div class="header-title-tagline-wrapper">
-        <div class="header-top">
-          <h1 class="site-title">p0kks</h1>
-        </div>
+        <img src="assets/images/site-logo-animated.webp" alt="p0kks" class="site-logo-animated">
         <p class="tagline">Vibe Coder | Bedroom Artist | Creative Works</p>
       </div>
-      <!-- Social links moved from here -->
+
       <nav class="main-nav">
-        <button class="nav-btn active" data-target="home" title="Home">🏠 home</button>
-        <button class="nav-btn" data-target="projects" title="Projects">📁 projects</button>
-        <button class="nav-btn" data-target="notes" title="Notes">📝 notes</button>
+        <button class="nav-btn active" data-target="home" title="Home" aria-label="Home"><i class="fas fa-home"></i></button>
+        <button class="nav-btn" data-target="projects" title="Projects" aria-label="Projects"><i class="fas fa-folder-open"></i></button>
+        <button class="nav-btn" data-target="notes" title="Notes" aria-label="Notes"><i class="fas fa-file-alt"></i></button>
       </nav>
     </header>
 
     <section id="home" class="page active">
       <!-- Dropdowns moved here, outside home-content but inside #home -->
       <details class="home-dropdown">
-        <summary class="home-dropdown-summary">About</summary>
+        <summary class="home-dropdown-summary">
+          <div class="dropdown-header-content">
+            <span class="dropdown-subtitle">read</span>
+            <span class="dropdown-title">About</span>
+          </div>
+        </summary>
         <div class="home-dropdown-content">
           <p>Hello! I'm p0kks, a developer, musician, and creator passionate about building interesting things and exploring new ideas. This site serves as a hub for my various projects and notes.</p>
           <div class="social-links home-social">
@@ -58,7 +60,12 @@
       </details>
 
       <details class="home-dropdown">
-        <summary class="home-dropdown-summary">Bookmarks</summary>
+        <summary class="home-dropdown-summary">
+          <div class="dropdown-header-content">
+            <span class="dropdown-subtitle">check</span>
+            <span class="dropdown-title">Bookmarks</span>
+          </div>
+        </summary>
         <div class="home-dropdown-content">
           <ul>
             <li><a href="https://github.com/p0kks" target="_blank" rel="noopener">My GitHub</a> - Where I share my code projects.</li>
@@ -69,7 +76,12 @@
       </details>
 
       <details class="home-dropdown">
-        <summary class="home-dropdown-summary">History</summary>
+        <summary class="home-dropdown-summary">
+          <div class="dropdown-header-content">
+            <span class="dropdown-subtitle">view</span>
+            <span class="dropdown-title">History</span>
+          </div>
+        </summary>
         <div class="home-dropdown-content">
           <p>Started coding in 2018, focusing on web development and automation. Began exploring music production in 2020. Always learning and experimenting with new technologies and creative outlets.</p>
         </div>
