@@ -101,13 +101,15 @@ function createCard(issue, label) {
 
     const summary = document.createElement('summary');
     summary.className = 'home-dropdown-summary';
-    summary.textContent = issue.title;
+    const titleSpan = document.createElement('span');
+    titleSpan.textContent = issue.title;
+    summary.appendChild(titleSpan);
 
     const contentWrapper = document.createElement('div');
     contentWrapper.className = 'home-dropdown-content';
 
     const cardContent = document.createElement('div');
-    cardContent.innerHTML = marked.parse(issue.body);
+    cardContent.innerHTML = marked.parse(issue.body); // WARNING: Potential XSS vulnerability if issue.body contains untrusted content. Assumed trusted as content comes from own GitHub issues.
 
     const cardFooter = document.createElement('div');
     cardFooter.className = 'card-footer';
@@ -120,20 +122,13 @@ function createCard(issue, label) {
         tagLabel.textContent = l.name;
         cardTags.appendChild(tagLabel);
     });
-    cardFooter.appendChild(cardTags);
+    summary.appendChild(cardTags);
 
     if (label === 'project') {
         const cardLinks = document.createElement('div');
         cardLinks.className = 'card-links';
 
-        if (issue.html_url) {
-            const githubLink = document.createElement('a');
-            githubLink.href = issue.html_url;
-            githubLink.target = '_blank';
-            githubLink.rel = 'noopener';
-            githubLink.innerHTML = '<img src="assets/icons/github.png" alt="GitHub" class="card-icon">';
-            cardLinks.appendChild(githubLink);
-        }
+
         if (issue.homepage) {
             const liveLink = document.createElement('a');
             liveLink.href = issue.homepage;
@@ -210,7 +205,9 @@ function showFallbackProjects(container) {
 
                     const summary = document.createElement('summary');
                     summary.className = 'home-dropdown-summary';
-                    summary.textContent = project.title;
+                    const titleSpan = document.createElement('span');
+                    titleSpan.textContent = project.title;
+                    summary.appendChild(titleSpan);
 
                     const contentWrapper = document.createElement('div');
                     contentWrapper.className = 'home-dropdown-content';
@@ -226,8 +223,7 @@ function showFallbackProjects(container) {
                     tagLabel.className = 'tag-label';
                     tagLabel.textContent = project.category;
                     cardTags.appendChild(tagLabel);
-                    cardFooter.appendChild(cardTags);
-
+                    summary.appendChild(cardTags);
                     contentWrapper.appendChild(cardContent);
                     contentWrapper.appendChild(cardFooter);
 
@@ -242,12 +238,6 @@ function showFallbackProjects(container) {
     initFilterButtons('project');
 }
 
-
-function escapeHtml(text) {
-    const div = document.createElement('div');
-    div.textContent = text;
-    return div.innerHTML;
-}
 
 function initFilterButtons(section) {
     const filterButtons = document.querySelectorAll(`.filter-buttons button[data-section="${section}"]`);

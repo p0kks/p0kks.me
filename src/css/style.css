@@ -68,18 +68,22 @@ body {
 }
 
 .header {
-  align-items: center; /* Center horizontally */
   border-bottom: 1px solid var(--border-color);
   display: flex;
   flex-direction: column; /* Stack elements vertically */
   padding: 15px 0;
 }
 
+.header-title-tagline-wrapper {
+  display: flex;
+  justify-content: space-between;
+  align-items: center; /* Vertically center title and tagline if they have different heights */
+  width: 100%; /* Ensure it takes full width */
+  margin-bottom: 20px; /* Space below this section */
+}
+
 .header-top {
   display: flex;
-  justify-content: center; /* Center site title */
-  margin-bottom: 15px; /* Space below title */
-  width: 100%;
 }
 
 .site-title {
@@ -92,7 +96,6 @@ body {
 .tagline {
   color: var(--muted-text-color);
   font-size: 1.1em;
-  margin-bottom: 20px; /* Space below tagline */
 }
 
 .social-links.header-social {
@@ -130,6 +133,7 @@ body {
   gap: 15px;
   justify-content: center;
   margin-bottom: 30px;
+  margin: 0 auto;
 }
 
 .nav-btn {
@@ -201,14 +205,14 @@ body {
 
 .home-dropdown-summary::after {
   color: var(--accent-color);
-  content: '+';
+  content: '';
   font-family: var(--font-body); /* Use body font for icon */
   font-size: 1.2em;
   transition: transform 0.2s ease;
 }
 
 .home-dropdown[open] .home-dropdown-summary::after {
-  content: '-';
+  content: '';
   transform: rotate(0deg); /* No rotation needed for +/- */
 }
 
@@ -284,6 +288,7 @@ body {
 }
 
 .card-footer {
+  border-top: 1px solid var(--border-color);
   padding: 10px;
   display: flex;
   justify-content: space-between;
@@ -296,6 +301,7 @@ body {
   display: flex;
   flex-wrap: wrap;
   gap: 6px;
+  margin-left: auto;
 }
 
 .card-links {
@@ -309,8 +315,8 @@ body {
 }
 
 .tag-label {
-  background-color: var(--surface);
-  border: 1px solid var(--border-color);
+  background: none;
+  border: none;
   border-radius: 4px;
   color: var(--muted-text-color);
   font-size: 0.75em;
@@ -337,42 +343,6 @@ body {
   }
 
   .main-nav {
-    flex-wrap: wrap;
-  }
-
-  .home-content {
-    gap: 25px;
-  }
-
-  .social-link {
-    height: 40px;
-    width: 40px;
-  }
-
-  .social-icon {
-    height: 24px;
-    width: 24px;
-  }
-
-  .nav-card {
-    flex-direction: column;
-    text-align: center;
-    gap: 10px;
-  }
-
-  .nav-card-icon {
-    font-size: 1.5em;
-  }
-
-  .nav-card-title {
-    font-size: 1.1em;
-  }
-
-  .nav-card-subtitle {
-    font-size: 0.8em;
-  }
-
-  .filter-buttons {
     flex-wrap: wrap;
   }
 }
