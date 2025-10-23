@@ -165,7 +165,10 @@ function createCard(issue, label) {
     contentWrapper.className = 'home-dropdown-content';
 
     const cardContent = document.createElement('div');
-    cardContent.classList.add('markdown-body');
+    // Add markdown-body class conditionally
+    if (label === 'project' || label === 'note') {
+        cardContent.classList.add('markdown-body');
+    }
     const bodyText = issue.body || '';
     // Use marked only if available and bodyText is non-empty. Sanitize the HTML with DOMPurify.
     if (typeof marked !== 'undefined' && bodyText) {

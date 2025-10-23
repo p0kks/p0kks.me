@@ -1,5 +1,3 @@
-const fs = require('fs');
-const path = require('path');
 
 async function getFetch() {
   try {
@@ -14,14 +12,27 @@ async function getFetch() {
 async function fetchIssuesByLabel(owner, repo, label, token) {
   const fetchFn = await getFetch();
   const perPage = 100;
-  const url = `https://api.github.com/repos/${owner}/${repo}/issues?labels=${encodeURIComponent(label)}&state=open&per_page=${perPage}`;
+  let allIssues = [];
+  let url = `https://api.github.com/repos/${owner}/${repo}/issues?labels=${encodeURIComponent(label)}&state=open&per_page=${perPage}`;
   const headers = { Accept: 'application/vnd.github.v3+json' };
   if (token) headers.Authorization = `token ${token}`;
 
-  const res = await fetchFn(url, { headers });
-  if (!res.ok) throw new Error(`GitHub API request failed: ${res.status} ${res.statusText}`);
-  const json = await res.json();
-  return json;
+  while (url) {
+    const res = await fetchFn(url, { headers });
+    if (!res.ok) throw new Error(`GitHub API request failed: ${res.status} ${res.statusText}`);
+    const json = await res.json();
+    allIssues = allIssues.concat(json);
+
+    const linkHeader = res.headers.get('Link');
+    url = null; // Reset url for the next iteration
+    if (linkHeader) {
+      const nextLinkMatch = linkHeader.match(/<([^>]+)>;\s*rel="next"/);
+      if (nextLinkMatch) {
+        url = nextLinkMatch[1];
+      }
+    }
+  }
+  return allIssues;
 }
 
 module.exports = { fetchIssuesByLabel };

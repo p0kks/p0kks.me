@@ -9,7 +9,7 @@ async function run() {
   const labels = ['project', 'note'];
 
   const outDir = path.join(__dirname, '..', 'data');
-  if (!fs.existsSync(outDir)) fs.mkdirSync(outDir);
+  if (!fs.existsSync(outDir)) fs.mkdirSync(outDir, { recursive: true });
 
   for (const label of labels) {
     console.log('Fetching', label);
