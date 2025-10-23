@@ -1,5 +1,16 @@
 // ===== MAIN INITIALIZATION =====
 document.addEventListener('DOMContentLoaded', function() {
+    // Configure DOMPurify to open links in new tabs
+    if (typeof DOMPurify !== 'undefined') {
+        DOMPurify.setConfig({ ADD_ATTR: ['target', 'rel'] });
+        DOMPurify.addHook('afterSanitizeAttributes', function (node) {
+            if ('href' in node && node.tagName === 'A') {
+                node.setAttribute('target', '_blank');
+                node.setAttribute('rel', 'noopener');
+            }
+        });
+    }
+
     initNavigation();
     initHomeFilterButtons();
     loadContent('project', 'project-container');
@@ -34,17 +45,19 @@ function initNavigation() {
 }
 
 function initHomeFilterButtons() {
-    const filterButtons = document.querySelectorAll('#home .filter-buttons .filter-btn');
-    filterButtons.forEach(button => {
-        button.addEventListener('click', () => {
-            const targetId = button.dataset.target;
-            const targetDropdown = document.getElementById(targetId);
-            if (targetDropdown) {
-                targetDropdown.open = true;
-            }
-        });
+    const button = document.querySelector('#home .filter-buttons .filter-btn');
+    if (!button) return;
+
+    // Change label
+    button.textContent = 'open/close all';
+
+    button.addEventListener('click', () => {
+        const dropdowns = document.querySelectorAll('#home .home-dropdown');
+        const anyClosed = Array.from(dropdowns).some(d => !d.open);
+        dropdowns.forEach(d => d.open = anyClosed);
     });
 }
+
 
 
 
@@ -150,8 +163,18 @@ function createCard(issue, label) {
     const summary = document.createElement('summary');
     summary.className = 'home-dropdown-summary';
 
-    const dropdownLeftContent = document.createElement('div');
-    dropdownLeftContent.className = 'dropdown-left-content';
+    const dropdownHeaderContent = document.createElement('div');
+    dropdownHeaderContent.className = 'dropdown-header-content';
+
+    const titleSpan = document.createElement('span');
+    titleSpan.className = 'dropdown-title';
+    titleSpan.textContent = issue.title;
+    dropdownHeaderContent.appendChild(titleSpan);
+
+    summary.appendChild(dropdownHeaderContent);
+
+    const dropdownRightContent = document.createElement('div');
+    dropdownRightContent.className = 'dropdown-right-content';
 
     const subtitleSpan = document.createElement('span');
     subtitleSpan.className = 'dropdown-subtitle';
@@ -164,14 +187,9 @@ function createCard(issue, label) {
         const tagLabel = createTagLabel(name);
         subtitleSpan.appendChild(tagLabel);
     });
-    dropdownLeftContent.appendChild(subtitleSpan);
+    dropdownRightContent.appendChild(subtitleSpan);
 
-    const titleSpan = document.createElement('span');
-    titleSpan.className = 'dropdown-title';
-    titleSpan.textContent = issue.title;
-    dropdownLeftContent.appendChild(titleSpan);
-
-    summary.appendChild(dropdownLeftContent);
+    summary.appendChild(dropdownRightContent);
 
     const contentWrapper = document.createElement('div');
     contentWrapper.className = 'home-dropdown-content';
@@ -217,7 +235,7 @@ function createCard(issue, label) {
         const tagLabel = createTagLabel(name);
         cardTags.appendChild(tagLabel);
     });
-    cardTagsAndLinks.appendChild(cardTags);
+
 
     if (label === 'project') {
         const cardLinks = document.createElement('div');
@@ -362,7 +380,7 @@ function initFilterButtons(section) {
                 if (section === 'project') {
                     display = (filter === 'all' || card.dataset.category === filter) ? 'block' : 'none';
                 } else if (section === 'note') {
-                    display = (filter === 'all' || card.dataset.month == filter) ? 'block' : 'none';
+                    display = (filter === 'note' || card.dataset.month == filter) ? 'block' : 'none';
                 }
                 card.style.display = display;
             });
