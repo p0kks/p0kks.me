@@ -1,6 +1,7 @@
 // ===== MAIN INITIALIZATION =====
 document.addEventListener('DOMContentLoaded', function() {
     initNavigation();
+    initHomeFilterButtons();
     loadContent('project', 'project-container');
     loadContent('note', 'notes-container');
 });
@@ -31,6 +32,21 @@ function initNavigation() {
         });
     });
 }
+
+function initHomeFilterButtons() {
+    const filterButtons = document.querySelectorAll('#home .filter-buttons .filter-btn');
+    filterButtons.forEach(button => {
+        button.addEventListener('click', () => {
+            const targetId = button.dataset.target;
+            const targetDropdown = document.getElementById(targetId);
+            if (targetDropdown) {
+                targetDropdown.open = true;
+            }
+        });
+    });
+}
+
+
 
 // ===== DYNAMIC CONTENT LOADING =====
 async function loadContent(label, containerId) {
@@ -83,6 +99,26 @@ async function loadContent(label, containerId) {
     }
 }
 
+function createTagLabel(name) {
+    const tagLabel = document.createElement('span');
+    tagLabel.className = 'tag-label';
+    tagLabel.textContent = name;
+
+    const lname = name.toLowerCase();
+    if (['audio'].includes(lname)) {
+        tagLabel.classList.add('tag-label-audio');
+    } else if (['code', 'web'].includes(lname)) {
+        tagLabel.classList.add('tag-label-code-web');
+    } else if (['cover', 'original'].includes(lname)) {
+        tagLabel.classList.add('tag-label-cover-original');
+    } else if (['note', 'thoughts', 'insights'].includes(lname)) {
+        tagLabel.classList.add('tag-label-note-thoughts-insights');
+    } else if (['project'].includes(lname)) {
+        tagLabel.classList.add('tag-label-project');
+    }
+    return tagLabel;
+}
+
 function createCard(issue, label) {
     const card = document.createElement('details');
     card.className = 'home-dropdown';
@@ -108,13 +144,14 @@ function createCard(issue, label) {
     const subtitleSpan = document.createElement('span');
     subtitleSpan.className = 'dropdown-subtitle';
 
-    if (label === 'project') {
-        const firstLine = issue.body ? issue.body.split('\n')[0] : '';
-        subtitleSpan.textContent = firstLine;
-    } else if (label === 'note') {
-        const issueDate = new Date(issue.created_at);
-        subtitleSpan.textContent = issueDate.toLocaleString('en-us', { month: 'long' }).toLowerCase();
-    }
+    subtitleSpan.innerHTML = ''; // Clear any existing content
+    const labels = Array.isArray(issue.labels) ? issue.labels : [];
+    labels.forEach(l => {
+        const name = (l && l.name) ? l.name : '';
+        if (name === label) return; // Skip the main label
+        const tagLabel = createTagLabel(name);
+        subtitleSpan.appendChild(tagLabel);
+    });
     dropdownHeaderContent.appendChild(subtitleSpan);
 
     const titleSpan = document.createElement('span');
@@ -128,6 +165,7 @@ function createCard(issue, label) {
     contentWrapper.className = 'home-dropdown-content';
 
     const cardContent = document.createElement('div');
+    cardContent.classList.add('markdown-body');
     const bodyText = issue.body || '';
     // Use marked only if available and bodyText is non-empty. Sanitize the HTML with DOMPurify.
     if (typeof marked !== 'undefined' && bodyText) {
@@ -140,28 +178,31 @@ function createCard(issue, label) {
     const cardFooter = document.createElement('div');
     cardFooter.className = 'card-footer';
 
+    const issueDate = new Date(issue.created_at);
+    const day = issueDate.getDate().toString().padStart(2, '0');
+    const month = issueDate.toLocaleString('en-us', { month: 'short' });
+    const year = issueDate.getFullYear();
+    const formattedDate = `${day} ${month}, ${year}`;
+
+    const cardDate = document.createElement('span');
+    cardDate.className = 'card-date';
+    cardDate.textContent = formattedDate;
+    cardFooter.appendChild(cardDate);
+
+    const cardTagsAndLinks = document.createElement('div');
+    cardTagsAndLinks.style.display = 'flex';
+    cardTagsAndLinks.style.gap = '15px';
+    cardTagsAndLinks.style.alignItems = 'center';
+
     const cardTags = document.createElement('div');
     cardTags.className = 'card-tags';
     const labelsForTags = Array.isArray(issue.labels) ? issue.labels : [];
     labelsForTags.forEach(l => {
         const name = (l && l.name) ? l.name : '';
-        const tagLabel = document.createElement('span');
-        tagLabel.className = 'tag-label';
-        tagLabel.textContent = name;
-        // Add specific classes based on label name
-        const lname = name.toLowerCase();
-        if (lname === 'note' || lname === 'insights' || lname === 'thoughts') {
-            tagLabel.classList.add('tag-label-yellow');
-        } else if (lname === 'project') {
-            tagLabel.classList.add('tag-label-blue');
-        } else if (lname === 'code') {
-            tagLabel.classList.add('tag-label-green');
-        } else if (lname === 'audio') {
-            tagLabel.classList.add('tag-label-red');
-        }
+        const tagLabel = createTagLabel(name);
         cardTags.appendChild(tagLabel);
     });
-    cardFooter.appendChild(cardTags);
+    cardTagsAndLinks.appendChild(cardTags);
 
     if (label === 'project') {
         const cardLinks = document.createElement('div');
@@ -177,15 +218,11 @@ function createCard(issue, label) {
             cardLinks.appendChild(liveLink);
         }
         if (cardLinks.children.length > 0) {
-            cardFooter.appendChild(cardLinks);
+            cardTagsAndLinks.appendChild(cardLinks);
         }
-    } else if (label === 'note') {
-        const cardDate = document.createElement('span');
-        cardDate.className = 'card-date';
-        const issueDate = new Date(issue.created_at);
-        cardDate.textContent = issueDate.toLocaleDateString();
-        cardFooter.appendChild(cardDate);
     }
+    
+    cardFooter.appendChild(cardTagsAndLinks);
 
     contentWrapper.appendChild(cardContent);
     contentWrapper.appendChild(cardFooter);
@@ -264,6 +301,7 @@ function showFallbackProjects(container) {
                     contentWrapper.className = 'home-dropdown-content';
 
                     const cardContent = document.createElement('div');
+                    cardContent.classList.add('markdown-body');
                     const raw = (typeof marked !== 'undefined') ? marked.parse(project.content) : project.content;
                     cardContent.innerHTML = (typeof DOMPurify !== 'undefined') ? DOMPurify.sanitize(raw) : raw;
 

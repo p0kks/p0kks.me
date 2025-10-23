@@ -25,68 +25,56 @@
         <div class="site-logo-container">
           <img src="assets/images/site-logo.webp" alt="p0kks" class="site-logo-animated">
         </div>
-        <div class="header-content">
-          <p class="tagline">Vibe Coder // Bedroom Artist // Creative Works</p>
-          <nav class="main-nav" role="navigation" aria-label="Main navigation">
-            <button class="nav-btn active" data-target="home" title="Home" aria-label="Home" aria-pressed="true"><i class="fas fa-home" aria-hidden="true"></i></button>
-            <button class="nav-btn" data-target="project" title="Projects" aria-label="Projects" aria-pressed="false"><i class="fas fa-folder-open" aria-hidden="true"></i></button>
-            <button class="nav-btn" data-target="note" title="Notes" aria-label="Notes" aria-pressed="false"><i class="fas fa-file-alt" aria-hidden="true"></i></button>
-          </nav>
-        </div>
+        <nav class="main-nav" role="navigation" aria-label="Main navigation">
+          <button class="nav-btn active" data-target="home" title="Home" aria-label="Home" aria-pressed="true"><i class="fas fa-home" aria-hidden="true"></i></button>
+          <button class="nav-btn" data-target="project" title="Projects" aria-label="Projects" aria-pressed="false"><i class="fas fa-folder-open" aria-hidden="true"></i></button>
+          <button class="nav-btn" data-target="note" title="Notes" aria-label="Notes" aria-pressed="false"><i class="fas fa-file-alt" aria-hidden="true"></i></button>
+        </nav>
       </div>
     </header>
 
     <section id="home" class="page active">
+      <div class="filter-buttons" role="toolbar" aria-label="Home filters">
+        <button class="filter-btn" data-target="about-dropdown">p0kks.me</button>
+      </div>
 
-      <details class="home-dropdown">
+      <details class="home-dropdown" id="about-dropdown">
         <summary class="home-dropdown-summary">
           <div class="dropdown-header-content">
-            <span class="dropdown-subtitle">read</span>
+            <span class="dropdown-subtitle hardcoded-subtitle">READ</span>
             <span class="dropdown-title">About</span>
           </div>
         </summary>
         <div class="home-dropdown-content">
           <p>Hello! I'm p0kks, a developer, musician, and creator passionate about building interesting things and exploring new ideas. This site serves as a hub for my various projects and notes.</p>
           <div class="social-links home-social">
-            <a href="https://github.com/p0kks" target="_blank" rel="noopener" class="social-link">
-              <img src="assets/icons/github.png" alt="GitHub" class="social-icon">
-            </a>
-            <a href="https://twitter.com/p0kks" target="_blank" rel="noopener" class="social-link">
-              <img src="assets/icons/twitter.png" alt="Twitter" class="social-icon">
-            </a>
-            <a href="https://t.me/p0kks" target="_blank" rel="noopener" class="social-link">
-              <img src="assets/icons/telegram.png" alt="Telegram" class="social-icon">
-            </a>
-            <a href="https://bandlab.com/p0kks" target="_blank" rel="noopener" class="social-link">
-              <img src="assets/icons/bandlab.png" alt="BandLab" class="social-icon">
-            </a>
-            <a href="https://discord.com/users/p0kks" target="_blank" rel="noopener" class="social-link">
-              <img src="assets/icons/discord.png" alt="Discord" class="social-icon">
-            </a>
+            <a href="https://github.com/p0kks" target="_blank" rel="noopener" class="social-link">GitHub</a>
+            <a href="https://twitter.com/p0kks" target="_blank" rel="noopener" class="social-link">Twitter</a>
+            <a href="https://t.me/p0kks" target="_blank" rel="noopener" class="social-link">Telegram</a>
+            <a href="https://bandlab.com/p0kks" target="_blank" rel="noopener" class="social-link">BandLab</a>
+            <a href="https://discord.com/users/p0kks" target="_blank" rel="noopener" class="social-link">Discord</a>
           </div>
         </div>
       </details>
 
-      <details class="home-dropdown">
+      <details class="home-dropdown" id="bookmarks-dropdown">
         <summary class="home-dropdown-summary">
           <div class="dropdown-header-content">
-            <span class="dropdown-subtitle">check</span>
+            <span class="dropdown-subtitle hardcoded-subtitle">CHECK</span>
             <span class="dropdown-title">Bookmarks</span>
           </div>
         </summary>
         <div class="home-dropdown-content">
-          <ul>
-            <li><a href="https://github.com/p0kks" target="_blank" rel="noopener">My GitHub</a> - Where I share my code projects.</li>
-            <li><a href="https://bandlab.com/p0kks" target="_blank" rel="noopener">My BandLab</a> - Listen to my music and audio experiments.</li>
-            <li><a href="https://example.com/favorite-tool" target="_blank" rel="noopener">Favorite Dev Tool</a> - A tool I frequently use.</li>
-            </ul>
+            <a href="https://github.com/p0kks" target="_blank" rel="noopener">My GitHub</a><br>Where I share my code projects.<br>
+            <a href="https://bandlab.com/p0kks" target="_blank" rel="noopener">My BandLab</a><br>Listen to my music and audio experiments.<br>
+            <a href="https://example.com/favorite-tool" target="_blank" rel="noopener">Favorite Dev Tool</a><br>A tool I frequently use.<br>
         </div>
       </details>
 
-      <details class="home-dropdown">
+      <details class="home-dropdown" id="history-dropdown">
         <summary class="home-dropdown-summary">
           <div class="dropdown-header-content">
-            <span class="dropdown-subtitle">view</span>
+            <span class="dropdown-subtitle hardcoded-subtitle">SEE</span>
             <span class="dropdown-title">History</span>
           </div>
         </summary>
@@ -100,8 +88,8 @@
   <section id="project" class="page">
       <div class="filter-buttons" role="toolbar" aria-label="Project filters">
         <button class="filter-btn active" data-filter="all" data-section="project" aria-pressed="true">All</button>
-        <button class="filter-btn" data-filter="code" data-section="project" aria-pressed="false">Code</button>
         <button class="filter-btn" data-filter="audio" data-section="project" aria-pressed="false">Audio</button>
+        <button class="filter-btn" data-filter="code" data-section="project" aria-pressed="false">Code</button>
         <button class="filter-btn" data-filter="other" data-section="project" aria-pressed="false">Other</button>
       </div>
       <div id="project-container" class="card-grid"></div>
