@@ -150,8 +150,8 @@ function createCard(issue, label) {
     const summary = document.createElement('summary');
     summary.className = 'home-dropdown-summary';
 
-    const dropdownHeaderContent = document.createElement('div');
-    dropdownHeaderContent.className = 'dropdown-header-content';
+    const dropdownLeftContent = document.createElement('div');
+    dropdownLeftContent.className = 'dropdown-left-content';
 
     const subtitleSpan = document.createElement('span');
     subtitleSpan.className = 'dropdown-subtitle';
@@ -164,14 +164,14 @@ function createCard(issue, label) {
         const tagLabel = createTagLabel(name);
         subtitleSpan.appendChild(tagLabel);
     });
-    dropdownHeaderContent.appendChild(subtitleSpan);
+    dropdownLeftContent.appendChild(subtitleSpan);
 
     const titleSpan = document.createElement('span');
     titleSpan.className = 'dropdown-title';
     titleSpan.textContent = issue.title;
-    dropdownHeaderContent.appendChild(titleSpan);
+    dropdownLeftContent.appendChild(titleSpan);
 
-    summary.appendChild(dropdownHeaderContent);
+    summary.appendChild(dropdownLeftContent);
 
     const contentWrapper = document.createElement('div');
     contentWrapper.className = 'home-dropdown-content';
