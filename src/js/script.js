@@ -107,12 +107,24 @@ function createTagLabel(name) {
     const lname = name.toLowerCase();
     if (['audio'].includes(lname)) {
         tagLabel.classList.add('tag-label-audio');
-    } else if (['code', 'web'].includes(lname)) {
+    } else if (['code'].includes(lname)) {
         tagLabel.classList.add('tag-label-code-web');
-    } else if (['cover', 'original'].includes(lname)) {
-        tagLabel.classList.add('tag-label-cover-original');
-    } else if (['note', 'thoughts', 'insights'].includes(lname)) {
-        tagLabel.classList.add('tag-label-note-thoughts-insights');
+    } else if (['web'].includes(lname)) {
+        tagLabel.classList.add('tag-label-web');
+    } else if (['cover'].includes(lname)) {
+        tagLabel.classList.add('tag-label-cover');
+    } else if (['song'].includes(lname)) {
+        tagLabel.classList.add('tag-label-song');
+    } else if (['original'].includes(lname)) {
+        tagLabel.classList.add('tag-label-original');
+    } else if (['insight'].includes(lname)) {
+        tagLabel.classList.add('tag-label-insight');
+    } else if (['note'].includes(lname)) {
+        tagLabel.classList.add('tag-label-note');
+    } else if (['thoughts'].includes(lname)) {
+        tagLabel.classList.add('tag-label-thoughts');
+    } else if (['insights'].includes(lname)) {
+        tagLabel.classList.add('tag-label-insights');
     } else if (['project'].includes(lname)) {
         tagLabel.classList.add('tag-label-project');
     }
@@ -312,17 +324,7 @@ function showFallbackProjects(container) {
                     cardFooter.className = 'card-footer';
                     const cardTags = document.createElement('div');
                     cardTags.className = 'card-tags';
-                    const tagLabel = document.createElement('span');
-                    tagLabel.className = 'tag-label';
-                    tagLabel.textContent = project.category;
-                    // Add specific classes based on category name
-                    if (project.category.toLowerCase() === 'code') {
-                        tagLabel.classList.add('tag-label-green');
-                    } else if (project.category.toLowerCase() === 'audio') {
-                        tagLabel.classList.add('tag-label-red');
-                    } else if (project.category.toLowerCase() === 'project') {
-                        tagLabel.classList.add('tag-label-blue');
-                    }
+                    const tagLabel = createTagLabel(project.category);
                     cardTags.appendChild(tagLabel);
                     cardFooter.appendChild(cardTags);
                     contentWrapper.appendChild(cardContent);

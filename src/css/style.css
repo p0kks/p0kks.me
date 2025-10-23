@@ -3,10 +3,10 @@
   /* Colors */
   --color-primary: #1d5069a4;
   --color-background: #0e0e0e;
-  --color-surface: #1e1e1e6b;
+  --color-surface: #1e1e1e81;
   --color-border: rgba(68, 68, 68, 0.2);
-  --color-text: #bebebe;
-  --color-text-muted: #888888;
+  --color-text: #acacac;
+  --color-text-muted: #757575;
   
   /* Category Colors */
   --color-code: #28a745;
@@ -85,8 +85,8 @@ body {
 }
 
 /* Nav button colors */
-.nav-btn[data-target="home"] { color: var(--color-text); }
-.nav-btn[data-target="project"] { color: var(--color-primary); }
+.nav-btn[data-target="home"] { color: #e2ffbc; }
+.nav-btn[data-target="project"] { color: #0f7fff; }
 .nav-btn[data-target="note"] { color: #ffc107; }
 
 /* Active indicator */
@@ -272,7 +272,15 @@ body {
 /* Tag Categories */
 .tag-label-audio { color: var(--color-audio); }
 .tag-label-code-web { color: var(--color-code); }
-.tag-label-project { color: var(--color-primary); }
+.tag-label-project { color: #0052cc; }
+.tag-label-insight { color: #fbca04; }
+.tag-label-note { color: #fbca04; }
+.tag-label-thoughts { color: #fbca04; }
+.tag-label-insights { color: #fbca04; }
+.tag-label-cover { color: #e99695; }
+.tag-label-song { color: #e99695; }
+.tag-label-original { color: #e99695; }
+.tag-label-web { color: #c2e0c6; }
 
 /* Code Blocks */
 pre {
