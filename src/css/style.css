@@ -163,7 +163,7 @@ body {
 /* Content area */
 .home-dropdown-content {
   color: var(--color-text-muted);
-  font-size: 0.95em;
+  font-size: 0.85em;
   padding: 0 var(--space-md) var(--space-md);
 }
 
