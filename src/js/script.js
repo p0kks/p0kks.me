@@ -265,7 +265,7 @@ function createCard(issue, label) {
             liveLink.href = issue.homepage;
             liveLink.target = '_blank';
             liveLink.rel = 'noopener';
-            liveLink.innerHTML = '<img src="assets/icons/githubpages.png" alt="Live Demo" class="card-icon">';
+            liveLink.innerHTML = '<i class="fas fa-external-link-alt"></i>';
             cardLinks.appendChild(liveLink);
         }
         if (cardLinks.children.length > 0) {
@@ -327,29 +327,34 @@ function showFallbackNotes(container) {
 function showFallbackProjects(container) {
     const fallbackProjects = [
         {
-            category: 'code',
             title: 'p0kks.me',
-            content: 'This portfolio website. Built with plain HTML, CSS and JavaScript.'
+            body: 'This portfolio website. Built with plain HTML, CSS and JavaScript.',
+            labels: [{name: 'project'}, {name: 'code'}],
+            created_at: new Date().toISOString(),
         },
         {
-            category: 'code',
             title: 'Discord Bot',
-            content: 'A custom Discord bot for a community server, built with Node.js. It provides various utility commands, moderation tools, and fun features.'
+            body: 'A custom Discord bot for a community server, built with Node.js. It provides various utility commands, moderation tools, and fun features.',
+            labels: [{name: 'project'}, {name: 'code'}],
+            created_at: new Date().toISOString(),
         },
         {
-            category: 'audio',
             title: 'Cover Song',
-            content: 'Peder Elias - Cover Song. A cover song project.'
+            body: 'Peder Elias - Cover Song. A cover song project.',
+            labels: [{name: 'project'}, {name: 'audio'}, {name: 'cover'}],
+            created_at: new Date().toISOString(),
         },
         {
-            category: 'audio',
             title: 'Ambient Music',
-            content: 'A collection of short, experimental ambient tracks. Exploring textures and soundscapes.'
+            body: 'A collection of short, experimental ambient tracks. Exploring textures and soundscapes.',
+            labels: [{name: 'project'}, {name: 'audio'}, {name: 'original'}],
+            created_at: new Date().toISOString(),
         },
         {
-            category: 'other',
             title: 'Reaper Configuration',
-            content: 'My personal configuration for the Reaper DAW, including themes, scripts, and settings.'
+            body: 'My personal configuration for the Reaper DAW, including themes, scripts, and settings.',
+            labels: [{name: 'project'}, {name: 'other'}],
+            created_at: new Date().toISOString(),
         }
     ];
 
@@ -365,55 +370,16 @@ function showFallbackProjects(container) {
         <div style="margin-top: 2rem;">
             <p style="text-align: center; opacity: 0.7; margin-bottom: 1rem;">Example projects:</p>
             <div class="card-grid">
-                ${fallbackProjects.map(project => {
-                    const card = document.createElement('details');
-                    card.className = 'home-dropdown';
-                    card.dataset.category = project.category;
-
-                    const summary = document.createElement('summary');
-                    summary.className = 'home-dropdown-summary';
-
-                    const dropdownHeaderContent = document.createElement('div');
-                    dropdownHeaderContent.className = 'dropdown-header-content';
-
-                    const subtitleSpan = document.createElement('span');
-                    subtitleSpan.className = 'dropdown-subtitle';
-                    subtitleSpan.textContent = project.content.split('\n')[0];
-                    dropdownHeaderContent.appendChild(subtitleSpan);
-
-                    const titleSpan = document.createElement('span');
-                    titleSpan.className = 'dropdown-title';
-                    titleSpan.textContent = project.title;
-                    dropdownHeaderContent.appendChild(titleSpan);
-
-                    summary.appendChild(dropdownHeaderContent);
-
-                    const contentWrapper = document.createElement('div');
-                    contentWrapper.className = 'home-dropdown-content';
-
-                    const cardContent = document.createElement('div');
-                    cardContent.classList.add('markdown-body');
-                    const raw = (typeof marked !== 'undefined') ? marked.parse(project.content) : project.content;
-                    cardContent.innerHTML = (typeof DOMPurify !== 'undefined') ? DOMPurify.sanitize(raw) : raw;
-
-                    const cardFooter = document.createElement('div');
-                    cardFooter.className = 'card-footer';
-                    const cardTags = document.createElement('div');
-                    cardTags.className = 'card-tags';
-                    const tagLabel = createTagLabel(project.category);
-                    cardTags.appendChild(tagLabel);
-                    cardFooter.appendChild(cardTags);
-                    contentWrapper.appendChild(cardContent);
-                    contentWrapper.appendChild(cardFooter);
-
-                    card.appendChild(summary);
-                    card.appendChild(contentWrapper);
-
-                    return card.outerHTML;
-                }).join('')}
             </div>
         </div>
     `;
+
+    const cardGrid = container.querySelector('.card-grid');
+    fallbackProjects.forEach(project => {
+        const card = createCard(project, 'project');
+        cardGrid.appendChild(card);
+    });
+
     initFilterButtons('project');
 }
 

@@ -85,6 +85,10 @@ body {
   transition: color var(--transition-speed) ease;
 }
 
+.nav-btn svg {
+  fill: currentColor;
+}
+
 /* Nav button colors */
 .nav-btn[data-target="home"] { color: #e2ffbc; }
 .nav-btn[data-target="project"] { color: #0f7fff; }
@@ -272,11 +276,15 @@ body {
 .tag-label {
   display: inline-flex;
   align-items: center;
-  font-size: 12px;
+  font-size: 10px;
   font-weight: 500;
+  padding: 3px 10px;
+  border: 1px solid;
+  border-radius: 15px;
+  text-align: center;
+  font-family: system-ui, sans-serif;
   text-decoration: none;
   white-space: nowrap;
-  border: none;
   background-color: transparent;
 }
 
@@ -284,51 +292,25 @@ body {
   margin-right: 5px;
 }
 
-
-/* Border & Text Colors */
-
-/* Audio Category */
+/* Tag Colors */
 .tag-label-audio,
 .tag-label-original,
 .tag-label-cover {
-  display: inline-block;
   color: var(--color-audio);
-  font-size: 10px;
-  font-weight: 500;
-  padding: 3px 10px;
-  border: 1px solid var(--color-audio);
-  border-radius: 15px;
-  text-align: center;
-  font-family: system-ui, sans-serif;
+  border-color: var(--color-audio);
 }
 
-/* Code Category */
 .tag-label-code,
 .tag-label-web {
-  display: inline-block;
   color: var(--color-code);
-  font-size: 10px;
-  font-weight: 500;
-  padding: 3px 10px;
-  border: 1px solid var(--color-code);
-  border-radius: 15px;
-  text-align: center;
-  font-family: system-ui, sans-serif;
+  border-color: var(--color-code);
 }
 
-/* Note Category */
 .tag-label-note,
 .tag-label-insights,
 .tag-label-thoughts {
-  display: inline-block;
   color: var(--color-note);
-  font-size: 10px;
-  font-weight: 500;
-  padding: 3px 10px;
-  border: 1px solid var(--color-note);
-  border-radius: 15px;
-  text-align: center;
-  font-family: system-ui, sans-serif;
+  border-color: var(--color-note);
 }
 
 /* Code Blocks */
