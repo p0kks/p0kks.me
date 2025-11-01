@@ -4,8 +4,8 @@
   --color-background: #0D1117;
   --color-surface: #151B23;
   --color-border: #2d3a4b;
-  --color-text: #dddddd;
-  --color-text-muted: #999999;
+  --color-text: #b1b1b1;
+  --color-text-muted: #808080;
   --color-code: #00ff3ca1;
   --color-audio: #ff00199f;
   --color-other: #0088ffb9;
@@ -181,7 +181,7 @@ body {
 }
 
 .unified-markdown-content {
-  color: var(--color-text-muted);
+  color: var(--color-text);
   font-size: 0.95em;
   width: 100%;
   padding: var(--space-md);
@@ -206,7 +206,7 @@ body {
   background-size: 70%;
   /* external chevron SVG (uses currentColor) */
   background-image: url('../../assets/images/icons/chevron.svg');
-  color: #999999;
+  color: var(--color-text-muted);
   transition: transform var(--dropdown-icon-transition) ease, color var(--dropdown-icon-transition) ease, opacity var(--dropdown-icon-transition) ease;
   transform-origin: center;
 }
@@ -276,7 +276,7 @@ body {
 
 .unified-inside-markdown-content {
   /* Normalize nested markdown content spacing and typography to match top-level */
-  color: var(--color-text-muted);
+  color: var(--color-text);
   font-size: 0.95em;
   width: 100%;
   padding: var(--space-md);
@@ -330,7 +330,11 @@ body {
 }
 
 .filter-btn[data-filter="note"]:hover,
-.filter-btn[data-filter="note"].active {
+.filter-btn[data-filter="note"].active,
+.filter-btn[data-filter="9"]:hover,
+.filter-btn[data-filter="9"].active,
+.filter-btn[data-filter="10"]:hover,
+.filter-btn[data-filter="10"].active {
   color: var(--color-note);
 }
 
@@ -606,16 +610,14 @@ pre code {
 }
 
 .slide-description {
-  margin: 0;
-  padding: 0;
+  margin: 0px -10px 0px;
   font-size: 0.9em;
   color: var(--color-text-muted);
   line-height: 1.4;
 }
 
 .slide-subtitle {
-  margin: 0;
-  padding: 0;
+  margin: -25px -10px 0px;
   color: var(--color-text);
   font-weight: bold;
   font-size: 1em;
@@ -650,7 +652,7 @@ pre code {
 
 /* Slide transitions */
 .slideshow {
-  transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .slide {
@@ -670,7 +672,7 @@ pre code {
 
 .slideshow {
   display: flex;
-  transition: transform 0.5s ease-in-out;
+  transition: transform 0.3s ease-in-out;
 }
 
 .slide {
@@ -699,25 +701,25 @@ pre code {
 .nav-dots {
   display: flex;
   justify-content: center;
-  gap: 10px;
+  gap: 15px;
   padding: 10px;
   margin: var(--space-sm) 0;
 }
 
 .nav-dot {
-  width: 8px;
-  height: 8px;
+  width: 10px;
+  height: 10px;
   border: none;
   border-radius: 50%;
-  background: rgba(255, 255, 255, 0.5);
+  background: var(--color-text-muted);
   cursor: pointer;
   transition: all 0.3s ease;
   padding: 0;
 }
 
 .nav-dot:hover {
-  background: rgba(255, 255, 255, 0.8);
-  transform: scale(1.2);
+  background: var(--color-text);
+  transform: scale(1.1);
 }
 
 .nav-dot.active {
@@ -725,6 +727,3 @@ pre code {
   transform: scale(1.2);
   box-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
 }
-
-.fullscreen-btn {
-
