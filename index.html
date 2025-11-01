@@ -18,21 +18,6 @@
   <script defer src="src/js/script.js"></script>
   <meta name="robots" content="index,follow">
 
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Void | P0KKS</title>
-
-  <!-- Twitter Meta -->
-  <meta name="twitter:card" content="player">
-  <meta name="twitter:title" content="Void">
-  <meta name="twitter:site" content="@p0kks">
-  <meta name="twitter:description" content="P0KKS - Void">
-  <meta name="twitter:player" content="https://p0kks.me">
-  <meta name="twitter:player:height" content="20">
-  <meta name="twitter:player:width" content="360">
-  <meta name="twitter:image" content="https://p0kks.me/assets/images/site-logo.webp">
-  <meta name="twitter:image:alt" content="p0kks.me">
-
 </head>
 <body>
   <main class="container">
@@ -66,6 +51,7 @@
             <span class="dropdown-subtitle hardcoded-subtitle">info</span>
             <span class="dropdown-title">About</span>
           </div>
+          <span class="dropdown-icon"></span>
         </summary>
         <div class="home-dropdown-content">
           <p>I'm P0KKS<br>Developer, musician, and creator driven by curiosity. This site is my hub for projects, experiments, and notes.</p>
@@ -73,9 +59,9 @@
           <details class="home-dropdown" id="social-inside-about-dropdown">
             <summary class="home-dropdown-summary">
               <div class="dropdown-header-content">
-                <span class="dropdown-subtitle hardcoded-subtitle">social</span>
-                <span class="dropdown-title">find me on</span>
+                <span class="dropdown-title">Socials</span>
               </div>
+              <span class="dropdown-icon"></span>
             </summary>
             <div class="home-dropdown-content">
               <div class="social-links home-social">
@@ -97,6 +83,7 @@
             <span class="dropdown-subtitle hardcoded-subtitle">pinned</span>
             <span class="dropdown-title">Bookmarks</span>
           </div>
+          <span class="dropdown-icon"></span>
         </summary>
         <div class="home-dropdown-content">
             <a href="https://github.com/p0kks" target="_blank" rel="noopener">My GitHub</a><br>Where I share my code projects.<br>
@@ -105,53 +92,201 @@
         </div>
       </details>
 
-      <details class="home-dropdown" id="timeline-dropdown">
+      <details class="home-dropdown" id="storyline-dropdown">
         <summary class="home-dropdown-summary">
           <div class="dropdown-header-content">
-            <span class="dropdown-subtitle hardcoded-subtitle">history</span>
-            <span class="dropdown-title">Timeline</span>
+            <span class="dropdown-subtitle hardcoded-subtitle"></span>
+            <span class="dropdown-title">Storyline</span>
           </div>
+          <span class="dropdown-icon"></span>
         </summary>
         <div class="home-dropdown-content">
-          <div class="timeline-entry">
-            <h3>1993: Born</h3>
-            <img src="https://via.placeholder.com/150" alt="Placeholder Image" style="width:100%; height:auto;">
-            <p>Placeholder text for 1993 event.</p>
+
+          <details class="home-dropdown timeline-dropdown">
+            <summary class="home-dropdown-summary">
+              <div class="dropdown-header-content">
+                <span class="dropdown-subtitle hardcoded-subtitle"></span>
+                <span class="dropdown-title">Early Years</span>
+              </div>
+              <span class="dropdown-icon"></span>
+            </summary>
+            <div class="home-dropdown-content">
+              <div class="timeline-gallery">
+                <div class="timeline-year">2010</div>
+                <div class="slideshow-container">
+                  <div class="slideshow">
+                    <div class="slide">
+                      <img src="assets/images/placeholder.png" alt="Image 1">
+                      <div class="slide-description">Description for image 1.</div>
+                    </div>
+                    <div class="slide">
+                      <img src="assets/images/placeholder.png" alt="Image 2">
+                      <div class="slide-description">Description for image 2.</div>
+                    </div>
+                    <div class="slide">
+                      <img src="assets/images/placeholder.png" alt="Image 3">
+                      <div class="slide-description">Description for image 3.</div>
+                    </div>
+                    <div class="slide">
+                      <img src="assets/images/placeholder.png" alt="Image 4">
+                      <div class="slide-description">Description for image 4.</div>
+                    </div>
+                  </div>
+                  <a class="prev">&#10094;</a>
+                  <a class="next">&#10095;</a>
+                </div>
+                <div class="timeline-description"></div>
+              </div>
+            </div>
+          </details>
+
+          <details class="home-dropdown timeline-dropdown">
+            <summary class="home-dropdown-summary">
+              <div class="dropdown-header-content">
+                <span class="dropdown-subtitle hardcoded-subtitle"></span>
+                <span class="dropdown-title">Mid Career</span>
+              </div>
+              <span class="dropdown-icon"></span>
+            </summary>
+            <div class="home-dropdown-content">
+              <div class="timeline-gallery">
+                <div class="timeline-year">2015</div>
+                <div class="slideshow-container">
+                  <div class="slideshow">
+                    <div class="slide">
+                      <img src="assets/images/placeholder.png" alt="Image 1">
+                      <div class="slide-description">Description for image 1.</div>
+                    </div>
+                    <div class="slide">
+                      <img src="assets/images/placeholder.png" alt="Image 2">
+                      <div class="slide-description">Description for image 2.</div>
+                    </div>
+                    <div class="slide">
+                      <img src="assets/images/placeholder.png" alt="Image 3">
+                      <div class="slide-description">Description for image 3.</div>
+                    </div>
+                    <div class="slide">
+                      <img src="assets/images/placeholder.png" alt="Image 4">
+                      <div class="slide-description">Description for image 4.</div>
+                    </div>
+                  </div>
+                  <a class="prev">&#10094;</a>
+                  <a class="next">&#10095;</a>
+                </div>
+                <div class="timeline-description"></div>
+              </div>
+            </div>
+          </details>
+
+          <details class="home-dropdown timeline-dropdown">
+            <summary class="home-dropdown-summary">
+              <div class="dropdown-header-content">
+                <span class="dropdown-subtitle hardcoded-subtitle"></span>
+                <span class="dropdown-title">Recent</span>
+              </div>
+              <span class="dropdown-icon"></span>
+            </summary>
+            <div class="home-dropdown-content">
+              <div class="timeline-gallery">
+                <div class="timeline-year">2020</div>
+                <div class="slideshow-container">
+                  <div class="slideshow">
+                    <div class="slide">
+                      <img src="assets/images/placeholder.png" alt="Image 1">
+                      <div class="slide-description">Description for image 1.</div>
+                    </div>
+                    <div class="slide">
+                      <img src="assets/images/placeholder.png" alt="Image 2">
+                      <div class="slide-description">Description for image 2.</div>
+                    </div>
+                    <div class="slide">
+                      <img src="assets/images/placeholder.png" alt="Image 3">
+                      <div class="slide-description">Description for image 3.</div>
+                    </div>
+                    <div class="slide">
+                      <img src="assets/images/placeholder.png" alt="Image 4">
+                      <div class="slide-description">Description for image 4.</div>
+                    </div>
+                  </div>
+                  <a class="prev">&#10094;</a>
+                  <a class="next">&#10095;</a>
+                </div>
+                <div class="timeline-description"></div>
+              </div>
+            </div>
+          </details>
+
+        </div>
+      </details>
+
+      <details class="home-dropdown" id="gallery-dropdown">
+        <summary class="home-dropdown-summary">
+          <div class="dropdown-header-content">
+            <span class="dropdown-subtitle hardcoded-subtitle">show</span>
+            <span class="dropdown-title">Gallery</span>
           </div>
-          <div class="timeline-entry">
-            <h3>2000: Early Interests</h3>
-            <img src="https://via.placeholder.com/150" alt="Placeholder Image" style="width:100%; height:auto;">
-            <p>Placeholder text for 2000 event.</p>
-          </div>
-          <div class="timeline-entry">
-            <h3>2008: High School</h3>
-            <img src="https://via.placeholder.com/150" alt="Placeholder Image" style="width:100%; height:auto;">
-            <p>Placeholder text for 2008 event.</p>
-          </div>
-          <div class="timeline-entry">
-            <h3>2012: College</h3>
-            <img src="https://via.placeholder.com/150" alt="Placeholder Image" style="width:100%; height:auto;">
-            <p>Placeholder text for 2012 event.</p>
-          </div>
-          <div class="timeline-entry">
-            <h3>2018: Started Coding</h3>
-            <img src="https://via.placeholder.com/150" alt="Placeholder Image" style="width:100%; height:auto;">
-            <p>Placeholder text for 2018 event.</p>
-          </div>
-          <div class="timeline-entry">
-            <h3>2020: Music Production</h3>
-            <img src="https://via.placeholder.com/150" alt="Placeholder Image" style="width:100%; height:auto;">
-            <p>Placeholder text for 2020 event.</p>
-          </div>
-          <div class="timeline-entry">
-            <h3>2022: First Major Project</h3>
-            <img src="https://via.placeholder.com/150" alt="Placeholder Image" style="width:100%; height:auto;">
-            <p>Placeholder text for 2022 event.</p>
-          </div>
-          <div class="timeline-entry">
-            <h3>2025: Current Endeavors</h3>
-            <img src="https://via.placeholder.com/150" alt="Placeholder Image" style="width:100%; height:auto;">
-            <p>Placeholder text for 2025 event.</p>
+          <span class="dropdown-icon"></span>
+        </summary>
+        <div class="home-dropdown-content">
+          <div class="timeline-gallery">
+            <div class="slideshow-container">
+              <button class="fullscreen-btn" aria-label="Toggle fullscreen">
+                <i class="fas fa-expand"></i>
+              </button>
+              <div class="slideshow">
+                <div class="slide">
+                  <img src="assets/images/placeholder.png" alt="Gallery Image 1">
+                  <div class="slide-description">Description for gallery image 1.</div>
+                </div>
+                <div class="slide">
+                  <img src="assets/images/placeholder.png" alt="Gallery Image 2">
+                  <div class="slide-description">Description for gallery image 2.</div>
+                </div>
+                <div class="slide">
+                  <img src="assets/images/placeholder.png" alt="Gallery Image 3">
+                  <div class="slide-description">Description for gallery image 3.</div>
+                </div>
+                <div class="slide">
+                  <img src="assets/images/placeholder.png" alt="Gallery Image 4">
+                  <div class="slide-description">Description for gallery image 4.</div>
+                </div>
+                <div class="slide">
+                  <img src="assets/images/placeholder.png" alt="Gallery Image 5">
+                  <div class="slide-description">Description for gallery image 5.</div>
+                </div>
+                <div class="slide">
+                  <img src="assets/images/placeholder.png" alt="Gallery Image 6">
+                  <div class="slide-description">Description for gallery image 6.</div>
+                </div>
+                <div class="slide">
+                  <img src="assets/images/placeholder.png" alt="Gallery Image 7">
+                  <div class="slide-description">Description for gallery image 7.</div>
+                </div>
+                <div class="slide">
+                  <img src="assets/images/placeholder.png" alt="Gallery Image 8">
+                  <div class="slide-description">Description for gallery image 8.</div>
+                </div>
+                <div class="slide">
+                  <img src="assets/images/placeholder.png" alt="Gallery Image 9">
+                  <div class="slide-description">Description for gallery image 9.</div>
+                </div>
+                <div class="slide">
+                  <img src="assets/images/placeholder.png" alt="Gallery Image 10">
+                  <div class="slide-description">Description for gallery image 10.</div>
+                </div>
+                <div class="slide">
+                  <img src="assets/images/placeholder.png" alt="Gallery Image 11">
+                  <div class="slide-description">Description for gallery image 11.</div>
+                </div>
+                <div class="slide">
+                  <img src="assets/images/placeholder.png" alt="Gallery Image 12">
+                  <div class="slide-description">Description for gallery image 12.</div>
+                </div>
+              </div>
+              <a class="prev">&#10094;</a>
+              <a class="next">&#10095;</a>
+            </div>
+            <div class="timeline-description"></div>
           </div>
         </div>
       </details>
@@ -172,6 +307,7 @@
       <div class="filter-buttons" role="toolbar" aria-label="Note filters">
         <button class="filter-btn active" data-filter="note" data-section="note" aria-pressed="true">all</button>
         <button class="filter-btn" data-filter="9" data-section="note" aria-pressed="false">october</button>
+        <button class="filter-btn" data-filter="10" data-section="note" aria-pressed="false">november</button>
       </div>
       <div id="notes-container" class="card-grid"></div>
     </section>

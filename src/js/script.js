@@ -1,6 +1,5 @@
 // ===== MAIN INITIALIZATION =====
 document.addEventListener('DOMContentLoaded', function() {
-    // Configure DOMPurify to open links in new tabs
     if (typeof DOMPurify !== 'undefined') {
         DOMPurify.setConfig({ ADD_ATTR: ['target', 'rel'] });
         DOMPurify.addHook('afterSanitizeAttributes', function (node) {
@@ -11,10 +10,18 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-    initNavigation();
-    initHomeFilterButtons();
-    loadContent('project', 'project-container');
-    loadContent('note', 'notes-container');
+    const init = async () => {
+        initNavigation();
+        initHomeFilterButtons();
+        await Promise.all([
+            loadContent('project', 'project-container'),
+            loadContent('note', 'notes-container')
+        ]);
+        initTimelineSlideshows();
+        initFullscreenButtons();
+    };
+
+    init().catch(console.error);
 });
 
 // ===== NAVIGATION FUNCTIONS =====
@@ -146,6 +153,9 @@ function createTagLabel(name) {
     } else if (['insights'].includes(lname)) {
         tagLabel.classList.add('tag-label-insights');
         iconClass = 'fas fa-lightbulb';
+    } else if (['poetry'].includes(lname)) {
+        tagLabel.classList.add('tag-label-poetry');
+        iconClass = 'fas fa-feather-alt';
     } else if (['project'].includes(lname)) {
         tagLabel.classList.add('tag-label-project');
         iconClass = 'fas fa-folder-open';
@@ -324,6 +334,37 @@ function showFallbackNotes(container) {
     initFilterButtons('note');
 }
 
+    });
+}
+
+function initFullscreenButtons() {
+    const fullscreenBtn = document.querySelector('.fullscreen-btn');
+    const slideshowContainer = document.querySelector('.slideshow-container');
+
+    if (!fullscreenBtn || !slideshowContainer) return;
+
+    const toggleFullscreen = async () => {
+        try {
+            if (!document.fullscreenElement) {
+                await slideshowContainer.requestFullscreen();
+            } else {
+                await document.exitFullscreen();
+            }
+        } catch (err) {
+            console.error('Fullscreen error:', err);
+        }
+    };
+
+    const updateFullscreenIcon = () => {
+        const icon = fullscreenBtn.querySelector('i');
+        icon.classList.toggle('fa-expand', !document.fullscreenElement);
+        icon.classList.toggle('fa-compress', document.fullscreenElement);
+    };
+
+    fullscreenBtn.addEventListener('click', toggleFullscreen);
+    document.addEventListener('fullscreenchange', updateFullscreenIcon);
+}
+
 function showFallbackProjects(container) {
     const fallbackProjects = [
         {
@@ -409,5 +450,33 @@ function initFilterButtons(section) {
                 card.style.display = display;
             });
         });
+    });
+}
+
+function initTimelineSlideshows() {
+    const slideshows = document.querySelectorAll('.timeline-gallery');
+    slideshows.forEach((gallery, index) => {
+        const slideshow = gallery.querySelector('.slideshow');
+        const slides = gallery.querySelectorAll('.slide');
+        const prevButton = gallery.querySelector('.prev');
+        const nextButton = gallery.querySelector('.next');
+        const description = gallery.querySelector('.timeline-description');
+        let slideIndex = 0;
+
+        function showSlide(n) {
+            slideIndex = (n + slides.length) % slides.length;
+            slideshow.style.transform = `translateX(-${slideIndex * 100}%)`;
+            description.textContent = slides[slideIndex].querySelector('.slide-description').textContent;
+        }
+
+        prevButton.addEventListener('click', () => {
+            showSlide(slideIndex - 1);
+        });
+
+        nextButton.addEventListener('click', () => {
+            showSlide(slideIndex + 1);
+        });
+
+        showSlide(0); // Show the first slide initially
     });
 }
