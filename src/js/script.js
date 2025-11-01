@@ -483,7 +483,7 @@ function initTimelineSlideshows() {
 
     const setupSlideshow = (gallery) => {
         const slideshow = gallery.querySelector('.slideshow');
-    const [prevButton, nextButton] = ['.prev', '.next'].map(sel => gallery.querySelector(sel));
+        const [prevButton, nextButton] = ['.prev', '.next'].map(sel => gallery.querySelector(sel));
         let slideIndex = 0;
         let slides;
         let touchStartX = 0;
@@ -495,7 +495,22 @@ function initTimelineSlideshows() {
             galleryImages.forEach(imageData => fragment.appendChild(createSlide(imageData)));
             slideshow.appendChild(fragment);
 
-            // No thumbnails: create current slide info container below the slideshow
+            // Create navigation dots container
+            let navDots = gallery.querySelector('.nav-dots');
+            if (!navDots) {
+                navDots = document.createElement('div');
+                navDots.className = 'nav-dots';
+                galleryImages.forEach((_, index) => {
+                    const dot = document.createElement('button');
+                    dot.className = 'nav-dot';
+                    dot.setAttribute('aria-label', `Go to slide ${index + 1}`);
+                    dot.addEventListener('click', () => showSlide(index));
+                    navDots.appendChild(dot);
+                });
+                gallery.appendChild(navDots);
+            }
+
+            // Create current slide info container below the slideshow
             let currentInfo = gallery.querySelector('.current-slide-info');
             if (!currentInfo) {
                 currentInfo = document.createElement('div');
@@ -503,7 +518,7 @@ function initTimelineSlideshows() {
                 gallery.appendChild(currentInfo);
             }
         }
-    slides = gallery.querySelectorAll('.slide');
+        slides = gallery.querySelectorAll('.slide');
     const thumbs = [];
     const currentInfoEl = gallery.querySelector('.current-slide-info');
         if (!slides.length) return;
@@ -511,16 +526,22 @@ function initTimelineSlideshows() {
         const showSlide = (n) => {
             slideIndex = (n + slides.length) % slides.length;
             slideshow.style.transform = `translateX(-${slideIndex * 100}%)`;
+            
             // Update current info (subtitle + description) from galleryImages data
             const info = galleryImages[slideIndex] || {};
             if (currentInfoEl) {
                 currentInfoEl.innerHTML = `<h3 class="slide-subtitle">${info.subtitle || info.alt || ''}</h3><p class="slide-description">${info.description || ''}</p>`;
             }
 
-            // No thumbnails to update. Images are loaded directly (with native lazy-loading).
+            // Update navigation dots
+            const dots = gallery.querySelectorAll('.nav-dot');
+            dots.forEach((dot, index) => {
+                dot.classList.toggle('active', index === slideIndex);
+                dot.setAttribute('aria-current', index === slideIndex ? 'true' : 'false');
+            });
         };
 
-        // Touch navigation
+        // Touch navigation for touch devices
         slideshow.addEventListener('touchstart', e => {
             touchStartX = e.changedTouches[0].screenX;
         }, { passive: true });
@@ -539,9 +560,6 @@ function initTimelineSlideshows() {
             if (e.key === 'ArrowLeft') showSlide(slideIndex - 1);
             if (e.key === 'ArrowRight') showSlide(slideIndex + 1);
         });
-
-        prevButton?.addEventListener('click', () => showSlide(slideIndex - 1));
-        nextButton?.addEventListener('click', () => showSlide(slideIndex + 1));
 
         showSlide(0);
     };
