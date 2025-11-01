@@ -9,10 +9,10 @@
   --color-text-muted: #999999;
   
   /* Category Colors */
-  --color-code: #28a7469f;
-  --color-audio: #dc3546a1;
-  --color-other: #6c757d;
-  --color-note: #fbca0485;
+  --color-code: #00ff3c7c;
+  --color-audio: #ff001980;
+  --color-other: #0088ff81;
+  --color-note: #fbff0081;
   
   /* Typography */
   --font-base: 'Roboto', system-ui, -apple-system, sans-serif;
@@ -38,7 +38,7 @@
 }
 
 body {
-  background-color: var(--color-background);
+  background: linear-gradient(0deg, #121212 0%, #0d1117 17%);
   color: var(--color-text);
   font: 16px/1.6 var(--font-base);
   min-height: 100vh;
@@ -270,24 +270,66 @@ body {
 
 /* Tags */
 .tag-label {
-  background: none;
-  font-size: 0.75em;
-  padding: 0 var(--space-xs);
-  color: var(--color-other);
+  display: inline-flex;
+  align-items: center;
+  font-size: 12px;
+  font-weight: 500;
+  text-decoration: none;
+  white-space: nowrap;
+  border: none;
+  background-color: transparent;
 }
 
-/* Tag Categories */
-.tag-label-audio { color: var(--color-audio);}
-.tag-label-code-web { color: var(--color-code); }
-.tag-label-project { color: var(--color-primary); }
-.tag-label-insight { color: var(--color-note); }
-.tag-label-note { color: var(--color-note); }
-.tag-label-thoughts { color: var(--color-note); }
-.tag-label-insights { color: var(--color-note); }
-.tag-label-cover { color: var(--color-audio); }
-.tag-label-song { color: var(--color-audio); }
-.tag-label-original { color: var(--color-audio); }
-.tag-label-web { color: var(--color-code); }
+.tag-label i {
+  margin-right: 5px;
+}
+
+
+/* Border & Text Colors */
+
+/* Audio Category */
+.tag-label-audio,
+.tag-label-original,
+.tag-label-cover {
+  display: inline-block;
+  color: var(--color-audio);
+  font-size: 10px;
+  font-weight: 500;
+  padding: 3px 10px;
+  border: 1px solid var(--color-audio);
+  border-radius: 15px;
+  text-align: center;
+  font-family: system-ui, sans-serif;
+}
+
+/* Code Category */
+.tag-label-code,
+.tag-label-web {
+  display: inline-block;
+  color: var(--color-code);
+  font-size: 10px;
+  font-weight: 500;
+  padding: 3px 10px;
+  border: 1px solid var(--color-code);
+  border-radius: 15px;
+  text-align: center;
+  font-family: system-ui, sans-serif;
+}
+
+/* Note Category */
+.tag-label-note,
+.tag-label-insights,
+.tag-label-thoughts {
+  display: inline-block;
+  color: var(--color-note);
+  font-size: 10px;
+  font-weight: 500;
+  padding: 3px 10px;
+  border: 1px solid var(--color-note);
+  border-radius: 15px;
+  text-align: center;
+  font-family: system-ui, sans-serif;
+}
 
 /* Code Blocks */
 pre {
@@ -296,7 +338,6 @@ pre {
   color: var(--color-muted);
   font-family: var(--font-mono);
   font-size: 1em;
-  line-height: 1.25;
   margin-bottom: var(--space-xs);
   max-width: 100%;
   overflow: auto;
@@ -361,6 +402,7 @@ pre code {
   display: flex;
   flex-wrap: wrap;
   padding: 0 var(--space-md);
+  gap: 5px;
 }
 
 .hardcoded-subtitle {
@@ -376,9 +418,11 @@ pre code {
 }
 
 .markdown-body audio {
-  background-color: transparent;
+  padding: 10px;
+  background-color: var(--color-surface);
   width: 100%;
-  height: 32px;
+  border: 5px solid;
+  border-color: var(--color-surface);
 }
 
 .markdown-body table {

@@ -86,6 +86,8 @@ async function loadContent(label, containerId) {
         if (issues.length === 0) {
             if (label === 'project') {
                 showFallbackProjects(container);
+            } else if (label === 'note') {
+                showFallbackNotes(container);
             } else {
                 container.innerHTML = `<p class="status-message">No ${label}s yet. Check back soon!</p>`;
             }
@@ -115,32 +117,48 @@ async function loadContent(label, containerId) {
 function createTagLabel(name) {
     const tagLabel = document.createElement('span');
     tagLabel.className = 'tag-label';
-    tagLabel.textContent = name;
 
+    const icon = document.createElement('i');
     const lname = name.toLowerCase();
+    let iconClass = '';
+
     if (['audio'].includes(lname)) {
         tagLabel.classList.add('tag-label-audio');
+        iconClass = 'fas fa-volume-up';
     } else if (['code'].includes(lname)) {
-        tagLabel.classList.add('tag-label-code-web');
+        tagLabel.classList.add('tag-label-code');
+        iconClass = 'fas fa-code';
     } else if (['web'].includes(lname)) {
         tagLabel.classList.add('tag-label-web');
-    } else if (['cover'].includes(lname)) {
+        iconClass = 'fas fa-globe';
+    } else if (lname.includes('cover')) {
         tagLabel.classList.add('tag-label-cover');
-    } else if (['song'].includes(lname)) {
-        tagLabel.classList.add('tag-label-song');
-    } else if (['original'].includes(lname)) {
+        iconClass = 'fas fa-microphone-alt';
+    } else if (lname.includes('original')) {
         tagLabel.classList.add('tag-label-original');
-    } else if (['insight'].includes(lname)) {
-        tagLabel.classList.add('tag-label-insight');
+        iconClass = 'fas fa-star';
     } else if (['note'].includes(lname)) {
         tagLabel.classList.add('tag-label-note');
+        iconClass = 'fas fa-file-alt';
     } else if (['thoughts'].includes(lname)) {
         tagLabel.classList.add('tag-label-thoughts');
+        iconClass = 'fas fa-comment-alt';
     } else if (['insights'].includes(lname)) {
         tagLabel.classList.add('tag-label-insights');
+        iconClass = 'fas fa-lightbulb';
     } else if (['project'].includes(lname)) {
         tagLabel.classList.add('tag-label-project');
+        iconClass = 'fas fa-folder-open';
     }
+
+    if (iconClass) {
+        icon.className = iconClass;
+        tagLabel.appendChild(icon);
+    }
+
+    const text = document.createTextNode(name);
+    tagLabel.appendChild(text);
+
     return tagLabel;
 }
 
@@ -264,6 +282,46 @@ function createCard(issue, label) {
     card.appendChild(contentWrapper);
 
     return card;
+}
+
+function showFallbackNotes(container) {
+    const fallbackNotes = [
+        {
+            title: 'My first note',
+            body: 'This is my first note. I can write anything here.',
+            created_at: new Date().toISOString(),
+            labels: [{name: 'note'}, {name: 'thoughts'}]
+        },
+        {
+            title: 'Another note',
+            body: 'This is another note. I can use markdown here.',
+            created_at: new Date().toISOString(),
+            labels: [{name: 'note'}, {name: 'insights'}]
+        }
+    ];
+
+    container.innerHTML = `
+        <p class="status-message">
+            No GitHub notes found. <br>
+            <small>
+                Create issues with the "note" label in the
+                <a href="https://github.com/p0kks/p0kks.me" target="_blank">p0kks.me repository</a>.
+            </small>
+        </p>
+        <div style="margin-top: 2rem;">
+            <p style="text-align: center; opacity: 0.7; margin-bottom: 1rem;">Example notes:</p>
+            <div class="card-grid">
+            </div>
+        </div>
+    `;
+
+    const cardGrid = container.querySelector('.card-grid');
+    fallbackNotes.forEach(note => {
+        const card = createCard(note, 'note');
+        cardGrid.appendChild(card);
+    });
+
+    initFilterButtons('note');
 }
 
 function showFallbackProjects(container) {
