@@ -18,22 +18,28 @@
   --space-sm: 10px;
   --space-md: 15px;
   --space-lg: 25px;
-  --border-radius: 6px;
+  --border-radius:15px;
   --container-width: 360px;
-  --transition-speed: 0.3s;
+  --transition-speed: 0.1s;
+  /* Dropdown icon variables */
+  --dropdown-icon-size: 20px;
+  --dropdown-icon-transition: 0.18s;
+  --dropdown-icon-color: #999999 ;
+  /* Small utility variables */
+  --border-radius-sm: 6px;
+  --color-muted: var(--color-text-muted);
 }
 
 /* Reset & Base */
 * {
   box-sizing: border-box;
   margin: 0;
-  padding: 1;
 }
 
 body {
-  background: linear-gradient(0deg, #121212 0%, #0d1117 17%);
+  background: linear-gradient(0deg, #121212 0%, #0d1117 25%);
   color: var(--color-text);
-  font: 16px/1.6 var(--font-base);
+  font: 15px/1.6 var(--font-base);
   min-height: 100vh;
   -webkit-font-smoothing: antialiased;
 }
@@ -64,14 +70,13 @@ body {
 .main-nav {
   display: flex;
   justify-content: center;
-  gap: var(--space-md);
-  margin: var(--space-md) 0;
+  gap: var(--space-sm);
+  margin: var(--space-sm) 0;
 }
 
 .nav-btn {
   background: none;
   border: none;
-  padding: var(--space-md);
   font-size: 1.25em;
   cursor: pointer;
   position: relative;
@@ -81,18 +86,17 @@ body {
 .nav-btn::before {
   content: attr(data-tooltip);
   position: absolute;
-  bottom: -30px;
+  bottom: -15px;
   left: 50%;
   transform: translateX(-50%);
   padding: 4px 8px;
   background-color: var(--color-surface);
   color: var(--color-text);
   font-size: 12px;
-  border-radius: 4px;
+  border-radius: 7px;
   white-space: nowrap;
   opacity: 0;
   visibility: hidden;
-  transition: opacity 0.2s ease, visibility 0.2s ease;
   pointer-events: none;
   z-index: 1000;
 }
@@ -107,32 +111,29 @@ body {
 }
 
 /* Nav button colors */
-.nav-btn[data-target="home"] { color: #e2ffbc; }
-.nav-btn[data-target="project"] { color: #0f7fff; }
-.nav-btn[data-target="note"] { color: #ffc107; }
+.nav-btn[data-target="home"] { color: var(--color-text-muted); }
+.nav-btn[data-target="project"] { color: var(--color-other); }
+.nav-btn[data-target="note"] { color: var(--color-note); }
 
 /* Active indicator */
-.nav-btn:hover::after,
 .nav-btn.active::after {
-  content: '•';
+  content: '▴';
   position: absolute;
-  bottom: -10px;
+  top: 15px;
   left: 50%;
   transform: translateX(-50%);
-  color: var(--color-text);
-  font-size: 16px;
+  color: var(--color-text-muted);
+  font-size: 24px;
 }
 
 /* Social Links */
 .social-links {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  justify-content: center;
-  gap: var(--space-sm);
-  margin-bottom: var(--space-md);
+  grid-template-columns: repeat(2, 3fr);
+  justify-content: space-between;
 }
 
 .social-link {
+  display: grid;
   color: var(--color-text);
   text-decoration: none;
   transition: color var(--transition-speed) ease;
@@ -141,6 +142,7 @@ body {
 .social-link:hover,
 .social-link:focus {
   color: var(--color-primary);
+  text-decoration: none;
 }
 
 .page {
@@ -155,8 +157,8 @@ body {
 }
 
 
-/* Dropdowns */
-.home-dropdown {
+/* Unified markdown/dropdown classes */
+.unified-markdown {
   background-color: var(--color-surface);
   border-radius: var(--border-radius);
   width: 100%;
@@ -164,46 +166,124 @@ body {
   margin-bottom: var(--space-md);
 }
 
-/* Hide default markers */
-.home-dropdown-summary::-webkit-details-marker,
-.home-dropdown-summary::marker {
-  display: none;
-}
-
-/* Summary styling */
-.home-dropdown-summary {
+.unified-markdown-summary {
   cursor: pointer;
   transition: background-color var(--transition-speed) ease;
-}
-
-.home-dropdown-summary:hover {
-  background-color: var(--color-surface);
-}
-
-/* Content area */
-.home-dropdown-content {
-  color: var(--color-text-muted);
-  font-size: 0.9em;
+  display: flex;
+  justify-content: space-between;
+  align-items: center; /* vertically center the dropdown icon and header */
   padding: var(--space-md);
 }
 
-#gallery-dropdown .slideshow-container {
-  padding-left: 0;
-  padding-right: 0;
+.unified-markdown-summary::-webkit-details-marker,
+.unified-markdown-summary::marker {
+  display: none;
 }
 
-.home-dropdown-content li {
-  padding-left: var(--space-md); /* Align with dropdown header title */
+.unified-markdown-content {
+  color: var(--color-text-muted);
+  font-size: 0.95em;
+  width: 100%;
+  padding: var(--space-md);
 }
-.home-dropdown-content a {
+
+.unified-markdown-content a {
   color: var(--color-primary);
   text-decoration: none;
-  transition: color var(--transition-speed) ease;
 }
 
-.home-dropdown-content a:hover {
+.unified-markdown-content a:hover {
   text-decoration: underline;
 }
+
+.dropdown-icon {
+  display: inline-block;
+  width: var(--dropdown-icon-size);
+  height: var(--dropdown-icon-size);
+  flex-shrink: 0;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 70%;
+  /* external chevron SVG (uses currentColor) */
+  background-image: url('../../assets/images/icons/chevron.svg');
+  color: #999999;
+  transition: transform var(--dropdown-icon-transition) ease, color var(--dropdown-icon-transition) ease, opacity var(--dropdown-icon-transition) ease;
+  transform-origin: center;
+}
+
+/* Rotate the SVG when the details is open (chevron-up effect) */
+.unified-markdown[open] > .unified-markdown-summary .dropdown-icon,
+.unified-inside-markdown[open] > .unified-inside-markdown-summary .dropdown-icon {
+  transform: rotate(180deg);
+  color: var(--color-text-muted);
+}
+
+.dropdown-header-content {
+  display: flex;
+  flex-direction: column;
+}
+
+.dropdown-right-content {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: var(--space-xs);
+}
+
+.dropdown-subtitle {
+  font-size: 0.75em;
+  color: var(--color-text-muted);
+}
+
+.dropdown-title {
+  font-size: 1em;
+  color: var(--color-text);
+}
+
+/* Ensure dropdown title/subtitle inherit unified-markdown scopes */
+.unified-markdown-summary .dropdown-title,
+.unified-inside-markdown-summary .dropdown-title {
+  font-size: 1em;
+  color: var(--color-text);
+  margin: 0;
+}
+
+.unified-markdown-summary .dropdown-subtitle,
+.unified-inside-markdown-summary .dropdown-subtitle {
+  font-size: 0.75em;
+  color: var(--color-text-muted);
+  margin: 0 0 4px 0;
+}
+
+.unified-inside-markdown {
+  margin-top: var(--space-md);
+}
+
+/* Nested markdown (inside another markdown) styling */
+.unified-inside-markdown-summary {
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  /* Match top-level markdown summary padding so nested blocks align */
+  padding: var(--space-md);
+  font-size: 0.95em;
+}
+
+.unified-inside-markdown-summary::-webkit-details-marker,
+.unified-inside-markdown-summary::marker {
+  display: none;
+}
+
+.unified-inside-markdown-content {
+  /* Normalize nested markdown content spacing and typography to match top-level */
+  color: var(--color-text-muted);
+  font-size: 0.95em;
+  width: 100%;
+  padding: var(--space-md);
+  background: transparent;
+}
+
 
 
 /* Content Sections (Projects/Notes) */
@@ -271,6 +351,7 @@ body {
   justify-content: space-between;
   align-items: center;
   flex-wrap: wrap;
+  padding: var(--space-md);
   margin-top: var(--space-md);
 }
 
@@ -286,7 +367,7 @@ body {
 
 .card-date {
   color: var(--color-text-muted);
-  font-size: 0.75em;
+  font-size: 0.85em;
 }
 
 /* Tags */
@@ -294,10 +375,10 @@ body {
   display: inline-flex;
   align-items: center;
   font-size: 10px;
-  font-weight: 500;
-  padding: 3px 10px;
+  font-weight: 400;
+  padding: 2px 8px;
   border: 1px solid;
-  border-radius: 15px;
+  border-radius: 10px;
   text-align: center;
   font-family: system-ui, sans-serif;
   text-decoration: none;
@@ -337,8 +418,8 @@ pre {
   border: none;
   color: var(--color-muted);
   font-family: var(--font-mono);
-  font-size: 1em;
-  margin-bottom: var(--space-xs);
+  font-size: 0.95em;
+  margin-bottom: var(--space-md);
   max-width: 100%;
   overflow: auto;
   padding: var(--space-md) var(--space-md);
@@ -351,7 +432,7 @@ code {
   font-family: var(--font-mono);
   background-color: var(--color-surface);
   border-radius: var(--border-radius-sm);
-  font-size: 1em;
+  font-size: 0.9em;
   padding: var(--space-xs) var(--space-xs);
 }
 
@@ -370,64 +451,25 @@ pre code {
 }
 
 
-/* Dropdown Header */
-.home-dropdown-summary {
-  color: var(--color-text);
-  cursor: pointer;
-  display: flex;
-  font-size: 1em;
-  font-weight: 400;
-  justify-content: space-between;
-  padding: var(--space-md) 0;
+.unified-markdown-content a:hover {
+  text-decoration: underline;
 }
 
-.dropdown-icon {
-  font-size: 1em;
-  margin-right: 15px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+.unified-markdown-content table {
+  border-collapse: collapse;
+  width: 100%;
 }
 
-.home-dropdown[open] > summary .dropdown-icon::before {
-  content: "-";
+.unified-markdown-content th,
+.unified-markdown-content td {
+  border: 1px solid var(--color-border);
 }
 
-.home-dropdown:not([open]) > summary .dropdown-icon::before {
-  content: "+";
+.unified-markdown-content tr:nth-child(2n) {
+  background-color: var(--color-surface);
 }
 
-.dropdown-header-content {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  padding: 0 var(--space-md);
-}
-
-.dropdown-right-content {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: flex-end;
-  flex-wrap: wrap;
-  gap: var(--space-xs);
-
-}
-
-.dropdown-subtitle {
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--space-md);
-}
-
-
-
-.dropdown-title {
-  font-size: 1em;
-  color: var(--color-text);
-}
-
-.markdown-body audio {
+.unified-markdown-content audio {
   padding: 10px;
   background-color: var(--color-surface);
   width: 100%;
@@ -435,25 +477,85 @@ pre code {
   border-color: var(--color-surface);
 }
 
-.markdown-body table {
-  border-collapse: collapse;
-  width: 100%;
+/* Bookmarks grid */
+#bookmarks-dropdown .bookmark-section h4 {
+  margin: 0 0 8px 0;
+  font-size: 0.95em;
+  color: var(--color-text);
 }
 
-.markdown-body th,
-.markdown-body td {
-  border: 1px solid var(--color-border);
+#bookmarks-dropdown .bookmark-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px 12px;
+  margin-bottom: 12px;
 }
 
-.markdown-body tr:nth-child(2n) {
-  background-color: var(--color-surface);
+.bookmark-item {
+  display: block;
+  padding: 8px 10px;
+  background: rgba(255,255,255,0.02);
+  border-radius: calc(var(--border-radius) / 2);
+  text-decoration: none;
+  color: var(--color-primary);
+  font-weight: 500;
+}
+
+.bookmark-item:hover {
+  background: rgba(255,255,255,0.03);
+}
+
+@media (max-width: 420px) {
+  #bookmarks-dropdown .bookmark-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Apply the same bookmark grid styling to the About socials bookmark-grid
+   so the social links are shown as two columns (3 items per column when 6 items) */
+#about-dropdown .bookmark-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px 12px;
+  margin-bottom: 12px;
+}
+
+@media (max-width: 420px) {
+  #about-dropdown .bookmark-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Social links in About: reuse bookmark grid/item styling */
+#about-dropdown .social-links {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px 12px;
+}
+
+#about-dropdown .social-link {
+  display: block;
+  background: rgba(255,255,255,0.02);
+  border-radius: calc(var(--border-radius) / 2);
+  text-decoration: none;
+  color: var(--color-primary);
+  font-weight: 500;
+}
+
+#about-dropdown .social-link:hover {
+  background: rgba(255,255,255,0.03);
+}
+
+@media (max-width: 420px) {
+  #about-dropdown .social-links {
+    grid-template-columns: 1fr;
+  }
 }
 
 .timeline-gallery {
   position: relative;
   display: flex;
   flex-direction: column;
-  gap: var(--space-md);
 }
 
 .timeline-year {
@@ -470,12 +572,14 @@ pre code {
   aspect-ratio: 16 / 9;
   background: var(--color-background);
   border-radius: var(--border-radius);
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
 .slideshow-container:fullscreen {
+  /* Consolidated fullscreen styles */
   padding: 20px;
-  background: rgba(0, 0, 0, 0.95);
+  background: black;
+  width: 100vw;
+  height: 100vh;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -494,53 +598,13 @@ pre code {
   object-fit: contain;
 }
 
-.thumbnail-nav {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(60px, 1fr));
-  gap: var(--space-xs);
-  padding: var(--space-sm);
-  background: var(--color-surface);
-  border-radius: var(--border-radius);
-  order: -1; /* Puts thumbnails above the slideshow */
-}
-
-.thumb-btn {
-  padding: 0;
-  border: 2px solid transparent;
-  background: none;
-  cursor: pointer;
-  aspect-ratio: 16/9;
-  overflow: hidden;
-  border-radius: calc(var(--border-radius) / 2);
-  transition: all var(--transition-speed) ease;
-}
-
-.thumb-btn img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-
-.thumb-btn:hover {
-  transform: translateY(-2px);
-}
-
-.thumb-btn.active {
-  border-color: var(--color-primary);
-}
+/* thumbnail styles are defined later */
 
 .current-slide-info {
   padding: var(--space-md);
   background: var(--color-surface);
   border-radius: var(--border-radius);
   margin-top: var(--space-sm);
-}
-
-.slide-subtitle {
-  font-size: 1.1em;
-  font-weight: 500;
-  margin-bottom: var(--space-xs);
-  color: var(--color-text);
 }
 
 .slide-description {
@@ -552,71 +616,29 @@ pre code {
 .fullscreen-btn {
   position: absolute;
   top: 10px;
-  right: 10px;
-  z-index: 10;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 1000;
   background: rgba(0, 0, 0, 0.5);
   border: none;
-  color: white;
+  color: var(--color-text);
   padding: 8px;
   cursor: pointer;
   border-radius: var(--border-radius);
-  transition: all var(--transition-speed) ease;
-  backdrop-filter: blur(4px);
+  /* No animations for the fullscreen button */
+  transition: none !important;
+  backdrop-filter: none;
 }
 
 .fullscreen-btn:hover {
-  background: rgba(0, 0, 0, 0.8);
-  transform: scale(1.05);
+  /* No hover animation */
+  background: rgba(0, 0, 0, 0.6);
+  transform: translateX(-50%);
 }
 
-.slideshow-container:fullscreen {
-  background: black;
-  width: 100vw;
-  height: 100vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
+/* fullscreen slideshow rules consolidated earlier; duplicate removed */
 
-.slideshow-container:fullscreen .slideshow {
-  max-width: 100vw;
-  max-height: 100vh;
-  object-fit: contain;
-}
-
-/* Thumbnail navigation */
-.thumbnail-nav {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(50px, 1fr));
-  gap: 3px;
-  padding: 0px;
-  background: var(--color-surface);
-  border-radius: var(--border-radius);
-  margin-top: 0px;
-}
-
-.thumb-btn {
-  aspect-ratio: 16/9;
-  border: none;
-  padding: 0;
-  cursor: pointer;
-  position: relative;
-  border-radius: calc(var(--border-radius) / 2);
-  overflow: hidden;
-  transition: all var(--transition-speed) ease;
-  background: var(--color-background);
-  opacity: 0.6;
-}
-
-.thumb-btn:hover {
-  opacity: 0.8;
-  transform: translateY(-2px);
-}
-
-.thumb-btn.active {
-  opacity: 1;
-  box-shadow: 0 0 0 2px var(--color-primary);
-}
+/* Thumbnails removed — gallery now uses full images directly. */
 
 /* Slide transitions */
 .slideshow {
@@ -635,26 +657,8 @@ pre code {
   transition: transform var(--transition-speed) ease;
 }
 
-.slide:hover img {
-  transform: scale(1.02);
-}
 
-.slide-description {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  padding: 15px;
-  background: linear-gradient(transparent, rgba(0, 0, 0, 0.8));
-  color: white;
-  font-size: 0.9em;
-  transform: translateY(100%);
-  transition: transform var(--transition-speed) ease;
-}
-
-.slide:hover .slide-description {
-  transform: translateY(0);
-}
+/* slide-description is now displayed below the slideshow in .current-slide-info */
 
 .slideshow {
   display: flex;
@@ -665,21 +669,13 @@ pre code {
   flex: 0 0 100%;
 }
 
-.slide img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-
 .slide-description {
-  padding: var(--space-xs) var(--space-md);
   color: var(--color-text-muted);
   font-size: 0.9em;
   text-align: left;
 }
 
 .slide-subtitle {
-  padding: var(--space-sm) var(--space-md) 0;
   color: var(--color-text);
   font-weight: bold;
   font-size: 1em;
@@ -698,10 +694,9 @@ pre code {
   width: auto;
   padding: 16px;
   margin-top: -22px;
-  color: white;
+  color: var(--color-text);
   font-weight: bold;
   font-size: 18px;
-  transition: 0.6s ease;
   border-radius: 0 3px 3px 0;
   user-select: none;
 }
@@ -712,5 +707,6 @@ pre code {
 }
 
 .prev:hover, .next:hover {
-  background-color: rgba(0,0,0,0.8);
+  background-color: transparent;
 }
+

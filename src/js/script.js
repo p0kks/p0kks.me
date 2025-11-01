@@ -154,7 +154,7 @@ function createTagLabel(name) {
 
 function createCard(issue, label) {
     const card = document.createElement('details');
-    card.className = 'home-dropdown';
+    card.className = 'unified-markdown';
 
     if (label === 'project') {
         const labels = Array.isArray(issue.labels) ? issue.labels : [];
@@ -169,7 +169,7 @@ function createCard(issue, label) {
     }
 
     const summary = document.createElement('summary');
-    summary.className = 'home-dropdown-summary';
+    summary.className = 'unified-markdown-summary';
 
     const dropdownHeaderContent = document.createElement('div');
     dropdownHeaderContent.className = 'dropdown-header-content';
@@ -200,13 +200,9 @@ function createCard(issue, label) {
     summary.appendChild(dropdownRightContent);
 
     const contentWrapper = document.createElement('div');
-    contentWrapper.className = 'home-dropdown-content';
+    contentWrapper.className = 'unified-markdown-content';
 
     const cardContent = document.createElement('div');
-    // Add markdown-body class conditionally
-    if (label === 'project' || label === 'note') {
-        cardContent.classList.add('markdown-body');
-    }
     const bodyText = issue.body || '';
     // Use marked only if available and bodyText is non-empty. Sanitize the HTML with DOMPurify.
     if (typeof marked !== 'undefined' && bodyText) {
@@ -326,6 +322,11 @@ function initFullscreenButtons() {
 
     const toggleFullscreen = async () => {
         try {
+            // If the gallery is inside a <details> that is closed, open it first so
+            // the element can be fullscreened reliably across browsers.
+            const parentDetails = slideshowContainer.closest('details');
+            if (parentDetails && !parentDetails.open) parentDetails.open = true;
+
             if (!document.fullscreenElement) {
                 await slideshowContainer.requestFullscreen();
             } else {
@@ -341,45 +342,11 @@ function initFullscreenButtons() {
         icon.className = document.fullscreenElement ? 'fas fa-compress' : 'fas fa-expand';
     };
 
-    fullscreenBtn.addEventListener('click', toggleFullscreen);
+    fullscreenBtn.addEventListener('click', (e) => { e.stopPropagation(); toggleFullscreen(); });
     document.addEventListener('fullscreenchange', updateFullscreenIcon);
-
-    // Initialize thumbnails
-    const thumbnailNav = document.querySelector('.thumbnail-nav');
-    const currentSlideInfo = document.querySelector('.current-slide-info');
-    
-    if (thumbnailNav && galleryImages) {
-        galleryImages.forEach((image, index) => {
-            const thumbBtn = document.createElement('button');
-            thumbBtn.className = 'thumb-btn';
-            thumbBtn.setAttribute('data-index', index);
-            thumbBtn.innerHTML = `<img src="${image.thumbnail}" alt="Thumbnail ${index + 1}">`;
-            thumbBtn.addEventListener('click', () => {
-                showSlide(index);
-                updateActiveThumbnail(index);
-            });
-            thumbnailNav.appendChild(thumbBtn);
-        });
-    }
-
-    // Function to update active thumbnail
-    function updateActiveThumbnail(index) {
-        const thumbs = thumbnailNav.querySelectorAll('.thumb-btn');
-        thumbs.forEach(thumb => thumb.classList.remove('active'));
-        thumbs[index]?.classList.add('active');
-
-        // Update current slide info
-        if (currentSlideInfo && galleryImages[index]) {
-            const image = galleryImages[index];
-            currentSlideInfo.innerHTML = `
-                <h3 class="slide-subtitle">${image.alt}</h3>
-                <p class="slide-description">${image.description}</p>
-            `;
-        }
-    }
-
-    // Update initial thumbnail state
-    updateActiveThumbnail(0);
+    // ensure icon matches initial state
+    updateFullscreenIcon();
+    // nothing else to initialize here; thumbnails and slide info are handled by the slideshow setup
 }
 
 function showFallbackProjects(container) {
@@ -424,7 +391,7 @@ function initFilterButtons(section) {
     const filterButtons = document.querySelectorAll(`.filter-buttons button[data-section="${section}"]`);
     // Map logical section name to actual container id in the DOM
     const containerId = section === 'project' ? 'project-container' : (section === 'note' ? 'notes-container' : `${section}-container`);
-    const cards = document.querySelectorAll(`#${containerId} .home-dropdown`);
+    const cards = document.querySelectorAll(`#${containerId} .unified-markdown`);
 
     filterButtons.forEach(button => {
         button.addEventListener('click', () => {
@@ -502,15 +469,13 @@ const galleryImages = [
 function initTimelineSlideshows() {
     const slideshows = document.querySelectorAll('.timeline-gallery');
     
-    const createSlide = ({ src, alt, thumbnail, description }) => {
+    const createSlide = ({ src, alt, description }, index) => {
         const template = document.createElement('template');
         template.innerHTML = `
-            <div class="slide">
-                <img src="${thumbnail}" 
-                     data-full="${src}" 
+            <div class="slide" data-index="${index}">
+                <img src="${src}" 
                      alt="${alt}" 
                      loading="lazy">
-                <div class="slide-description">${description}</div>
             </div>
         `;
         return template.content.firstElementChild;
@@ -518,8 +483,7 @@ function initTimelineSlideshows() {
 
     const setupSlideshow = (gallery) => {
         const slideshow = gallery.querySelector('.slideshow');
-        const [prevButton, nextButton] = ['.prev', '.next'].map(sel => gallery.querySelector(sel));
-        const description = gallery.querySelector('.timeline-description');
+    const [prevButton, nextButton] = ['.prev', '.next'].map(sel => gallery.querySelector(sel));
         let slideIndex = 0;
         let slides;
         let touchStartX = 0;
@@ -531,46 +495,29 @@ function initTimelineSlideshows() {
             galleryImages.forEach(imageData => fragment.appendChild(createSlide(imageData)));
             slideshow.appendChild(fragment);
 
-            // Create thumbnail navigation
-            const thumbNav = document.createElement('div');
-            thumbNav.className = 'thumbnail-nav';
-            galleryImages.forEach((_, index) => {
-                const thumb = document.createElement('button');
-                thumb.className = 'thumb-btn';
-                thumb.setAttribute('aria-label', `Go to slide ${index + 1}`);
-                thumb.addEventListener('click', () => showSlide(index));
-                thumbNav.appendChild(thumb);
-            });
-            gallery.appendChild(thumbNav);
+            // No thumbnails: create current slide info container below the slideshow
+            let currentInfo = gallery.querySelector('.current-slide-info');
+            if (!currentInfo) {
+                currentInfo = document.createElement('div');
+                currentInfo.className = 'current-slide-info';
+                gallery.appendChild(currentInfo);
+            }
         }
-
-        slides = gallery.querySelectorAll('.slide');
-        const thumbs = gallery.querySelectorAll('.thumb-btn');
+    slides = gallery.querySelectorAll('.slide');
+    const thumbs = [];
+    const currentInfoEl = gallery.querySelector('.current-slide-info');
         if (!slides.length) return;
 
         const showSlide = (n) => {
             slideIndex = (n + slides.length) % slides.length;
             slideshow.style.transform = `translateX(-${slideIndex * 100}%)`;
-            description.textContent = slides[slideIndex].querySelector('.slide-description').textContent;
+            // Update current info (subtitle + description) from galleryImages data
+            const info = galleryImages[slideIndex] || {};
+            if (currentInfoEl) {
+                currentInfoEl.innerHTML = `<h3 class="slide-subtitle">${info.subtitle || info.alt || ''}</h3><p class="slide-description">${info.description || ''}</p>`;
+            }
 
-            // Update thumbnails
-            thumbs.forEach((thumb, i) => {
-                thumb.classList.toggle('active', i === slideIndex);
-                if (i === slideIndex) {
-                    thumb.setAttribute('aria-current', 'true');
-                } else {
-                    thumb.removeAttribute('aria-current');
-                }
-            });
-
-            // Lazy load adjacent images
-            [-1, 0, 1].forEach(offset => {
-                const index = (slideIndex + offset + slides.length) % slides.length;
-                const img = slides[index].querySelector('img');
-                if (img.src !== img.dataset.full) {
-                    img.src = img.dataset.full;
-                }
-            });
+            // No thumbnails to update. Images are loaded directly (with native lazy-loading).
         };
 
         // Touch navigation
