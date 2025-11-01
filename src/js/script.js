@@ -63,14 +63,78 @@ function initNavigation() {
 
 
 
-// ===== DYNAMIC CONTENT LOADING =====
+
+
+function showFallbackProjects(container) {
+    const fallbackProjects = [
+        {
+            title: 'p0kks.me',
+            body: 'This portfolio website. Built with plain HTML, CSS and JavaScript.',
+            labels: [{name: 'project'}, {name: 'code'}],
+            created_at: new Date().toISOString(),
+        },
+        {
+            title: 'Discord Bot',
+            body: 'A custom Discord bot for a community server, built with Node.js. It provides various utility commands, moderation tools, and fun features.',
+            labels: [{name: 'project'}, {name: 'code'}],
+            created_at: new Date().toISOString(),
+        },
+        {
+            title: 'Cover Song',
+            body: 'Peder Elias - Cover Song. A cover song project.',
+            labels: [{name: 'project'}, {name: 'audio'}, {name: 'cover'}],
+            created_at: new Date().toISOString(),
+        },
+        {
+            title: 'Ambient Music',
+            body: 'A collection of short, experimental ambient tracks. Exploring textures and soundscapes.',
+            labels: [{name: 'project'}, {name: 'audio'}, {name: 'original'}],
+            created_at: new Date().toISOString(),
+        },
+        {
+            title: 'Reaper Configuration',
+            body: 'My personal configuration for the Reaper DAW, including themes, scripts, and settings.',
+            labels: [{name: 'project'}, {name: 'other'}],
+            created_at: new Date().toISOString(),
+        }
+    ];
+    showFallbackContent(container, 'project', fallbackProjects, 'No GitHub projects found.');
+    initFilterButtons('project');
+}
+
+function showFallbackNotes(container) {
+    const fallbackNotes = [
+        {
+            title: 'My first note',
+            body: 'This is my first note. I can write anything here.',
+            created_at: new Date().toISOString(),
+            labels: [{name: 'note'}, {name: 'thoughts'}]
+        },
+        {
+            title: 'Another note',
+            body: 'This is another note. I can use markdown here.',
+            created_at: new Date().toISOString(),
+            labels: [{name: 'note'}, {name: 'insights'}]
+        }
+    ];
+    showFallbackContent(container, 'note', fallbackNotes, 'No GitHub notes found.');
+    initFilterButtons('note');
+}
+
 async function loadContent(label, containerId) {
     const container = document.getElementById(containerId);
     if (!container) return;
 
     try {
-        const response = await fetch(`https://api.github.com/repos/p0kks/p0kks.me/issues?labels=${label}&state=open`);
-        if (!response.ok) throw new Error('Failed to fetch GitHub issues');
+        const response = await fetch(`https://api.github.com/repos/p0kks/p0kks.me/issues?labels=${label}&state=open`, {
+            headers: {
+                'Accept': 'application/vnd.github.v3+json'
+            }
+        });
+        if (!response.ok) {
+            console.error('GitHub API Error:', await response.text());
+            throw new Error('Failed to fetch GitHub issues');
+        }
         
         const issues = await response.json();
         
@@ -97,9 +161,10 @@ async function loadContent(label, containerId) {
         }
     }
 
-    // initFilterButtons expects the section name used in data-section ("project" or "note")
     initFilterButtons(label);
 }
+
+
 
 function createTagLabel(name) {
     const tagLabel = document.createElement('span');
@@ -150,125 +215,6 @@ function createTagLabel(name) {
     tagLabel.appendChild(text);
 
     return tagLabel;
-}
-
-function createCard(issue, label) {
-    const card = document.createElement('details');
-    card.className = 'unified-markdown';
-
-    if (label === 'project') {
-        const labels = Array.isArray(issue.labels) ? issue.labels : [];
-        const category = labels.find(l => {
-            const name = (l && l.name) ? l.name.toLowerCase() : '';
-            return ['code', 'audio', 'other'].includes(name);
-        })?.name || 'other';
-        card.dataset.category = category;
-    } else if (label === 'note') {
-        const issueDate = new Date(issue.created_at || Date.now());
-        card.dataset.month = issueDate.getMonth();
-    }
-
-    const summary = document.createElement('summary');
-    summary.className = 'unified-markdown-summary';
-
-    const dropdownHeaderContent = document.createElement('div');
-    dropdownHeaderContent.className = 'dropdown-header-content';
-
-    const titleSpan = document.createElement('span');
-    titleSpan.className = 'dropdown-title';
-    titleSpan.textContent = issue.title;
-    dropdownHeaderContent.appendChild(titleSpan);
-
-    summary.appendChild(dropdownHeaderContent);
-
-    const dropdownRightContent = document.createElement('div');
-    dropdownRightContent.className = 'dropdown-right-content';
-
-    const subtitleSpan = document.createElement('span');
-    subtitleSpan.className = 'dropdown-subtitle';
-
-    subtitleSpan.innerHTML = ''; // Clear any existing content
-    const labels = Array.isArray(issue.labels) ? issue.labels : [];
-    labels.forEach(l => {
-        const name = (l && l.name) ? l.name : '';
-        if (name === label) return; // Skip the main label
-        const tagLabel = createTagLabel(name);
-        subtitleSpan.appendChild(tagLabel);
-    });
-    dropdownRightContent.appendChild(subtitleSpan);
-
-    summary.appendChild(dropdownRightContent);
-
-    const contentWrapper = document.createElement('div');
-    contentWrapper.className = 'unified-markdown-content';
-
-    const cardContent = document.createElement('div');
-    const bodyText = issue.body || '';
-    // Use marked only if available and bodyText is non-empty. Sanitize the HTML with DOMPurify.
-    if (typeof marked !== 'undefined' && bodyText) {
-        const raw = marked.parse(bodyText);
-        cardContent.innerHTML = (typeof DOMPurify !== 'undefined') ? DOMPurify.sanitize(raw) : raw;
-    } else {
-        cardContent.textContent = bodyText || '';
-    }
-
-    const cardFooter = document.createElement('div');
-    cardFooter.className = 'card-footer';
-
-    const issueDate = new Date(issue.created_at);
-    const day = issueDate.getDate().toString().padStart(2, '0');
-    const month = issueDate.toLocaleString('en-us', { month: 'short' });
-    const year = issueDate.getFullYear();
-    const formattedDate = `${day} ${month}, ${year}`;
-
-    const cardDate = document.createElement('span');
-    cardDate.className = 'card-date';
-    cardDate.textContent = formattedDate;
-    cardFooter.appendChild(cardDate);
-
-    const cardTagsAndLinks = document.createElement('div');
-    cardTagsAndLinks.style.display = 'flex';
-    cardTagsAndLinks.style.gap = '15px';
-    cardTagsAndLinks.style.alignItems = 'center';
-    cardTagsAndLinks.style.flexWrap = 'wrap';
-
-    const cardTags = document.createElement('div');
-    cardTags.className = 'card-tags';
-    const labelsForTags = Array.isArray(issue.labels) ? issue.labels : [];
-    labelsForTags.forEach(l => {
-        const name = (l && l.name) ? l.name : '';
-        const tagLabel = createTagLabel(name);
-        cardTags.appendChild(tagLabel);
-    });
-
-
-    if (label === 'project') {
-        const cardLinks = document.createElement('div');
-        cardLinks.className = 'card-links';
-
-
-        if (issue.homepage) {
-            const liveLink = document.createElement('a');
-            liveLink.href = issue.homepage;
-            liveLink.target = '_blank';
-            liveLink.rel = 'noopener';
-            liveLink.innerHTML = '<i class="fas fa-external-link-alt"></i>';
-            cardLinks.appendChild(liveLink);
-        }
-        if (cardLinks.children.length > 0) {
-            cardTagsAndLinks.appendChild(cardLinks);
-        }
-    }
-    
-    cardFooter.appendChild(cardTagsAndLinks);
-
-    contentWrapper.appendChild(cardContent);
-    contentWrapper.appendChild(cardFooter);
-
-    card.appendChild(summary);
-    card.appendChild(contentWrapper);
-
-    return card;
 }
 
 function showFallbackContent(container, label, fallbackItems, message) {
@@ -432,73 +378,98 @@ function initFilterButtons(section) {
 
 const galleryImages = [
     { 
-        src: 'assets/images/gallery/01.JPG', 
-        alt: 'Scenic View', 
-        description: 'A beautiful landscape capturing nature\'s essence.',
-        subtitle: 'Nature\'s Beauty'
+        src: 'assets/images/gallery/image-01.webp', 
+        alt: 'Gallery Image 1', 
+        description: 'First image in the gallery showcase.',
+        subtitle: 'Image One'
     },
     { 
-        src: 'assets/images/gallery/02.JPG', 
-        alt: 'Urban Life', 
-        description: 'City lights and modern architecture blend together.',
-        subtitle: 'City Perspectives'
+        src: 'assets/images/gallery/image-02.webp', 
+        alt: 'Gallery Image 2', 
+        description: 'Second image in the gallery showcase.',
+        subtitle: 'Image Two'
     },
     { 
-        src: 'assets/images/gallery/03.JPG', 
-        alt: 'Abstract Patterns', 
-        description: 'Geometric shapes create an interesting composition.',
-        subtitle: 'Pattern Study'
+        src: 'assets/images/gallery/image-03.webp', 
+        alt: 'Gallery Image 3', 
+        description: 'Third image in the gallery showcase.',
+        subtitle: 'Image Three'
     },
     { 
-        src: 'assets/images/gallery/04.JPG', 
-        alt: 'Natural Details', 
-        description: 'Close-up view revealing intricate details.',
-        subtitle: 'Macro World'
+        src: 'assets/images/gallery/image-04.webp', 
+        alt: 'Gallery Image 4', 
+        description: 'Fourth image in the gallery showcase.',
+        subtitle: 'Image Four'
     },
     { 
-        src: 'assets/images/gallery/05.JPG', 
-        alt: 'Minimalist Space', 
-        description: 'Clean lines and simple forms create harmony.',
-        subtitle: 'Less is More'
+        src: 'assets/images/gallery/image-05.webp', 
+        alt: 'Gallery Image 5', 
+        description: 'Fifth image in the gallery showcase.',
+        subtitle: 'Image Five'
     }
-].map((img) => ({
-    ...img,
-    thumbnail: img.src.replace('.JPG', '-thumb.JPG')
-}));
+];
 
 function initTimelineSlideshows() {
     const slideshows = document.querySelectorAll('.timeline-gallery');
     
+    const preloadImage = (src) => {
+        return new Promise((resolve, reject) => {
+            const img = new Image();
+            img.onload = () => resolve(img);
+            img.onerror = reject;
+            img.src = src;
+        });
+    };
+
     const createSlide = ({ src, alt, description }, index) => {
         const template = document.createElement('template');
         template.innerHTML = `
-            <div class="slide" data-index="${index}">
+            <div class="slide" data-index="${index}" role="tabpanel" aria-roledescription="slide">
                 <img src="${src}" 
-                     alt="${alt}" 
-                     loading="lazy">
+                     alt="${alt}"
+                     loading="${index < 2 ? 'eager' : 'lazy'}"
+                     decoding="async">
             </div>
         `;
         return template.content.firstElementChild;
     };
 
     const setupSlideshow = (gallery) => {
+        if (!gallery) return;
         const slideshow = gallery.querySelector('.slideshow');
-        const [prevButton, nextButton] = ['.prev', '.next'].map(sel => gallery.querySelector(sel));
+        if (!slideshow) {
+            console.error('Slideshow element not found');
+            return;
+        }
+        
         let slideIndex = 0;
-        let slides;
         let touchStartX = 0;
         let touchEndX = 0;
+        let isAnimating = false;
 
         if (gallery.closest('#gallery-dropdown')) {
             slideshow.innerHTML = '';
             const fragment = document.createDocumentFragment();
-            galleryImages.forEach(imageData => fragment.appendChild(createSlide(imageData)));
+            galleryImages.forEach((imageData, index) => {
+                fragment.appendChild(createSlide(imageData));
+            });
             slideshow.appendChild(fragment);
 
-            // Create navigation dots container
-            let navDots = gallery.querySelector('.nav-dots');
-            if (!navDots) {
-                navDots = document.createElement('div');
+            // Create navigation container
+            let galleryNav = gallery.querySelector('.gallery-nav');
+            if (!galleryNav) {
+                galleryNav = document.createElement('div');
+                galleryNav.className = 'gallery-nav';
+
+                // Previous button
+                const prevButton = document.createElement('button');
+                prevButton.className = 'nav-button prev';
+                prevButton.innerHTML = '&lt;';
+                prevButton.setAttribute('aria-label', 'Previous slide');
+                prevButton.addEventListener('click', () => showSlide(slideIndex - 1));
+
+                // Navigation dots container
+                const navDots = document.createElement('div');
                 navDots.className = 'nav-dots';
                 galleryImages.forEach((_, index) => {
                     const dot = document.createElement('button');
@@ -507,7 +478,19 @@ function initTimelineSlideshows() {
                     dot.addEventListener('click', () => showSlide(index));
                     navDots.appendChild(dot);
                 });
-                gallery.appendChild(navDots);
+
+                // Next button
+                const nextButton = document.createElement('button');
+                nextButton.className = 'nav-button next';
+                nextButton.innerHTML = '&gt;';
+                nextButton.setAttribute('aria-label', 'Next slide');
+                nextButton.addEventListener('click', () => showSlide(slideIndex + 1));
+
+                // Append all navigation elements
+                galleryNav.appendChild(prevButton);
+                galleryNav.appendChild(navDots);
+                galleryNav.appendChild(nextButton);
+                gallery.appendChild(galleryNav);
             }
 
             // Create current slide info container below the slideshow
@@ -518,51 +501,150 @@ function initTimelineSlideshows() {
                 gallery.appendChild(currentInfo);
             }
         }
-        slides = gallery.querySelectorAll('.slide');
-    const thumbs = [];
-    const currentInfoEl = gallery.querySelector('.current-slide-info');
+                const slides = gallery.querySelectorAll('.slide');
+        const currentInfoEl = gallery.querySelector('.current-slide-info');
         if (!slides.length) return;
 
-        const showSlide = (n) => {
-            slideIndex = (n + slides.length) % slides.length;
+        const showSlide = async (n, animate = true) => {
+            if (isAnimating) return;
+            isAnimating = true;
+
+            const newIndex = (n + slides.length) % slides.length;
+            if (animate) {
+                slideshow.style.transition = 'transform 0.3s cubic-bezier(0.4, 0, 0.2, 1)';
+            } else {
+                slideshow.style.transition = 'none';
+            }
+
+            slideIndex = newIndex;
             slideshow.style.transform = `translateX(-${slideIndex * 100}%)`;
             
-            // Update current info (subtitle + description) from galleryImages data
+            // Preload next and previous images
+            const nextIndex = (slideIndex + 1) % slides.length;
+            const prevIndex = (slideIndex - 1 + slides.length) % slides.length;
+            Promise.all([
+                preloadImage(galleryImages[nextIndex].src),
+                preloadImage(galleryImages[prevIndex].src)
+            ]).catch(console.error);
+
+            // Update current info with fade effect
             const info = galleryImages[slideIndex] || {};
             if (currentInfoEl) {
-                currentInfoEl.innerHTML = `<h3 class="slide-subtitle">${info.subtitle || info.alt || ''}</h3><p class="slide-description">${info.description || ''}</p>`;
+                currentInfoEl.style.opacity = '0';
+                setTimeout(() => {
+                    currentInfoEl.innerHTML = `
+                        <h3 class="slide-subtitle">${info.subtitle || info.alt || ''}</h3>
+                        <p class="slide-description">${info.description || ''}</p>
+                    `;
+                    currentInfoEl.style.opacity = '1';
+                }, 150);
             }
 
-            // Update navigation dots
+            // Update navigation dots and aria labels
             const dots = gallery.querySelectorAll('.nav-dot');
             dots.forEach((dot, index) => {
-                dot.classList.toggle('active', index === slideIndex);
-                dot.setAttribute('aria-current', index === slideIndex ? 'true' : 'false');
+                const isActive = index === slideIndex;
+                dot.classList.toggle('active', isActive);
+                dot.setAttribute('aria-current', isActive ? 'true' : 'false');
+                dot.setAttribute('aria-label', `Go to slide ${index + 1}${isActive ? ' (current)' : ''}`);
             });
+
+            // Reset animation lock after transition
+            setTimeout(() => {
+                isAnimating = false;
+            }, 300);
         };
 
-        // Touch navigation for touch devices
-        slideshow.addEventListener('touchstart', e => {
-            touchStartX = e.changedTouches[0].screenX;
-        }, { passive: true });
+        // Enhanced touch navigation
+        let touchStartY = 0;
+        let touchMoveX = 0;
+        let initialTransform = 0;
 
-        slideshow.addEventListener('touchend', e => {
-            touchEndX = e.changedTouches[0].screenX;
-            if (touchStartX - touchEndX > 50) {
-                showSlide(slideIndex + 1);
-            } else if (touchEndX - touchStartX > 50) {
-                showSlide(slideIndex - 1);
+        const handleTouchStart = (e) => {
+            if (isAnimating) return;
+            touchStartX = e.touches[0].clientX;
+            touchStartY = e.touches[0].clientY;
+            initialTransform = slideIndex * -100;
+            slideshow.style.transition = 'none';
+        };
+
+        const handleTouchMove = (e) => {
+            if (isAnimating) return;
+            const touchCurrentX = e.touches[0].clientX;
+            const touchCurrentY = e.touches[0].clientY;
+            
+            // Calculate delta movements
+            const deltaX = touchCurrentX - touchStartX;
+            const deltaY = touchCurrentY - touchStartY;
+            
+            // Check if scrolling is more horizontal than vertical
+            if (Math.abs(deltaX) > Math.abs(deltaY)) {
+                e.preventDefault();
+                touchMoveX = deltaX;
+                
+                // Calculate percentage moved
+                const percentMoved = (touchMoveX / slideshow.offsetWidth) * 100;
+                slideshow.style.transform = `translateX(${initialTransform + percentMoved}%)`;
             }
-        }, { passive: true });
+        };
 
-        // Keyboard navigation
+        const handleTouchEnd = (e) => {
+            if (isAnimating) return;
+            slideshow.style.transition = 'transform 0.3s cubic-bezier(0.4, 0, 0.2, 1)';
+            
+            const moveThreshold = slideshow.offsetWidth * 0.2; // 20% threshold
+            if (Math.abs(touchMoveX) > moveThreshold) {
+                if (touchMoveX > 0) {
+                    showSlide(slideIndex - 1);
+                } else {
+                    showSlide(slideIndex + 1);
+                }
+            } else {
+                // Snap back if threshold not met
+                showSlide(slideIndex);
+            }
+            
+            touchMoveX = 0;
+        };
+
+        slideshow.addEventListener('touchstart', handleTouchStart, { passive: true });
+        slideshow.addEventListener('touchmove', handleTouchMove, { passive: false });
+        slideshow.addEventListener('touchend', handleTouchEnd, { passive: true });
+
+        // Enhanced keyboard navigation
         gallery.addEventListener('keydown', e => {
-            if (e.key === 'ArrowLeft') showSlide(slideIndex - 1);
-            if (e.key === 'ArrowRight') showSlide(slideIndex + 1);
+            if (isAnimating) return;
+            
+            switch (e.key) {
+                case 'ArrowLeft':
+                case 'h':
+                    e.preventDefault();
+                    showSlide(slideIndex - 1);
+                    break;
+                case 'ArrowRight':
+                case 'l':
+                    e.preventDefault();
+                    showSlide(slideIndex + 1);
+                    break;
+                case 'Home':
+                    e.preventDefault();
+                    showSlide(0);
+                    break;
+                case 'End':
+                    e.preventDefault();
+                    showSlide(slides.length - 1);
+                    break;
+            }
         });
 
-        showSlide(0);
+        // Initial slide setup without animation
+        showSlide(0, false);
+        
+        // Preload next slide
+        if (galleryImages.length > 1) {
+            preloadImage(galleryImages[1].src).catch(console.error);
+        }
     };
 
     slideshows.forEach(setupSlideshow);
-}
+});
