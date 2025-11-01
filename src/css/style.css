@@ -78,6 +78,30 @@ body {
   transition: color var(--transition-speed) ease;
 }
 
+.nav-btn::before {
+  content: attr(data-tooltip);
+  position: absolute;
+  bottom: -30px;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 4px 8px;
+  background-color: var(--color-surface);
+  color: var(--color-text);
+  font-size: 12px;
+  border-radius: 4px;
+  white-space: nowrap;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.2s ease, visibility 0.2s ease;
+  pointer-events: none;
+  z-index: 1000;
+}
+
+.nav-btn:hover::before {
+  opacity: 1;
+  visibility: visible;
+}
+
 .nav-btn svg {
   fill: currentColor;
 }
@@ -426,6 +450,9 @@ pre code {
 
 .timeline-gallery {
   position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
 }
 
 .timeline-year {
@@ -443,6 +470,82 @@ pre code {
   background: var(--color-background);
   border-radius: var(--border-radius);
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.slideshow-container:fullscreen {
+  padding: 20px;
+  background: rgba(0, 0, 0, 0.95);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.slideshow-container:fullscreen .slideshow {
+  max-height: 90vh;
+  width: auto;
+  max-width: 90vw;
+}
+
+.slideshow-container:fullscreen .slide img {
+  max-height: 90vh;
+  width: auto;
+  max-width: 90vw;
+  object-fit: contain;
+}
+
+.thumbnail-nav {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(60px, 1fr));
+  gap: var(--space-xs);
+  padding: var(--space-sm);
+  background: var(--color-surface);
+  border-radius: var(--border-radius);
+  order: -1; /* Puts thumbnails above the slideshow */
+}
+
+.thumb-btn {
+  padding: 0;
+  border: 2px solid transparent;
+  background: none;
+  cursor: pointer;
+  aspect-ratio: 16/9;
+  overflow: hidden;
+  border-radius: calc(var(--border-radius) / 2);
+  transition: all var(--transition-speed) ease;
+}
+
+.thumb-btn img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.thumb-btn:hover {
+  transform: translateY(-2px);
+}
+
+.thumb-btn.active {
+  border-color: var(--color-primary);
+}
+
+.current-slide-info {
+  padding: var(--space-md);
+  background: var(--color-surface);
+  border-radius: var(--border-radius);
+  margin-top: var(--space-sm);
+}
+
+.slide-subtitle {
+  font-size: 1.1em;
+  font-weight: 500;
+  margin-bottom: var(--space-xs);
+  color: var(--color-text);
+}
+
+.slide-description {
+  font-size: 0.9em;
+  color: var(--color-text-muted);
+  line-height: 1.4;
 }
 
 .fullscreen-btn {

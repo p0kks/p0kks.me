@@ -66,19 +66,37 @@ function initNavigation() {
 // ===== DYNAMIC CONTENT LOADING =====
 async function loadContent(label, containerId) {
     const container = document.getElementById(containerId);
-    if (!container) {
-        console.error(`Container with ID "${containerId}" not found.`);
-        return;
+    if (!container) return;
+
+    try {
+        const response = await fetch(`https://api.github.com/repos/p0kks/p0kks.me/issues?labels=${label}&state=open`);
+        if (!response.ok) throw new Error('Failed to fetch GitHub issues');
+        
+        const issues = await response.json();
+        
+        if (issues.length === 0) {
+            if (label === 'project') {
+                showFallbackProjects(container);
+            } else {
+                showFallbackNotes(container);
+            }
+        } else {
+            container.innerHTML = '<div class="card-grid"></div>';
+            const cardGrid = container.querySelector('.card-grid');
+            issues.forEach(issue => {
+                const card = createCard(issue, label);
+                cardGrid.appendChild(card);
+            });
+        }
+    } catch (error) {
+        console.error('Error loading content:', error);
+        if (label === 'project') {
+            showFallbackProjects(container);
+        } else {
+            showFallbackNotes(container);
+        }
     }
 
-    // Directly call fallback functions to populate content statically
-    if (label === 'project') {
-        showFallbackProjects(container);
-    } else if (label === 'note') {
-        showFallbackNotes(container);
-    } else {
-        container.innerHTML = `<p class="status-message">No ${label}s yet. Content is static.</p>`;
-    }
     // initFilterButtons expects the section name used in data-section ("project" or "note")
     initFilterButtons(label);
 }
@@ -314,18 +332,54 @@ function initFullscreenButtons() {
                 await document.exitFullscreen();
             }
         } catch (err) {
-            console.error('Fullscreen error:', err);
+            console.error('Error attempting to toggle fullscreen:', err);
         }
     };
 
     const updateFullscreenIcon = () => {
         const icon = fullscreenBtn.querySelector('i');
-        icon.classList.toggle('fa-expand', !document.fullscreenElement);
-        icon.classList.toggle('fa-compress', document.fullscreenElement);
+        icon.className = document.fullscreenElement ? 'fas fa-compress' : 'fas fa-expand';
     };
 
     fullscreenBtn.addEventListener('click', toggleFullscreen);
     document.addEventListener('fullscreenchange', updateFullscreenIcon);
+
+    // Initialize thumbnails
+    const thumbnailNav = document.querySelector('.thumbnail-nav');
+    const currentSlideInfo = document.querySelector('.current-slide-info');
+    
+    if (thumbnailNav && galleryImages) {
+        galleryImages.forEach((image, index) => {
+            const thumbBtn = document.createElement('button');
+            thumbBtn.className = 'thumb-btn';
+            thumbBtn.setAttribute('data-index', index);
+            thumbBtn.innerHTML = `<img src="${image.thumbnail}" alt="Thumbnail ${index + 1}">`;
+            thumbBtn.addEventListener('click', () => {
+                showSlide(index);
+                updateActiveThumbnail(index);
+            });
+            thumbnailNav.appendChild(thumbBtn);
+        });
+    }
+
+    // Function to update active thumbnail
+    function updateActiveThumbnail(index) {
+        const thumbs = thumbnailNav.querySelectorAll('.thumb-btn');
+        thumbs.forEach(thumb => thumb.classList.remove('active'));
+        thumbs[index]?.classList.add('active');
+
+        // Update current slide info
+        if (currentSlideInfo && galleryImages[index]) {
+            const image = galleryImages[index];
+            currentSlideInfo.innerHTML = `
+                <h3 class="slide-subtitle">${image.alt}</h3>
+                <p class="slide-description">${image.description}</p>
+            `;
+        }
+    }
+
+    // Update initial thumbnail state
+    updateActiveThumbnail(0);
 }
 
 function showFallbackProjects(container) {
@@ -410,21 +464,39 @@ function initFilterButtons(section) {
 }
 
 const galleryImages = [
-    { src: 'assets/images/gallery/01.jpg', alt: 'Gallery Image 1', description: 'Description 1' },
-    { src: 'assets/images/gallery/02.jpg', alt: 'Gallery Image 2', description: 'Description 2' },
-    { src: 'assets/images/gallery/03.jpg', alt: 'Gallery Image 3', description: 'Description 3' },
-    { src: 'assets/images/gallery/04.jpg', alt: 'Gallery Image 4', description: 'Description 4' },
-    { src: 'assets/images/gallery/05.jpg', alt: 'Gallery Image 5', description: 'Description 5' },
-    { src: 'assets/images/gallery/06.jpg', alt: 'Gallery Image 6', description: 'Description 6' },
-    { src: 'assets/images/gallery/07.jpg', alt: 'Gallery Image 7', description: 'Description 7' },
-    { src: 'assets/images/gallery/08.jpg', alt: 'Gallery Image 8', description: 'Description 8' },
-    { src: 'assets/images/gallery/09.jpg', alt: 'Gallery Image 9', description: 'Description 9' },
-    { src: 'assets/images/gallery/10.jpg', alt: 'Gallery Image 10', description: 'Description 10' },
-    { src: 'assets/images/gallery/11.jpg', alt: 'Gallery Image 11', description: 'Description 11' },
-    { src: 'assets/images/gallery/12.jpg', alt: 'Gallery Image 12', description: 'Description 12' }
-].map((img, index) => ({
+    { 
+        src: 'assets/images/gallery/01.JPG', 
+        alt: 'Scenic View', 
+        description: 'A beautiful landscape capturing nature\'s essence.',
+        subtitle: 'Nature\'s Beauty'
+    },
+    { 
+        src: 'assets/images/gallery/02.JPG', 
+        alt: 'Urban Life', 
+        description: 'City lights and modern architecture blend together.',
+        subtitle: 'City Perspectives'
+    },
+    { 
+        src: 'assets/images/gallery/03.JPG', 
+        alt: 'Abstract Patterns', 
+        description: 'Geometric shapes create an interesting composition.',
+        subtitle: 'Pattern Study'
+    },
+    { 
+        src: 'assets/images/gallery/04.JPG', 
+        alt: 'Natural Details', 
+        description: 'Close-up view revealing intricate details.',
+        subtitle: 'Macro World'
+    },
+    { 
+        src: 'assets/images/gallery/05.JPG', 
+        alt: 'Minimalist Space', 
+        description: 'Clean lines and simple forms create harmony.',
+        subtitle: 'Less is More'
+    }
+].map((img) => ({
     ...img,
-    thumbnail: img.src.replace('.jpg', '-thumb.jpg')
+    thumbnail: img.src.replace('.JPG', '-thumb.JPG')
 }));
 
 function initTimelineSlideshows() {
