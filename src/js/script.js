@@ -92,14 +92,17 @@ function createCard(issue, label) {
         <div class="dropdown-header-content">
             <span class="dropdown-title">${issue.title}</span>
         </div>
-        <div class="dropdown-right-content">
-            <span class="dropdown-subtitle"></span>
-        </div>
+        <div class="dropdown-tags"></div>
+        <span class="dropdown-icon"></span>
     `;
 
-    const subtitleSpan = summary.querySelector('.dropdown-subtitle');
+    const dropdownTagsContainer = summary.querySelector('.dropdown-tags');
     (issue.labels || []).forEach(l => {
-        if (l.name !== label) subtitleSpan.appendChild(createTagLabel(l.name));
+        if (l.name !== label) {
+            const tagLabel = createTagLabel(l.name);
+            tagLabel.classList.add('dropdown-tag-label');
+            dropdownTagsContainer.appendChild(tagLabel);
+        }
     });
 
     const content = document.createElement('div');
@@ -130,24 +133,7 @@ function createCardFooter(issue, label) {
     const date = new Date(issue.created_at);
     const formatted = `${String(date.getDate()).padStart(2, '0')} ${date.toLocaleString('en-us', { month: 'short' })}, ${date.getFullYear()}`;
     
-    footer.innerHTML = `<span class="card-date">${formatted}</span>`;
-
-    const tagsAndLinks = document.createElement('div');
-    tagsAndLinks.style.cssText = 'display:flex;gap:15px;align-items:center;flex-wrap:wrap';
-
-    const tags = document.createElement('div');
-    tags.className = 'card-tags';
-    (issue.labels || []).forEach(l => tags.appendChild(createTagLabel(l.name)));
-    tagsAndLinks.appendChild(tags);
-
-    if (label === 'project' && issue.homepage) {
-        const links = document.createElement('div');
-        links.className = 'card-links';
-        links.innerHTML = `<a href="${issue.homepage}" target="_blank" rel="noopener"><i class="fas fa-external-link-alt"></i></a>`;
-        tagsAndLinks.appendChild(links);
-    }
-
-    footer.appendChild(tagsAndLinks);
+    footer.innerHTML = `<span class="card-date" style="margin-left: auto;">${formatted}</span>`;
     return footer;
 }
 
@@ -155,26 +141,11 @@ function createTagLabel(name) {
     const tag = document.createElement('span');
     tag.className = 'tag-label';
 
-    const iconMap = {
-        audio: 'fas fa-volume-up',
-        code: 'fas fa-code',
-        web: 'fas fa-globe',
-        cover: 'fas fa-microphone-alt',
-        original: 'fas fa-star',
-        note: 'fas fa-file-alt',
-        thoughts: 'fas fa-comment-alt',
-        insights: 'fas fa-lightbulb',
-        poetry: 'fas fa-feather-alt'
-    };
-
     const lname = name.toLowerCase();
-    const iconClass = iconMap[lname] || (lname.includes('cover') ? iconMap.cover : lname.includes('original') ? iconMap.original : '');
-
-    if (iconClass) {
-        tag.innerHTML = `<i class="${iconClass}"></i>`;
-    }
 
     if (['audio', 'cover', 'original'].includes(lname)) tag.classList.add('tag-label-audio');
+    else if (['code', 'web'].includes(lname)) tag.classList.add('tag-label-code');
+    else if (['note', 'insights', 'poetry', 'thoughts'].includes(lname)) tag.classList.add('tag-label-note');
     else if (['code', 'web'].includes(lname)) tag.classList.add('tag-label-code');
     else if (['note', 'thoughts', 'insights', 'poetry'].includes(lname)) tag.classList.add('tag-label-note');
 
