@@ -1,0 +1,152 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="description" content="p0kks — minimalist portfolio showcasing code projects and audio work.">
+  <meta name="robots" content="index,follow">
+  <title>P0KKS</title>
+  <link rel="icon" href="assets/images/favicon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;600;700&family=Roboto+Mono:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+  <link rel="stylesheet" href="src/css/style.css">
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/dompurify@2.4.0/dist/purify.min.js"></script>
+  <script defer src="src/js/script.js"></script>
+</head>
+<body>
+  <main class="container">
+    <header class="header">
+      <div class="header-container">
+        <div class="site-logo-container">
+          <img src="assets/images/site-logo.webp" alt="p0kks" class="site-logo-animated">
+        </div>
+        <nav class="main-nav" role="navigation" aria-label="Main navigation">
+          <button class="nav-btn active" data-target="home" data-tooltip="Home" aria-label="Home" aria-pressed="true">
+            <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px"><path d="M160-120v-375l-72 55-48-64 120-92v-124h80v63l240-183 440 336-48 63-72-54v375H160Zm80-80h200v-160h80v160h200v-356L480-739 240-556v356Zm-80-560q0-50 35-85t85-35q17 0 28.5-11.5T320-920h80q0 50-35 85t-85 35q-17 0-28.5 11.5T240-760h-80Zm80 560h480-480Z"/></svg>
+          </button>
+          <button class="nav-btn" data-target="project" data-tooltip="Projects" aria-label="Projects" aria-pressed="false">
+            <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px"><path d="M480-118 120-398l66-50 294 228 294-228 66 50-360 280Zm0-202L120-600l360-280 360 280-360 280Zm0-280Zm0 178 230-178-230-178-230 178 230 178Z"/></svg>
+          </button>
+          <button class="nav-btn" data-target="note" data-tooltip="Notes" aria-label="Notes" aria-pressed="false">
+            <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px"><path d="M280-160v-441q0-33 24-56t57-23h439q33 0 56.5 23.5T880-600v320L680-80H360q-33 0-56.5-23.5T280-160ZM81-710q-6-33 13-59.5t52-32.5l434-77q33-6 59.5 13t32.5 52l10 54h-82l-7-40-433 77 40 226v279q-16-9-27.5-24T158-276L81-710Zm279 110v440h280v-160h160v-280H360Zm220 220Z"/></svg>
+          </button>
+        </nav>
+      </div>
+    </header>
+
+    <section id="home" class="page active">
+      <div class="filter-buttons" role="toolbar" aria-label="Home filters">
+        <button class="filter-btn" data-target="about-dropdown">p0kks.me</button>
+      </div>
+
+      <details class="unified-markdown" id="about-dropdown">
+        <summary class="unified-markdown-summary">
+          <div class="dropdown-header-content">
+            <span class="dropdown-subtitle">info</span>
+            <span class="dropdown-title">About</span>
+          </div>
+          <span class="dropdown-icon"></span>
+        </summary>
+        <div class="unified-markdown-content">
+          <p>I'm P0KKS<br>Developer, musician, and creator driven by curiosity. This site is my hub for projects, experiments, and notes.</p>
+          <br>
+          <div class="bookmark-grid">
+            <a class="bookmark-item" href="https://bandlab.com/p0kks" target="_blank" rel="noopener">BandLab</a>
+            <a class="bookmark-item" href="https://github.com/p0kks" target="_blank" rel="noopener">GitHub</a>
+            <a class="bookmark-item" href="https://open.spotify.com/user/21zawbqtyaukxot4h46qodaca" target="_blank" rel="noopener">Spotify</a>
+            <a class="bookmark-item" href="https://t.me/p0kks" target="_blank" rel="noopener">Telegram</a>
+            <a class="bookmark-item" href="https://twitter.com/p0kks" target="_blank" rel="noopener">Twitter</a>
+            <a class="bookmark-item" href="https://www.youtube.com/@p0kks-YT" target="_blank" rel="noopener">YouTube</a>
+          </div>
+        </div>
+      </details>
+
+      <details class="unified-markdown" id="bookmarks-dropdown">
+        <summary class="unified-markdown-summary">
+          <div class="dropdown-header-content">
+            <span class="dropdown-subtitle">pinned</span>
+            <span class="dropdown-title">Bookmarks</span>
+          </div>
+          <span class="dropdown-icon"></span>
+        </summary>
+        <div class="unified-markdown-content">
+          <div class="bookmark-section">
+            <h4>Crypto</h4>
+            <div class="bookmark-grid">
+              <a class="bookmark-item" href="https://www.coingecko.com/" target="_blank" rel="noopener">CoinGecko</a>
+            </div>
+            <h4>Image-editor</h4>
+            <div class="bookmark-grid">
+              <a class="bookmark-item" href="https://kleki.com/" target="_blank" rel="noopener">Kleki</a>
+            </div>
+            <h4>LLM</h4>
+            <div class="bookmark-grid">
+              <a class="bookmark-item" href="https://chatgpt.com/" target="_blank" rel="noopener">ChatGPT</a>
+              <a class="bookmark-item" href="https://www.perplexity.ai/" target="_blank" rel="noopener">Perplexity</a>
+              <a class="bookmark-item" href="https://grok.com/" target="_blank" rel="noopener">Grok</a>
+              <a class="bookmark-item" href="https://claude.ai/new" target="_blank" rel="noopener">Claude</a>
+              <a class="bookmark-item" href="https://gemini.google.com/app" target="_blank" rel="noopener">Google Gemini</a>
+              <a class="bookmark-item" href="https://chat.deepseek.com/" target="_blank" rel="noopener">Deepseek Chat</a>
+            </div>
+            <h4>Dev</h4>
+            <div class="bookmark-grid">
+              <a class="bookmark-item" href="https://github.com/trimstray/the-book-of-secret-knowledge" target="_blank" rel="noopener">Book of Secret Knowledge</a>
+              <a class="bookmark-item" href="https://github.com/Hack-with-Github/Awesome-Hacking" target="_blank" rel="noopener">Awesome Hacking</a>
+            </div>
+            <h4>Audio</h4>
+            <div class="bookmark-grid">
+              <a class="bookmark-item" href="https://www.ultimate-guitar.com/" target="_blank" rel="noopener">Ultimate Guitar</a>
+            </div>
+          </div>
+        </div>
+      </details>
+
+      <details class="unified-markdown" id="gallery-dropdown">
+        <summary class="unified-markdown-summary">
+          <div class="dropdown-header-content">
+            <span class="dropdown-subtitle">view</span>
+            <span class="dropdown-title">Memories</span>
+          </div>
+          <span class="dropdown-icon"></span>
+        </summary>
+        <div class="unified-markdown-content">
+          <div class="timeline-gallery">
+            <div class="slideshow-container">
+              <button class="fullscreen-btn" aria-label="Toggle fullscreen">
+                <i class="fas fa-expand"></i>
+              </button>
+              <div class="slideshow"></div>
+            </div>
+          </div>
+        </div>
+      </details>
+    </section>
+
+    <section id="project" class="page">
+      <div class="filter-buttons" role="toolbar" aria-label="Project filters">
+        <button class="filter-btn active" data-filter="all" data-section="project" aria-pressed="true">all</button>
+        <button class="filter-btn" data-filter="audio" data-section="project" aria-pressed="false">audio</button>
+        <button class="filter-btn" data-filter="code" data-section="project" aria-pressed="false">code</button>
+        <button class="filter-btn" data-filter="other" data-section="project" aria-pressed="false">other</button>
+      </div>
+      <div id="project-container" class="card-grid"></div>
+    </section>
+
+    <section id="note" class="page">
+      <div class="filter-buttons" role="toolbar" aria-label="Note filters">
+        <button class="filter-btn active" data-filter="note" data-section="note" aria-pressed="true">all</button>
+        <button class="filter-btn" data-filter="9" data-section="note" aria-pressed="false">october</button>
+        <button class="filter-btn" data-filter="10" data-section="note" aria-pressed="false">november</button>
+      </div>
+      <div id="notes-container" class="card-grid"></div>
+    </section>
+
+    <footer class="footer">
+      <p>&copy; 2025 P0KKS. All rights reserved.</p>
+    </footer>
+  </main>
+</body>
+</html>
