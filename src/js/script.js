@@ -12,7 +12,8 @@ document.addEventListener('DOMContentLoaded', function() {
 
     const init = async () => {
         initNavigation();
-        initHomeFilterButtons();
+
+        // Load content for home page initially
         await Promise.all([
             loadContent('project', 'project-container'),
             loadContent('note', 'notes-container')
@@ -26,44 +27,38 @@ document.addEventListener('DOMContentLoaded', function() {
 
 // ===== NAVIGATION FUNCTIONS =====
 function initNavigation() {
-    const navButtons = document.querySelectorAll('.main-nav .nav-btn');
+    const nav = document.querySelector('.main-nav');
     const pages = document.querySelectorAll('.page');
+    const pageCache = new Map();
 
     function activatePage(targetId) {
-        pages.forEach(page => {
-            page.classList.toggle('active', page.id === targetId);
-        });
-
-        navButtons.forEach(btn => {
+        pages.forEach(page => page.classList.toggle('active', page.id === targetId));
+        nav.querySelectorAll('.nav-btn').forEach(btn => {
             const isActive = btn.dataset.target === targetId;
             btn.classList.toggle('active', isActive);
-            btn.setAttribute('aria-pressed', isActive ? 'true' : 'false');
+            btn.setAttribute('aria-pressed', isActive);
         });
     }
 
-    navButtons.forEach(button => {
-        button.addEventListener('click', (e) => {
-            // Use the button element as the source (handles clicks on child elements)
-            const btn = e.currentTarget;
-            const targetId = btn.dataset.target;
-            if (targetId) activatePage(targetId);
-        });
+    nav.addEventListener('click', async (e) => {
+        const btn = e.target.closest('.nav-btn');
+        if (!btn) return;
+
+        const targetId = btn.dataset.target;
+        if (!targetId) return;
+
+        activatePage(targetId);
+
+        // Load content if needed and not cached
+        if ((targetId === 'project' || targetId === 'note') && !pageCache.has(targetId)) {
+            const containerId = `${targetId}-container`;
+            await loadContent(targetId, containerId);
+            pageCache.set(targetId, true);
+        }
     });
 }
 
-function initHomeFilterButtons() {
-    const button = document.querySelector('#home .filter-buttons .filter-btn');
-    if (!button) return;
 
-    // Change label
-    button.textContent = 'open/close all';
-
-    button.addEventListener('click', () => {
-        const dropdowns = document.querySelectorAll('#home .home-dropdown');
-        const anyClosed = Array.from(dropdowns).some(d => !d.open);
-        dropdowns.forEach(d => d.open = anyClosed);
-    });
-}
 
 
 
@@ -76,49 +71,16 @@ async function loadContent(label, containerId) {
         return;
     }
 
-    if (container.innerHTML === '') {
-        container.innerHTML = `<p class="status-message">Loading ${label}s...</p>`;
+    // Directly call fallback functions to populate content statically
+    if (label === 'project') {
+        showFallbackProjects(container);
+    } else if (label === 'note') {
+        showFallbackNotes(container);
+    } else {
+        container.innerHTML = `<p class="status-message">No ${label}s yet. Content is static.</p>`;
     }
-
-    try {
-        // Browsers block setting a custom User-Agent header, so omit it here.
-        const response = await fetch(`https://api.github.com/repos/p0kks/p0kks.me/issues?labels=${label}&state=open&sort=created&direction=desc`);
-
-        if (!response.ok) {
-            throw new Error(`Failed to fetch ${label}s`);
-        }
-
-        const issues = await response.json();
-
-        if (issues.length === 0) {
-            if (label === 'project') {
-                showFallbackProjects(container);
-            } else if (label === 'note') {
-                showFallbackNotes(container);
-            } else {
-                container.innerHTML = `<p class="status-message">No ${label}s yet. Check back soon!</p>`;
-            }
-            return;
-        }
-
-        container.innerHTML = '';
-        issues.forEach(issue => {
-            const card = createCard(issue, label);
-            container.appendChild(card);
-        });
-
-        // initFilterButtons expects the section name used in data-section ("project" or "note")
-        initFilterButtons(label);
-
-    } catch (error) {
-        console.error(`Error loading ${label}s:`, error);
-        container.innerHTML = `
-            <p class="status-message">
-                Unable to load ${label}s. <br>
-                <small>Make sure the <a href="https://github.com/p0kks/p0kks.me" target="_blank">p0kks.me repository</a> exists.</small>
-            </p>
-        `;
-    }
+    // initFilterButtons expects the section name used in data-section ("project" or "note")
+    initFilterButtons(label);
 }
 
 function createTagLabel(name) {
@@ -254,6 +216,7 @@ function createCard(issue, label) {
     cardTagsAndLinks.style.display = 'flex';
     cardTagsAndLinks.style.gap = '15px';
     cardTagsAndLinks.style.alignItems = 'center';
+    cardTagsAndLinks.style.flexWrap = 'wrap';
 
     const cardTags = document.createElement('div');
     cardTags.className = 'card-tags';
@@ -294,6 +257,30 @@ function createCard(issue, label) {
     return card;
 }
 
+function showFallbackContent(container, label, fallbackItems, message) {
+    container.innerHTML = `
+        <p class="status-message">
+            ${message} <br>
+            <small>
+                Create issues with the "${label}" label in the
+                <a href="https://github.com/p0kks/p0kks.me" target="_blank">p0kks.me repository</a>.
+                ${label === 'project' ? '<br>Use labels: "code", "audio", "other" for categories, "live" for live projects.' : ''}
+            </small>
+        </p>
+        <div style="margin-top: 2rem;">
+            <p style="text-align: center; opacity: 0.7; margin-bottom: 1rem;">Example ${label}s:</p>
+            <div class="card-grid">
+            </div>
+        </div>
+    `;
+
+    const cardGrid = container.querySelector('.card-grid');
+    fallbackItems.forEach(item => {
+        const card = createCard(item, label);
+        cardGrid.appendChild(card);
+    });
+}
+
 function showFallbackNotes(container) {
     const fallbackNotes = [
         {
@@ -309,32 +296,8 @@ function showFallbackNotes(container) {
             labels: [{name: 'note'}, {name: 'insights'}]
         }
     ];
-
-    container.innerHTML = `
-        <p class="status-message">
-            No GitHub notes found. <br>
-            <small>
-                Create issues with the "note" label in the
-                <a href="https://github.com/p0kks/p0kks.me" target="_blank">p0kks.me repository</a>.
-            </small>
-        </p>
-        <div style="margin-top: 2rem;">
-            <p style="text-align: center; opacity: 0.7; margin-bottom: 1rem;">Example notes:</p>
-            <div class="card-grid">
-            </div>
-        </div>
-    `;
-
-    const cardGrid = container.querySelector('.card-grid');
-    fallbackNotes.forEach(note => {
-        const card = createCard(note, 'note');
-        cardGrid.appendChild(card);
-    });
-
+    showFallbackContent(container, 'note', fallbackNotes, 'No GitHub notes found.');
     initFilterButtons('note');
-}
-
-    });
 }
 
 function initFullscreenButtons() {
@@ -398,29 +361,7 @@ function showFallbackProjects(container) {
             created_at: new Date().toISOString(),
         }
     ];
-
-    container.innerHTML = `
-        <p class="status-message">
-            No GitHub projects found. <br>
-            <small>
-                Create issues with the "project" label in the
-                <a href="https://github.com/p0kks/p0kks.me" target="_blank">p0kks.me repository</a>.
-                <br>Use labels: "code", "audio", "other" for categories, "live" for live projects.
-            </small>
-        </p>
-        <div style="margin-top: 2rem;">
-            <p style="text-align: center; opacity: 0.7; margin-bottom: 1rem;">Example projects:</p>
-            <div class="card-grid">
-            </div>
-        </div>
-    `;
-
-    const cardGrid = container.querySelector('.card-grid');
-    fallbackProjects.forEach(project => {
-        const card = createCard(project, 'project');
-        cardGrid.appendChild(card);
-    });
-
+    showFallbackContent(container, 'project', fallbackProjects, 'No GitHub projects found.');
     initFilterButtons('project');
 }
 
@@ -451,32 +392,140 @@ function initFilterButtons(section) {
             });
         });
     });
+
+    // Immediately apply the active filter on initialization
+    const activeFilterButton = document.querySelector(`.filter-buttons button[data-section="${section}"].active`);
+    if (activeFilterButton) {
+        const filter = activeFilterButton.dataset.filter;
+        cards.forEach(card => {
+            let display = 'none';
+            if (section === 'project') {
+                display = (filter === 'all' || card.dataset.category === filter) ? 'block' : 'none';
+            } else if (section === 'note') {
+                display = (filter === 'note' || card.dataset.month == filter) ? 'block' : 'none';
+            }
+            card.style.display = display;
+        });
+    }
 }
+
+const galleryImages = [
+    { src: 'assets/images/gallery/01.jpg', alt: 'Gallery Image 1', description: 'Description 1' },
+    { src: 'assets/images/gallery/02.jpg', alt: 'Gallery Image 2', description: 'Description 2' },
+    { src: 'assets/images/gallery/03.jpg', alt: 'Gallery Image 3', description: 'Description 3' },
+    { src: 'assets/images/gallery/04.jpg', alt: 'Gallery Image 4', description: 'Description 4' },
+    { src: 'assets/images/gallery/05.jpg', alt: 'Gallery Image 5', description: 'Description 5' },
+    { src: 'assets/images/gallery/06.jpg', alt: 'Gallery Image 6', description: 'Description 6' },
+    { src: 'assets/images/gallery/07.jpg', alt: 'Gallery Image 7', description: 'Description 7' },
+    { src: 'assets/images/gallery/08.jpg', alt: 'Gallery Image 8', description: 'Description 8' },
+    { src: 'assets/images/gallery/09.jpg', alt: 'Gallery Image 9', description: 'Description 9' },
+    { src: 'assets/images/gallery/10.jpg', alt: 'Gallery Image 10', description: 'Description 10' },
+    { src: 'assets/images/gallery/11.jpg', alt: 'Gallery Image 11', description: 'Description 11' },
+    { src: 'assets/images/gallery/12.jpg', alt: 'Gallery Image 12', description: 'Description 12' }
+].map((img, index) => ({
+    ...img,
+    thumbnail: img.src.replace('.jpg', '-thumb.jpg')
+}));
 
 function initTimelineSlideshows() {
     const slideshows = document.querySelectorAll('.timeline-gallery');
-    slideshows.forEach((gallery, index) => {
+    
+    const createSlide = ({ src, alt, thumbnail, description }) => {
+        const template = document.createElement('template');
+        template.innerHTML = `
+            <div class="slide">
+                <img src="${thumbnail}" 
+                     data-full="${src}" 
+                     alt="${alt}" 
+                     loading="lazy">
+                <div class="slide-description">${description}</div>
+            </div>
+        `;
+        return template.content.firstElementChild;
+    };
+
+    const setupSlideshow = (gallery) => {
         const slideshow = gallery.querySelector('.slideshow');
-        const slides = gallery.querySelectorAll('.slide');
-        const prevButton = gallery.querySelector('.prev');
-        const nextButton = gallery.querySelector('.next');
+        const [prevButton, nextButton] = ['.prev', '.next'].map(sel => gallery.querySelector(sel));
         const description = gallery.querySelector('.timeline-description');
         let slideIndex = 0;
+        let slides;
+        let touchStartX = 0;
+        let touchEndX = 0;
 
-        function showSlide(n) {
+        if (gallery.closest('#gallery-dropdown')) {
+            slideshow.innerHTML = '';
+            const fragment = document.createDocumentFragment();
+            galleryImages.forEach(imageData => fragment.appendChild(createSlide(imageData)));
+            slideshow.appendChild(fragment);
+
+            // Create thumbnail navigation
+            const thumbNav = document.createElement('div');
+            thumbNav.className = 'thumbnail-nav';
+            galleryImages.forEach((_, index) => {
+                const thumb = document.createElement('button');
+                thumb.className = 'thumb-btn';
+                thumb.setAttribute('aria-label', `Go to slide ${index + 1}`);
+                thumb.addEventListener('click', () => showSlide(index));
+                thumbNav.appendChild(thumb);
+            });
+            gallery.appendChild(thumbNav);
+        }
+
+        slides = gallery.querySelectorAll('.slide');
+        const thumbs = gallery.querySelectorAll('.thumb-btn');
+        if (!slides.length) return;
+
+        const showSlide = (n) => {
             slideIndex = (n + slides.length) % slides.length;
             slideshow.style.transform = `translateX(-${slideIndex * 100}%)`;
             description.textContent = slides[slideIndex].querySelector('.slide-description').textContent;
-        }
 
-        prevButton.addEventListener('click', () => {
-            showSlide(slideIndex - 1);
+            // Update thumbnails
+            thumbs.forEach((thumb, i) => {
+                thumb.classList.toggle('active', i === slideIndex);
+                if (i === slideIndex) {
+                    thumb.setAttribute('aria-current', 'true');
+                } else {
+                    thumb.removeAttribute('aria-current');
+                }
+            });
+
+            // Lazy load adjacent images
+            [-1, 0, 1].forEach(offset => {
+                const index = (slideIndex + offset + slides.length) % slides.length;
+                const img = slides[index].querySelector('img');
+                if (img.src !== img.dataset.full) {
+                    img.src = img.dataset.full;
+                }
+            });
+        };
+
+        // Touch navigation
+        slideshow.addEventListener('touchstart', e => {
+            touchStartX = e.changedTouches[0].screenX;
+        }, { passive: true });
+
+        slideshow.addEventListener('touchend', e => {
+            touchEndX = e.changedTouches[0].screenX;
+            if (touchStartX - touchEndX > 50) {
+                showSlide(slideIndex + 1);
+            } else if (touchEndX - touchStartX > 50) {
+                showSlide(slideIndex - 1);
+            }
+        }, { passive: true });
+
+        // Keyboard navigation
+        gallery.addEventListener('keydown', e => {
+            if (e.key === 'ArrowLeft') showSlide(slideIndex - 1);
+            if (e.key === 'ArrowRight') showSlide(slideIndex + 1);
         });
 
-        nextButton.addEventListener('click', () => {
-            showSlide(slideIndex + 1);
-        });
+        prevButton?.addEventListener('click', () => showSlide(slideIndex - 1));
+        nextButton?.addEventListener('click', () => showSlide(slideIndex + 1));
 
-        showSlide(0); // Show the first slide initially
-    });
+        showSlide(0);
+    };
+
+    slideshows.forEach(setupSlideshow);
 }

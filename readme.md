@@ -1,35 +1,26 @@
 # p0kks.me
 
-**Live Site:** [p0kks.me](https://p0kks.me)
-
-A minimalist portfolio showcasing my code projects and audio work. Designed with a clean dark theme, responsive layout, and dynamic content powered by GitHub. Explore my interactive projects, filter through my creations, and discover weekly notes.
+Minimalist portfolio showcasing code projects and audio work. [Visit Live Site](https://p0kks.me)
 
 ## Features
-- **Sleek Design:** Clean, dark-themed interface for an optimal viewing experience.
-- **Responsive Layout:** Seamlessly adapts to any screen size.
-- **Dynamic Content:** Projects and notes loaded directly from GitHub issues.
-- **Interactive Filtering:** Easily sort projects and notes by category or month.
-- **Smooth Navigation:** Intuitive and fluid user experience.
+- Clean dark theme interface
+- Dynamic content from GitHub Issues
+- Interactive filtering by category/month
+- Timeline slideshows & gallery
+- Responsive design
 
-## Tech Stack
-- **HTML5:** Semantic and accessible markup.
-- **CSS3:** Modern styling with custom properties, Flexbox, and Grid for responsive design.
-- **Vanilla JavaScript:** Efficient, dependency-free interactivity and GitHub API integration (ES6+).
-- **GitHub Pages:** Reliable hosting with custom domain (CNAME).
+## Stack
+- HTML5/CSS3
+- Vanilla JavaScript (ES6+)
+- GitHub Pages
+- GitHub Actions for deployment
 
-## How to View
-Simply visit the [live site](https://p0kks.me) to explore the portfolio.
+## Local Development
+1. Clone the repository
+2. Open `index.html` in your browser
+3. No build step required
 
 ## License
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+MIT License - See [LICENSE](LICENSE)
 
-**Built with ❤️ by p0kks**
-
-## Deploy with GitHub Actions
-
-This repository includes a GitHub Actions workflow that publishes the repository contents to the `gh-pages` branch when changes are pushed to `main`. The workflow uses a standard action to commit the built static files (no build step required for this plain static site).
-
-To enable deployment:
-
-- Ensure the repository `Settings > Pages` is set to deploy from the `gh-pages` branch.
-- If you want to deploy under a custom domain, ensure `CNAME` is present at the repository root (already included in this repo).
+Built by [p0kks](https://github.com/p0kks)
