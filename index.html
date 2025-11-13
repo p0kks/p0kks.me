@@ -90,7 +90,7 @@
             border-radius: 12px;
             text-decoration: none;
             color: #e8e8e8;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            transition: all 0.3s ease-in-out;
             position: relative;
             overflow: hidden;
         }
@@ -105,16 +105,11 @@
         }
 
         .card-header .arrow {
-            transition: transform 0.3s ease;
+            transition: transform 0.3s ease-in-out;
             color: #666;
         }
 
-        .card-header:hover .arrow,
-        .card-header.open .arrow {
-            color: #e8e8e8;
-        }
-
-        .card-header.open .arrow {
+        .card.open .card-header .arrow {
             transform: rotate(90deg);
         }
 
@@ -138,7 +133,13 @@
 
         .card-content {
             padding: 0 28px 20px;
-            display: none;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease-in-out; /* Added transition */
+        }
+
+        .card.open .card-content {
+            max-height: 1000px; /* Fixed max-height for open state */
         }
 
         .issues-container {
@@ -148,38 +149,65 @@
         }
 
         .issue-card {
-            background: rgba(0, 0, 0, 0.2);
-            border-radius: 8px;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            transition: all 0.3s ease;
+            background: transparent;
+            border: none;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 0;
+            padding: 16px 0;
             cursor: pointer;
+            transition: all 0.3s ease-in-out;
         }
 
         .issue-card:hover {
-            background: rgba(0, 0, 0, 0.4);
-            border-color: rgba(255, 255, 255, 0.2);
+            background: transparent;
         }
 
         .issue-header {
-            padding: 16px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0;
+        }
+
+        .issue-title-container {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .issue-toggle-icon {
+            transition: transform 0.3s ease-in-out;
+        }
+
+        .issue-card.open .issue-toggle-icon {
+            transform: rotate(90deg);
         }
 
         .issue-title {
             font-weight: 500;
-            margin-bottom: 8px;
+            text-align: left;
         }
 
         .issue-content {
-            padding: 0 16px 16px;
-            display: none;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease-in-out; /* Added transition */
             color: #aaa;
             font-size: 14px;
             line-height: 1.6;
+            text-align: left;
+            padding-top: 12px;
+        }
+
+        .issue-card.open .issue-content {
+            max-height: 1000px; /* Fixed max-height for open state */
         }
 
         .issue-footer {
-            padding: 0 16px 12px;
-            text-align: right;
+            padding: 12px 0 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
             font-size: 12px;
             color: #666;
         }
@@ -187,7 +215,6 @@
         .issue-labels {
             display: flex;
             gap: 8px;
-            margin-top: 12px;
         }
 
         .issue-label {
@@ -215,7 +242,7 @@
             border-radius: 50%;
             color: #999;
             text-decoration: none;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            transition: all 0.3s ease-in-out;
             font-size: 18px;
         }
 
@@ -405,28 +432,28 @@
         init();
         animate();
 
+        let openCard = null;
+        const issuesCache = {};
+
         function toggleCard(event) {
             const header = event.currentTarget;
             const card = header.parentElement;
+            
+            if (openCard && openCard !== card) {
+                openCard.classList.remove('open');
+            }
+
+            card.classList.toggle('open');
             const content = card.querySelector('.card-content');
-            const isOpen = content.style.display === 'block';
-
-            // Close all cards and reset arrows
-            document.querySelectorAll('.card-content').forEach(c => c.style.display = 'none');
-            document.querySelectorAll('.card-header').forEach(h => h.classList.remove('open'));
-
-            // Open or close the clicked card
-            if (!isOpen) {
-                content.style.display = 'block';
-                header.classList.add('open');
+            if (card.classList.contains('open')) {
+                openCard = card;
                 const repo = card.dataset.repo;
                 const labels = card.dataset.labels;
                 if (repo && labels && content.querySelector('.issues-container')) {
                     fetchIssues(repo, labels, content.querySelector('.issues-container'));
                 }
             } else {
-                content.style.display = 'none';
-                header.classList.remove('open');
+                openCard = null;
             }
         }
 
@@ -435,11 +462,18 @@
         });
 
         async function fetchIssues(repo, labels, container) {
+            const cacheKey = `${repo}-${labels}`;
+            if (issuesCache[cacheKey]) {
+                renderIssues(issuesCache[cacheKey], container);
+                return;
+            }
+
             container.innerHTML = '<p>Loading...</p>';
             try {
                 // Note: GitHub API has a rate limit for unauthenticated requests.
                 const response = await fetch(`https://api.github.com/repos/${repo}/issues?labels=${labels}`);
                 const issues = await response.json();
+                issuesCache[cacheKey] = issues;
                 renderIssues(issues, container);
             } catch (error) {
                 console.error('Error fetching issues:', error);
@@ -461,10 +495,27 @@
                 const issueHeader = document.createElement('div');
                 issueHeader.className = 'issue-header';
 
+                const titleContainer = document.createElement('div');
+                titleContainer.className = 'issue-title-container';
+
+                const toggleIcon = document.createElement('span');
+                toggleIcon.className = 'issue-toggle-icon';
+                toggleIcon.innerHTML = '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>';
+
                 const title = document.createElement('div');
                 title.className = 'issue-title';
                 title.textContent = issue.title;
 
+                titleContainer.appendChild(toggleIcon);
+                titleContainer.appendChild(title);
+
+                const issueContent = document.createElement('div');
+                issueContent.className = 'issue-content';
+                issueContent.textContent = issue.body;
+
+                const issueFooter = document.createElement('div');
+                issueFooter.className = 'issue-footer';
+                
                 const labelsContainer = document.createElement('div');
                 labelsContainer.className = 'issue-labels';
 
@@ -476,26 +527,20 @@
                     labelsContainer.appendChild(labelEl);
                 });
 
-                const issueContent = document.createElement('div');
-                issueContent.className = 'issue-content';
-                issueContent.textContent = issue.body;
-
-                const issueFooter = document.createElement('div');
-                issueFooter.className = 'issue-footer';
                 const createdAt = new Date(issue.created_at);
-                issueFooter.textContent = `Published on ${createdAt.toLocaleDateString()}`;
+                const dateSpan = document.createElement('span');
+                dateSpan.textContent = `Published on ${createdAt.toLocaleDateString()}`;
 
-                issueHeader.appendChild(title);
-                issueHeader.appendChild(labelsContainer);
+                issueHeader.appendChild(titleContainer);
                 issueCard.appendChild(issueHeader);
                 issueCard.appendChild(issueContent);
+                issueFooter.appendChild(labelsContainer);
+                issueFooter.appendChild(dateSpan);
                 issueCard.appendChild(issueFooter);
                 container.appendChild(issueCard);
 
                 issueHeader.addEventListener('click', () => {
-                    const content = issueCard.querySelector('.issue-content');
-                    const isOpen = content.style.display === 'block';
-                    content.style.display = isOpen ? 'none' : 'block';
+                    issueCard.classList.toggle('open');
                 });
             });
         }
