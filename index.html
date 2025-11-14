@@ -7,7 +7,6 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Roboto+Flex:opsz,wght@8..144,300;8..144,400;8..144,500;8..144,600&display=swap" rel="stylesheet">
-    <link rel="icon" type="image/png" href="site-favicon.png">
     <style>
         * {
             margin: 0;
@@ -20,10 +19,7 @@
             background: #0a0a0a;
             color: #e8e8e8;
             min-height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            overflow: hidden;
+            overflow-x: hidden;
         }
 
         #particles {
@@ -33,207 +29,207 @@
             width: 100%;
             height: 100%;
             z-index: 0;
-        }
-
-        .particle {
-            position: absolute;
-            width: 9px;
-            height: 9px;
-            background: rgba(255, 255, 255, 0.15);
-            border-radius: 100%;
             pointer-events: none;
         }
 
-        .container {
-            position: relative;
-            z-index: 1;
-            width: 100%;
-            max-width: 360px;
-            padding: 0px;
-            text-align: center;
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 100;
+            background: rgba(10, 10, 10, 0.85);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.06);
         }
 
-        .profile {
-            margin-bottom: 24px;
+        .nav-container {
+            max-width: 680px;
+            margin: 0 auto;
+            padding: 0 24px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            height: 64px;
+        }
+
+        .nav-logo {
+            /* font-size: 18px; */ /* Removed as it's an image now */
+            /* font-weight: 600; */ /* Removed */
+            /* color: #e8e8e8; */ /* Removed */
+            text-decoration: none;
+            /* letter-spacing: 0.5px; */ /* Removed */
+            display: flex; /* To center the image if needed */
+            align-items: center;
+        }
+
+        .nav-logo img {
+            height: 30px; /* Set a default height for the logo */
+            width: auto;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 8px;
+            align-items: center;
+        }
+
+        .nav-item {
+            position: relative;
+        }
+
+        .nav-link {
+            padding: 8px 16px;
+            color: #999;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 500;
+            border-radius: 8px;
+            transition: all 0.2s ease;
+            display: block;
+        }
+
+        .nav-link:hover {
+            color: #e8e8e8;
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .nav-link.active {
+            color: #e8e8e8;
+            background: rgba(255, 255, 255, 0.08);
+        }
+
+        .dropdown {
+            position: relative;
+        }
+
+        .dropdown-toggle {
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .dropdown-icon {
+            transition: transform 0.2s ease;
+            font-size: 10px;
+        }
+
+        .dropdown.open .dropdown-icon {
+            transform: rotate(180deg);
+        }
+
+        .dropdown-menu {
+            position: absolute;
+            top: calc(100% + 8px);
+            left: 0;
+            background: rgba(18, 18, 18, 0.95);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 12px;
+            padding: 8px;
+            min-width: 160px;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(-8px);
+            transition: all 0.2s ease;
+        }
+
+        .dropdown.open .dropdown-menu {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        .dropdown-item {
+            padding: 10px 14px;
+            color: #999;
+            text-decoration: none;
+            font-size: 14px;
+            display: block;
+            border-radius: 8px;
+            transition: all 0.2s ease;
+        }
+
+        .dropdown-item:hover {
+            color: #e8e8e8;
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        /* Main Content */
+        main {
+            position: relative;
+            z-index: 1;
+            padding-top: 64px;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 60px 24px;
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+            animation: fadeIn 0.4s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(12px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Home Section */
+        .hero {
+            text-align: center;
+            padding: 40px 0 60px;
         }
 
         .avatar {
-            width: 50%;
-            height: auto;
-            margin: 0 auto 20px;
-            background: none;
-            border-radius: 0;
+            width: 140px;
+            height: 140px;
+            margin: 0 auto 28px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.03);
+            border: 2px solid rgba(255, 255, 255, 0.08);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 48px;
+            font-weight: 600;
         }
 
         h1 {
-            font-size: 24px;
+            font-size: 36px;
             font-weight: 600;
-            margin-bottom: 8px;
-            letter-spacing: 0.3px;
+            margin-bottom: 12px;
+            letter-spacing: 0.5px;
         }
 
         .bio {
-            font-size: 14px;
+            font-size: 16px;
             color: #999;
-            line-height: 1.5;
-        }
-
-        .links {
-            display: flex;
-            flex-direction: column;
-            gap: 16px;
-        }
-
-        .card {
-            background: rgba(255, 255, 255, 0.03);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            border-radius: 12px;
-            text-decoration: none;
-            color: #e8e8e8;
-            transition: all 0.3s ease-in-out;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .card-header {
-            padding: 20px 28px;
-            cursor: pointer;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            text-align: left;
-        }
-
-        .card-header .arrow {
-            transition: transform 0.3s ease-in-out;
-            color: #666;
-        }
-
-        .card.open .card-header .arrow {
-            transform: rotate(90deg);
-        }
-
-        .card:hover {
-            background: rgba(255, 255, 255, 0.06);
-            border-color: rgba(255, 255, 255, 0.15);
-        }
-
-        .link-title {
-            display: block;
-            margin-bottom: 4px;
-            font-size: 15px;
-            font-weight: 500;
-        }
-
-        .link-subtitle {
-            font-size: 13px;
-            color: #666;
-            font-weight: 400;
-        }
-
-        .card-content {
-            padding: 0 28px 20px;
-            max-height: 0;
-            overflow: hidden;
-            transition: max-height 0.3s ease-in-out; /* Added transition */
-        }
-
-        .card.open .card-content {
-            max-height: 1000px; /* Fixed max-height for open state */
-        }
-
-        .issues-container {
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-        }
-
-        .issue-card {
-            background: transparent;
-            border: none;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 0;
-            padding: 16px 0;
-            cursor: pointer;
-            transition: all 0.3s ease-in-out;
-        }
-
-        .issue-card:hover {
-            background: transparent;
-        }
-
-        .issue-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 0;
-        }
-
-        .issue-title-container {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-
-        .issue-toggle-icon {
-            transition: transform 0.3s ease-in-out;
-        }
-
-        .issue-card.open .issue-toggle-icon {
-            transform: rotate(90deg);
-        }
-
-        .issue-title {
-            font-weight: 500;
-            text-align: left;
-        }
-
-        .issue-content {
-            max-height: 0;
-            overflow: hidden;
-            transition: max-height 0.3s ease-in-out; /* Added transition */
-            color: #aaa;
-            font-size: 14px;
             line-height: 1.6;
-            text-align: left;
-            padding-top: 12px;
-        }
-
-        .issue-card.open .issue-content {
-            max-height: 1000px; /* Fixed max-height for open state */
-        }
-
-        .issue-footer {
-            padding: 12px 0 0;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            font-size: 12px;
-            color: #666;
-        }
-
-        .issue-labels {
-            display: flex;
-            gap: 8px;
-        }
-
-        .issue-label {
-            font-size: 10px;
-            padding: 2px 0;
-            font-weight: 500;
+            max-width: 500px;
+            margin: 0 auto 40px;
         }
 
         .socials {
             display: flex;
             justify-content: center;
-            gap: 20px;
-            margin-top: 32px;
-            margin-bottom: 32px;
+            gap: 16px;
+            margin-bottom: 60px;
         }
 
         .social-link {
-            width: 44px;
-            height: 44px;
+            width: 48px;
+            height: 48px;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -242,32 +238,187 @@
             border-radius: 50%;
             color: #999;
             text-decoration: none;
-            transition: all 0.3s ease-in-out;
-            font-size: 18px;
+            transition: all 0.3s ease;
         }
 
         .social-link:hover {
-            background: rgba(255, 255, 255, 0.06);
+            background: rgba(255, 255, 255, 0.08);
             border-color: rgba(255, 255, 255, 0.15);
             color: #e8e8e8;
             transform: translateY(-2px);
         }
 
+        .about-section {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            border-radius: 16px;
+            padding: 32px;
+            line-height: 1.8;
+            color: #aaa;
+            font-size: 15px;
+        }
+
+        .about-section p {
+            margin-bottom: 16px;
+        }
+
+        .about-section p:last-child {
+            margin-bottom: 0;
+        }
+
+        /* Projects Grid */
+        .projects-grid {
+            display: grid;
+            gap: 24px;
+        }
+
+        .project-card {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            border-radius: 16px;
+            padding: 28px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .project-card:hover {
+            background: rgba(255, 255, 255, 0.04);
+            border-color: rgba(255, 255, 255, 0.12);
+            transform: translateY(-2px);
+        }
+
+        .project-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 16px;
+        }
+
+        .project-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: #e8e8e8;
+            margin-bottom: 8px;
+        }
+
+        .project-meta {
+            font-size: 12px;
+            color: #666;
+            display: flex;
+            gap: 16px;
+            align-items: center;
+        }
+
+        .project-body {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+        }
+
+        .project-card.expanded .project-body {
+            max-height: 1000px;
+            margin-top: 16px;
+        }
+
+        .project-description {
+            color: #aaa;
+            line-height: 1.7;
+            font-size: 14px;
+            margin-bottom: 16px;
+        }
+
+        .project-labels {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .label {
+            font-size: 11px;
+            padding: 4px 10px;
+            border-radius: 6px;
+            background: rgba(255, 255, 255, 0.05);
+            font-weight: 500;
+        }
+
+        .expand-icon {
+            transition: transform 0.3s ease;
+            color: #666;
+        }
+
+        .project-card.expanded .expand-icon {
+            transform: rotate(180deg);
+        }
+
+        /* Loading State */
+        .loading {
+            text-align: center;
+            padding: 60px 20px;
+            color: #666;
+        }
+
+        .spinner {
+            width: 40px;
+            height: 40px;
+            margin: 0 auto 16px;
+            border: 3px solid rgba(255, 255, 255, 0.1);
+            border-top-color: #666;
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 60px 20px;
+            color: #666;
+        }
+
+        .empty-icon {
+            font-size: 48px;
+            margin-bottom: 16px;
+            opacity: 0.3;
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 40px 24px;
+            font-size: 13px;
+            color: #666;
+            border-top: 1px solid rgba(255, 255, 255, 0.06);
+            margin-top: 80px;
+        }
+
+        /* Responsive */
         @media (max-width: 768px) {
-            .container {
-                padding: 32px 20px;
+            .nav-container {
+                padding: 0 16px;
+                height: 56px;
+            }
+
+            .nav-links {
+                gap: 4px;
+            }
+
+            .nav-link {
+                padding: 6px 12px;
+                font-size: 13px;
             }
 
             h1 {
-                font-size: 22px;
+                font-size: 28px;
             }
 
-            .card-header {
-                padding: 18px 24px;
+            .container {
+                padding: 40px 16px;
             }
 
-            .card-content {
-                padding: 0 24px 18px;
+            .about-section {
+                padding: 24px;
             }
         }
     </style>
@@ -275,118 +426,126 @@
 <body>
     <canvas id="particles"></canvas>
     
-    <div class="container">
-        <div class="profile">
-            <img src="site-logo.png" alt="p0kks logo" class="avatar">
-            <h1>P0KKS</h1>
-            <p class="bio">Creative developer & audio engineer</p>
-        </div>
-
-        <div class="socials">
-            <a href="https://twitter.com/p0kks" class="social-link" target="_blank" title="Twitter">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M4 4l11.733 16h4.267l-11.733 -16z"/>
-                    <path d="M4 20l6.768 -6.768m2.46 -2.46l6.772 -6.772"/>
-                </svg>
+    <nav>
+        <div class="nav-container">
+            <a href="#home" class="nav-logo">
+                <img src="site-logo.png" alt="p0kks.me logo" style="height: 30px;">
             </a>
-            <a href="https://github.com/p0kks" class="social-link" target="_blank" title="GitHub">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/>
-                </svg>
-            </a>
-            <a href="https://linkedin.com/in/p0kks" class="social-link" target="_blank" title="LinkedIn">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/>
-                    <rect x="2" y="9" width="4" height="12"/>
-                    <circle cx="4" cy="4" r="2"/>
-                </svg>
-            </a>
-            <a href="mailto:p0kks@proton.me" class="social-link" title="Email">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
-                    <polyline points="22,6 12,13 2,6"/>
-                </svg>
-            </a>
-        </div>
-
-        <div class="links">
-            <div class="card">
-                <div class="card-header">
-                    <div>
-                        <span class="link-title">About</span>
-                        <span class="link-subtitle">Read about</span>
+            <div class="nav-links">
+                <div class="nav-item">
+                    <a href="#home" class="nav-link active" data-tab="home">Home</a>
+                </div>
+                <div class="nav-item dropdown">
+                    <div class="nav-link dropdown-toggle">
+                        Projects
+                        <span class="dropdown-icon">▼</span>
                     </div>
-                    <span class="arrow">▶</span>
-                </div>
-                <div id="about-content" class="card-content" style="display: none; text-align: left; background: rgba(255, 255, 255, 0.02); border: 1px solid rgba(255, 255, 255, 0.06); padding: 24px; border-radius: 12px; margin-bottom: 16px; line-height: 1.7; font-size: 14px; color: #aaa;">
-                    <p style="margin-bottom: 12px;">Brief introduction about yourself, your work, and what drives you creatively.</p>
-                    <p>You can customize this section to tell your story, share your background, or highlight what makes your work unique.</p>
-                </div>
-            </div>
-
-            <div class="card" data-repo="p0kks/p0kks.me" data-labels="audio">
-                <div class="card-header">
-                    <div>
-                        <span class="link-title">Audio Work</span>
-                        <span class="link-subtitle">Productions, mixes & sound design</span>
+                    <div class="dropdown-menu">
+                        <a href="#projects-audio" class="dropdown-item" data-tab="projects-audio">Audio</a>
+                        <a href="#projects-code" class="dropdown-item" data-tab="projects-code">Code</a>
                     </div>
-                    <span class="arrow">▶</span>
                 </div>
-                <div class="card-content">
-                    <div class="issues-container"></div>
-                </div>
-            </div>
-
-            <div class="card" data-repo="p0kks/p0kks.me" data-labels="code">
-                <div class="card-header">
-                    <div>
-                        <span class="link-title">Code Work</span>
-                        <span class="link-subtitle">Projects, experiments & tools</span>
-                    </div>
-                    <span class="arrow">▶</span>
-                </div>
-                <div class="card-content">
-                    <div class="issues-container"></div>
-                </div>
-            </div>
-
-            <div class="card" data-repo="p0kks/p0kks.me" data-labels="note">
-                <div class="card-header">
-                    <div>
-                        <span class="link-title">Notes</span>
-                        <span class="link-subtitle">Thoughts, ideas & observations</span>
-                    </div>
-                    <span class="arrow">▶</span>
-                </div>
-                <div class="card-content">
-                    <div class="issues-container"></div>
+                <div class="nav-item">
+                    <a href="#notes" class="nav-link" data-tab="notes">Notes</a>
                 </div>
             </div>
         </div>
+    </nav>
 
-        <footer style="text-align: center; margin-top: 40px; margin-bottom: 20px; font-size: 12px; color: #666;">
+    <main>
+        <div class="container">
+            <!-- Home Tab -->
+            <div id="home" class="tab-content active">
+                <div class="hero">
+                    <div class="avatar">PK</div>
+                    <h1>P0KKS</h1>
+                    <p class="bio">Creative developer & audio engineer crafting digital experiences and sonic landscapes</p>
+                    
+                    <div class="socials">
+                        <a href="https://twitter.com/p0kks" class="social-link" target="_blank" title="Twitter">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M4 4l11.733 16h4.267l-11.733 -16z"/>
+                                <path d="M4 20l6.768 -6.768m2.46 -2.46l6.772 -6.772"/>
+                            </svg>
+                        </a>
+                        <a href="https://github.com/p0kks" class="social-link" target="_blank" title="GitHub">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/>
+                            </svg>
+                        </a>
+                        <a href="https://linkedin.com/in/p0kks" class="social-link" target="_blank" title="LinkedIn">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/>
+                                <rect x="2" y="9" width="4" height="12"/>
+                                <circle cx="4" cy="4" r="2"/>
+                            </svg>
+                        </a>
+                        <a href="mailto:p0kks@proton.me" class="social-link" title="Email">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+                                <polyline points="22,6 12,13 2,6"/>
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="about-section">
+                    <p>Hey there! I'm a creative developer and audio engineer focused on building meaningful digital experiences and crafting immersive soundscapes.</p>
+                    <p>My work sits at the intersection of code and creativity, where technical precision meets artistic expression. Whether I'm developing interactive web applications or producing audio content, I'm driven by the challenge of turning ideas into reality.</p>
+                    <p>This space is a collection of my projects, experiments, and thoughts. Feel free to explore and reach out if something resonates with you.</p>
+                </div>
+            </div>
+
+            <!-- Projects Audio Tab -->
+            <div id="projects-audio" class="tab-content">
+                <h1 style="margin-bottom: 32px;">Audio Work</h1>
+                <div class="projects-grid" data-projects="audio"></div>
+            </div>
+
+            <!-- Projects Code Tab -->
+            <div id="projects-code" class="tab-content">
+                <h1 style="margin-bottom: 32px;">Code Work</h1>
+                <div class="projects-grid" data-projects="code"></div>
+            </div>
+
+            <!-- Notes Tab -->
+            <div id="notes" class="tab-content">
+                <h1 style="margin-bottom: 32px;">Notes</h1>
+                <div class="projects-grid" data-projects="note"></div>
+            </div>
+        </div>
+
+        <footer>
             &copy; 2025 p0kks.me
         </footer>
-    </div>
+    </main>
 
     <script>
+        // Particle Animation
         const canvas = document.getElementById('particles');
         const ctx = canvas.getContext('2d');
         
-        canvas.width = window.innerWidth;
-        canvas.height = window.innerHeight;
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+        resizeCanvas();
 
         const particles = [];
-        const particleCount = 50;
+        const particleCount = 60;
 
         class Particle {
             constructor() {
+                this.reset();
+            }
+
+            reset() {
                 this.x = Math.random() * canvas.width;
                 this.y = Math.random() * canvas.height;
-                this.size = Math.random() * 2 + 1;
-                this.speedX = (Math.random() - 0.5) * 0.3;
-                this.speedY = (Math.random() - 0.5) * 0.3;
-                this.opacity = Math.random() * 0.15 + 0.05;
+                this.size = Math.random() * 2 + 0.5;
+                this.speedX = (Math.random() - 0.5) * 0.4;
+                this.speedY = (Math.random() - 0.5) * 0.4;
+                this.opacity = Math.random() * 0.2 + 0.05;
             }
 
             update() {
@@ -407,140 +566,197 @@
             }
         }
 
-        function init() {
-            for (let i = 0; i < particleCount; i++) {
-                particles.push(new Particle());
-            }
+        for (let i = 0; i < particleCount; i++) {
+            particles.push(new Particle());
         }
 
         function animate() {
             ctx.clearRect(0, 0, canvas.width, canvas.height);
-            
             particles.forEach(particle => {
                 particle.update();
                 particle.draw();
             });
-
             requestAnimationFrame(animate);
         }
 
-        window.addEventListener('resize', () => {
-            canvas.width = window.innerWidth;
-            canvas.height = window.innerHeight;
-        });
-
-        init();
+        window.addEventListener('resize', resizeCanvas);
         animate();
 
-        let openCard = null;
+        // Navigation & Routing
+        const tabs = {
+            'home': document.getElementById('home'),
+            'projects-audio': document.getElementById('projects-audio'),
+            'projects-code': document.getElementById('projects-code'),
+            'notes': document.getElementById('notes')
+        };
+
+        let currentTab = 'home';
         const issuesCache = {};
 
-        function toggleCard(event) {
-            const header = event.currentTarget;
-            const card = header.parentElement;
+        function switchTab(tabName) {
+            Object.values(tabs).forEach(tab => tab.classList.remove('active'));
+            document.querySelectorAll('.nav-link').forEach(link => link.classList.remove('active'));
             
-            if (openCard && openCard !== card) {
-                openCard.classList.remove('open');
-            }
-
-            card.classList.toggle('open');
-            const content = card.querySelector('.card-content');
-            if (card.classList.contains('open')) {
-                openCard = card;
-                const repo = card.dataset.repo;
-                const labels = card.dataset.labels;
-                if (repo && labels && content.querySelector('.issues-container')) {
-                    fetchIssues(repo, labels, content.querySelector('.issues-container'));
+            if (tabs[tabName]) {
+                tabs[tabName].classList.add('active');
+                currentTab = tabName;
+                
+                const activeLink = document.querySelector(`[data-tab="${tabName}"]`);
+                if (activeLink && activeLink.classList.contains('nav-link')) {
+                    activeLink.classList.add('active');
                 }
-            } else {
-                openCard = null;
+
+                if (tabName !== 'home') {
+                    loadProjects(tabName);
+                }
             }
         }
 
-        document.querySelectorAll('.card-header').forEach(header => {
-            header.addEventListener('click', toggleCard);
+        // Navigation Links
+        document.querySelectorAll('[data-tab]').forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                const tabName = link.dataset.tab;
+                window.location.hash = tabName;
+                switchTab(tabName);
+                
+                const dropdown = link.closest('.dropdown');
+                if (dropdown) {
+                    dropdown.classList.remove('open');
+                }
+            });
         });
 
-        async function fetchIssues(repo, labels, container) {
-            const cacheKey = `${repo}-${labels}`;
+        // Dropdown Toggle
+        document.querySelectorAll('.dropdown-toggle').forEach(toggle => {
+            toggle.addEventListener('click', (e) => {
+                e.stopPropagation();
+                const dropdown = toggle.closest('.dropdown');
+                dropdown.classList.toggle('open');
+            });
+        });
+
+        document.addEventListener('click', (e) => {
+            if (!e.target.closest('.dropdown')) {
+                document.querySelectorAll('.dropdown').forEach(d => d.classList.remove('open'));
+            }
+        });
+
+        // Hash Navigation
+        window.addEventListener('hashchange', () => {
+            const hash = window.location.hash.slice(1);
+            if (hash && tabs[hash]) {
+                switchTab(hash);
+            }
+        });
+
+        if (window.location.hash) {
+            const hash = window.location.hash.slice(1);
+            if (tabs[hash]) {
+                switchTab(hash);
+            }
+        }
+
+        // GitHub Issues Fetching
+        async function loadProjects(tabName) {
+            let label = '';
+            if (tabName === 'projects-audio') label = 'audio';
+            else if (tabName === 'projects-code') label = 'code';
+            else if (tabName === 'notes') label = 'note';
+
+            if (!label) return;
+
+            const container = document.querySelector(`[data-projects="${label}"]`);
+            if (!container) return;
+
+            const cacheKey = label;
             if (issuesCache[cacheKey]) {
-                renderIssues(issuesCache[cacheKey], container);
+                renderProjects(issuesCache[cacheKey], container);
                 return;
             }
 
-            container.innerHTML = '<p>Loading...</p>';
+            container.innerHTML = '<div class="loading"><div class="spinner"></div><p>Loading...</p></div>';
+
             try {
-                // Note: GitHub API has a rate limit for unauthenticated requests.
-                const response = await fetch(`https://api.github.com/repos/${repo}/issues?labels=${labels}`);
+                const response = await fetch(`https://api.github.com/repos/p0kks/p0kks.me/issues?labels=${label}&state=open`);
+                
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                
                 const issues = await response.json();
                 issuesCache[cacheKey] = issues;
-                renderIssues(issues, container);
+                renderProjects(issues, container);
             } catch (error) {
                 console.error('Error fetching issues:', error);
-                container.innerHTML = '<p>Error loading issues.</p>';
+                container.innerHTML = `<div class="empty-state"><div class="empty-icon">⚠</div><p>Error loading content. Please try again later.</p></div>`;
             }
         }
 
-        function renderIssues(issues, container) {
+        function renderProjects(issues, container) {
             container.innerHTML = '';
-            if (issues.length === 0) {
-                container.innerHTML = '<p>No issues found.</p>';
+            
+            if (!issues || issues.length === 0) {
+                container.innerHTML = '<div class="empty-state"><div class="empty-icon">📭</div><p>No items found yet.</p></div>';
                 return;
             }
 
             issues.forEach(issue => {
-                const issueCard = document.createElement('div');
-                issueCard.className = 'issue-card';
+                const card = document.createElement('div');
+                card.className = 'project-card';
 
-                const issueHeader = document.createElement('div');
-                issueHeader.className = 'issue-header';
+                const header = document.createElement('div');
+                header.className = 'project-header';
 
-                const titleContainer = document.createElement('div');
-                titleContainer.className = 'issue-title-container';
-
-                const toggleIcon = document.createElement('span');
-                toggleIcon.className = 'issue-toggle-icon';
-                toggleIcon.innerHTML = '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>';
-
+                const titleSection = document.createElement('div');
                 const title = document.createElement('div');
-                title.className = 'issue-title';
+                title.className = 'project-title';
                 title.textContent = issue.title;
 
-                titleContainer.appendChild(toggleIcon);
-                titleContainer.appendChild(title);
+                const meta = document.createElement('div');
+                meta.className = 'project-meta';
+                const date = new Date(issue.created_at);
+                meta.innerHTML = `<span>${date.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' })}</span>`;
 
-                const issueContent = document.createElement('div');
-                issueContent.className = 'issue-content';
-                issueContent.textContent = issue.body;
+                titleSection.appendChild(title);
+                titleSection.appendChild(meta);
 
-                const issueFooter = document.createElement('div');
-                issueFooter.className = 'issue-footer';
-                
-                const labelsContainer = document.createElement('div');
-                labelsContainer.className = 'issue-labels';
+                const expandIcon = document.createElement('div');
+                expandIcon.className = 'expand-icon';
+                expandIcon.innerHTML = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"></polyline></svg>';
 
-                issue.labels.forEach(label => {
-                    const labelEl = document.createElement('span');
-                    labelEl.className = 'issue-label';
-                    labelEl.textContent = label.name;
-                    labelEl.style.color = `#${label.color}`;
-                    labelsContainer.appendChild(labelEl);
-                });
+                header.appendChild(titleSection);
+                header.appendChild(expandIcon);
 
-                const createdAt = new Date(issue.created_at);
-                const dateSpan = document.createElement('span');
-                dateSpan.textContent = `Published on ${createdAt.toLocaleDateString()}`;
+                const body = document.createElement('div');
+                body.className = 'project-body';
 
-                issueHeader.appendChild(titleContainer);
-                issueCard.appendChild(issueHeader);
-                issueCard.appendChild(issueContent);
-                issueFooter.appendChild(labelsContainer);
-                issueFooter.appendChild(dateSpan);
-                issueCard.appendChild(issueFooter);
-                container.appendChild(issueCard);
+                if (issue.body) {
+                    const description = document.createElement('div');
+                    description.className = 'project-description';
+                    description.textContent = issue.body;
+                    body.appendChild(description);
+                }
 
-                issueHeader.addEventListener('click', () => {
-                    issueCard.classList.toggle('open');
+                if (issue.labels && issue.labels.length > 0) {
+                    const labelsContainer = document.createElement('div');
+                    labelsContainer.className = 'project-labels';
+                    issue.labels.forEach(label => {
+                        const labelEl = document.createElement('span');
+                        labelEl.className = 'label';
+                        labelEl.textContent = label.name;
+                        labelEl.style.color = `#${label.color}`;
+                        labelsContainer.appendChild(labelEl);
+                    });
+                    body.appendChild(labelsContainer);
+                }
+
+                card.appendChild(header);
+                card.appendChild(body);
+                container.appendChild(card);
+
+                card.addEventListener('click', () => {
+                    card.classList.toggle('expanded');
                 });
             });
         }
