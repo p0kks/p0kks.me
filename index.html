@@ -3,116 +3,145 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="p0kks - Minimal Link Tree">
+    <meta name="description" content="p0kks — Minimal personal site for projects, audio experiments, and journal notes.">
     <title>p0kks</title>
     <link rel="icon" type="image/png" href="assets/images/p0kks-me-optimized.png">
-    
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
-    
+
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <canvas id="matrix-bg"></canvas>
-    
+    <canvas id="matrix-bg" aria-hidden="true"></canvas>
+
     <main class="container">
-        <!-- Profile Section -->
-        <section class="profile">
-            <img src="assets/images/p0kks-me-optimized.png" alt="p0kks Profile Picture" class="profile-pfp">
-            <h1 class="profile-name">p<span>0</span>kks</h1>
-            <p class="profile-bio">"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."</p>
+        <section class="profile" aria-labelledby="profile-name">
+            <img src="assets/images/p0kks-me-optimized.png" alt="Portrait of p0kks" class="profile-pfp" width="100" height="100" loading="eager" decoding="async">
+            <h1 id="profile-name" class="profile-name">p<span>0</span>kks</h1>
+            <p class="profile-bio">Building minimal digital experiences across software and sound.</p>
         </section>
 
-        <!-- Navigation Menu (Dropdowns) -->
-        <nav class="nav-menu">
+        <nav class="nav-menu" aria-label="Primary">
             <details class="nav-about">
                 <summary>About</summary>
                 <div class="dropdown-content">
-                    <p>Building minimal digital experiences at the intersection of code and sound. Currently focused on lightweight performance and brutalist aesthetics.</p>
+                    <p>Focused on lightweight products, practical tooling, and brutalist visual systems with clear hierarchy.</p>
                 </div>
             </details>
 
             <details class="nav-code">
                 <summary>Code Projects</summary>
                 <div class="dropdown-content">
-                    <a href="https://github.com/p0kks?tab=repositories&q=label:code" class="project-item" target="_blank">→ System Architecture</a>
-                    <a href="https://github.com/p0kks?tab=repositories&q=label:code" class="project-item" target="_blank">→ Minimal UI Kits</a>
-                    <a href="https://github.com/p0kks?tab=repositories&q=label:code" class="project-item" target="_blank">→ CLI Tooling</a>
+                    <a href="https://github.com/p0kks?tab=repositories&q=label:code" class="project-item" target="_blank" rel="noopener noreferrer">→ System Architecture</a>
+                    <a href="https://github.com/p0kks?tab=repositories&q=label:code" class="project-item" target="_blank" rel="noopener noreferrer">→ Minimal UI Kits</a>
+                    <a href="https://github.com/p0kks?tab=repositories&q=label:code" class="project-item" target="_blank" rel="noopener noreferrer">→ CLI Tooling</a>
                 </div>
             </details>
 
             <details class="nav-audio">
                 <summary>Audio Projects</summary>
                 <div class="dropdown-content">
-                    <a href="https://github.com/p0kks?tab=repositories&q=label:audio" class="project-item" target="_blank">→ DSP Explorations</a>
-                    <a href="https://github.com/p0kks?tab=repositories&q=label:audio" class="project-item" target="_blank">→ Generative Soundscapes</a>
-                    <a href="https://github.com/p0kks?tab=repositories&q=label:audio" class="project-item" target="_blank">→ MIDI Controllers</a>
+                    <a href="https://github.com/p0kks?tab=repositories&q=label:audio" class="project-item" target="_blank" rel="noopener noreferrer">→ DSP Explorations</a>
+                    <a href="https://github.com/p0kks?tab=repositories&q=label:audio" class="project-item" target="_blank" rel="noopener noreferrer">→ Generative Soundscapes</a>
+                    <a href="https://github.com/p0kks?tab=repositories&q=label:audio" class="project-item" target="_blank" rel="noopener noreferrer">→ MIDI Controllers</a>
                 </div>
             </details>
         </nav>
 
-        <!-- Journal Section (Main Index Content) -->
-        <section class="journal">
+        <section class="journal" aria-label="Journal entries">
             <article class="journal-entry">
                 <span class="journal-date">March 31, 2026</span>
                 <h2 class="journal-title">Transitioning to Obsidian</h2>
-                <p class="journal-excerpt">The shift towards a more monochromatic, brutalist design. Stripping away the green accents in favor of pure form and shadow...</p>
+                <p class="journal-excerpt">The shift toward a monochromatic brutalist layout: fewer accents, stronger typography, and cleaner structure.</p>
             </article>
 
             <article class="journal-entry">
                 <span class="journal-date">March 15, 2026</span>
                 <h2 class="journal-title">Minimalist Software Manifesto</h2>
-                <p class="journal-excerpt">Why less is often more when it comes to user interfaces. A deep dive into cognitive load and the beauty of defaults...</p>
+                <p class="journal-excerpt">Why lower interface complexity improves focus, confidence, and long-term maintainability.</p>
             </article>
         </section>
     </main>
 
-    <!-- Fixed Footer Section -->
     <footer class="footer">
         <p class="footer-text">2026 &bull; P0KKS.ME</p>
     </footer>
 
     <script>
         const canvas = document.getElementById('matrix-bg');
-        const ctx = canvas.getContext('2d');
+        const ctx = canvas?.getContext('2d');
 
-        let width, height, columns;
-        const fontSize = 16;
-        let drops = [];
+        if (canvas && ctx) {
+            let width;
+            let height;
+            let columns;
+            const fontSize = 16;
+            const charSet = '01';
+            let drops = [];
+            let animationFrameId = null;
+            const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
 
-        function resize() {
-            width = canvas.width = window.innerWidth;
-            height = canvas.height = window.innerHeight;
-            columns = Math.floor(width / fontSize);
-            drops = new Array(columns).fill(1);
-        }
-
-        window.addEventListener('resize', resize);
-        resize();
-
-        const charSet = "01"; 
-
-        function draw() {
-            // Subtle trail effect
-            ctx.fillStyle = 'rgba(0, 0, 0, 0.05)';
-            ctx.fillRect(0, 0, width, height);
-
-            ctx.fillStyle = '#111111'; // Very subtle gray
-            ctx.font = fontSize + 'px monospace';
-
-            for (let i = 0; i < drops.length; i++) {
-                const text = charSet.charAt(Math.floor(Math.random() * charSet.length));
-                ctx.fillText(text, i * fontSize, drops[i] * fontSize);
-
-                if (drops[i] * fontSize > height && Math.random() > 0.975) {
-                    drops[i] = 0;
-                }
-                drops[i]++;
+            function resize() {
+                width = canvas.width = window.innerWidth;
+                height = canvas.height = window.innerHeight;
+                columns = Math.floor(width / fontSize);
+                drops = new Array(columns).fill(1);
             }
-        }
 
-        setInterval(draw, 50);
+            function draw() {
+                ctx.fillStyle = 'rgba(0, 0, 0, 0.05)';
+                ctx.fillRect(0, 0, width, height);
+
+                ctx.fillStyle = '#111111';
+                ctx.font = `${fontSize}px monospace`;
+
+                for (let i = 0; i < drops.length; i += 1) {
+                    const text = charSet.charAt(Math.floor(Math.random() * charSet.length));
+                    ctx.fillText(text, i * fontSize, drops[i] * fontSize);
+
+                    if (drops[i] * fontSize > height && Math.random() > 0.975) {
+                        drops[i] = 0;
+                    }
+                    drops[i] += 1;
+                }
+            }
+
+            function animate() {
+                draw();
+                animationFrameId = window.requestAnimationFrame(animate);
+            }
+
+            function stopAnimation() {
+                if (animationFrameId !== null) {
+                    window.cancelAnimationFrame(animationFrameId);
+                    animationFrameId = null;
+                }
+            }
+
+            function startAnimation() {
+                if (prefersReducedMotion.matches || document.hidden || animationFrameId !== null) {
+                    return;
+                }
+                animate();
+            }
+
+            function syncAnimationState() {
+                if (prefersReducedMotion.matches || document.hidden) {
+                    stopAnimation();
+                    return;
+                }
+                startAnimation();
+            }
+
+            window.addEventListener('resize', resize);
+            document.addEventListener('visibilitychange', syncAnimationState);
+            prefersReducedMotion.addEventListener('change', syncAnimationState);
+
+            resize();
+            syncAnimationState();
+        }
     </script>
 </body>
 </html>
