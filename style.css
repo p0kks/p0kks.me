@@ -1,0 +1,230 @@
+/* ============================================
+   p0kks.me - Obsidian Minimalist
+   Grayscale Aesthetic
+   ============================================ */
+
+/* Reset & Base */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --bg-color: #000000;
+    --text-primary: #ffffff;
+    --text-secondary: #888888;
+    --accent-color: #444444; /* Grayscale from profile logo */
+    --border-color: #222222;
+    --max-width: 480px;
+    --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+body {
+    background-color: var(--bg-color);
+    color: var(--text-primary);
+    font-family: 'Roboto', sans-serif;
+    line-height: 1.6;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 100vh;
+    padding: 4rem 1.5rem 6rem 1.5rem; /* Bottom padding for fixed footer */
+}
+
+/* Container */
+.container {
+    width: 100%;
+    max-width: var(--max-width);
+    display: flex;
+    flex-direction: column;
+    gap: 4rem;
+}
+
+/* Profile Section */
+.profile {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+}
+
+.profile-pfp {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    object-fit: cover;
+    /* Border removed per request */
+}
+
+.profile-name {
+    font-weight: 700;
+    font-size: 2rem;
+    letter-spacing: -0.04em;
+}
+
+.profile-name span {
+    color: var(--text-secondary);
+}
+
+.profile-bio {
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+    max-width: 380px;
+    font-style: italic;
+    opacity: 0.8;
+}
+
+/* Dropdown Navigation */
+.nav-menu {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+details {
+    width: 100%;
+    border-bottom: 1px solid var(--border-color);
+    transition: var(--transition);
+}
+
+details:last-of-type {
+    border-bottom: 1px solid var(--border-color);
+}
+
+summary {
+    list-style: none;
+    padding: 1.25rem 0;
+    cursor: pointer;
+    font-weight: 500;
+    font-size: 0.9rem;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: var(--text-secondary);
+    transition: var(--transition);
+}
+
+summary:hover {
+    color: var(--text-primary);
+}
+
+summary::-webkit-details-marker {
+    display: none;
+}
+
+summary::after {
+    content: '+';
+    font-size: 1.2rem;
+    font-weight: 300;
+    color: var(--accent-color);
+}
+
+details[open] summary::after {
+    content: '−';
+}
+
+details[open] summary {
+    color: var(--text-primary);
+}
+
+.dropdown-content {
+    padding: 0 0 1.5rem 0;
+    font-size: 0.95rem;
+    color: var(--text-secondary);
+    animation: fadeIn 0.4s ease-out;
+}
+
+.project-item {
+    display: block;
+    text-decoration: none;
+    color: var(--text-secondary);
+    padding: 0.5rem 0;
+    transition: var(--transition);
+}
+
+.project-item:hover {
+    color: var(--text-primary);
+    padding-left: 0.5rem;
+}
+
+/* Journal Section (Index Content) */
+.journal {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 2.5rem;
+}
+
+.journal-entry {
+    border-left: 1px solid var(--accent-color);
+    padding-left: 1.5rem;
+}
+
+.journal-date {
+    font-size: 0.75rem;
+    color: var(--accent-color);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-bottom: 0.5rem;
+    display: block;
+}
+
+.journal-title {
+    font-size: 1.1rem;
+    margin-bottom: 0.5rem;
+    color: var(--text-primary);
+}
+
+.journal-excerpt {
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+}
+
+/* Fixed Footer */
+.footer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    padding: 1.5rem;
+    background: rgba(0, 0, 0, 0.8);
+    backdrop-filter: blur(10px);
+    border-top: 1px solid var(--border-color);
+    text-align: center;
+    z-index: 100;
+}
+
+.footer-text {
+    font-size: 0.7rem;
+    letter-spacing: 0.2em;
+    color: var(--text-secondary);
+    text-transform: uppercase;
+}
+
+/* Modern Animations */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-5px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+    width: 4px;
+}
+::-webkit-scrollbar-track {
+    background: var(--bg-color);
+}
+::-webkit-scrollbar-thumb {
+    background: var(--accent-color);
+}
+
+/* Media Queries */
+@media (max-width: 480px) {
+    body {
+        padding: 3rem 1rem 5rem 1rem;
+    }
+}

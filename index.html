@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="p0kks - Minimal Link Tree">
+    <title>p0kks</title>
+    <link rel="icon" type="image/png" href="assets/images/p0kks-me-pfp.png">
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <main class="container">
+        <!-- Profile Section -->
+        <section class="profile">
+            <img src="assets/images/p0kks-me-pfp.png" alt="p0kks Profile Picture" class="profile-pfp">
+            <h1 class="profile-name">p<span>0</span>kks</h1>
+            <p class="profile-bio">"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."</p>
+        </section>
+
+        <!-- Navigation Menu (Dropdowns) -->
+        <nav class="nav-menu">
+            <details>
+                <summary>About</summary>
+                <div class="dropdown-content">
+                    <p>Building minimal digital experiences at the intersection of code and sound. Currently focused on lightweight performance and brutalist aesthetics.</p>
+                </div>
+            </details>
+
+            <details>
+                <summary>Code Projects</summary>
+                <div class="dropdown-content">
+                    <a href="https://github.com/p0kks?tab=repositories&q=label:code" class="project-item" target="_blank">→ System Architecture</a>
+                    <a href="https://github.com/p0kks?tab=repositories&q=label:code" class="project-item" target="_blank">→ Minimal UI Kits</a>
+                    <a href="https://github.com/p0kks?tab=repositories&q=label:code" class="project-item" target="_blank">→ CLI Tooling</a>
+                </div>
+            </details>
+
+            <details>
+                <summary>Audio Projects</summary>
+                <div class="dropdown-content">
+                    <a href="https://github.com/p0kks?tab=repositories&q=label:audio" class="project-item" target="_blank">→ DSP Explorations</a>
+                    <a href="https://github.com/p0kks?tab=repositories&q=label:audio" class="project-item" target="_blank">→ Generative Soundscapes</a>
+                    <a href="https://github.com/p0kks?tab=repositories&q=label:audio" class="project-item" target="_blank">→ MIDI Controllers</a>
+                </div>
+            </details>
+        </nav>
+
+        <!-- Journal Section (Main Index Content) -->
+        <section class="journal">
+            <article class="journal-entry">
+                <span class="journal-date">March 31, 2026</span>
+                <h2 class="journal-title">Transitioning to Obsidian</h2>
+                <p class="journal-excerpt">The shift towards a more monochromatic, brutalist design. Stripping away the green accents in favor of pure form and shadow...</p>
+            </article>
+
+            <article class="journal-entry">
+                <span class="journal-date">March 15, 2026</span>
+                <h2 class="journal-title">Minimalist Software Manifesto</h2>
+                <p class="journal-excerpt">Why less is often more when it comes to user interfaces. A deep dive into cognitive load and the beauty of defaults...</p>
+            </article>
+        </section>
+    </main>
+
+    <!-- Fixed Footer Section -->
+    <footer class="footer">
+        <p class="footer-text">2026 &bull; P0KKS.ME</p>
+    </footer>
+</body>
+</html>
