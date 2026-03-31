@@ -18,6 +18,11 @@
     --border-color: #222222;
     --max-width: 480px;
     --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    
+    /* Section Specific Colors */
+    --color-journal: #fbca04;
+    --color-code: #0e8a16;
+    --color-audio: #b60205;
 }
 
 body {
@@ -145,6 +150,10 @@ details[open] summary {
     color: var(--text-primary);
 }
 
+/* Section Specific Indicators */
+.nav-code summary::after { color: var(--color-code); }
+.nav-audio summary::after { color: var(--color-audio); }
+
 .dropdown-content {
     padding: 0 0 1.5rem 0;
     font-size: 0.95rem;
@@ -160,6 +169,9 @@ details[open] summary {
     transition: var(--transition);
 }
 
+.nav-code .project-item:hover { color: var(--color-code); padding-left: 0.5rem; }
+.nav-audio .project-item:hover { color: var(--color-audio); padding-left: 0.5rem; }
+
 .project-item:hover {
     color: var(--text-primary);
     padding-left: 0.5rem;
@@ -174,13 +186,13 @@ details[open] summary {
 }
 
 .journal-entry {
-    border-left: 1px solid var(--accent-color);
+    border-left: 1px solid var(--color-journal);
     padding-left: 1.5rem;
 }
 
 .journal-date {
     font-size: 0.75rem;
-    color: var(--accent-color);
+    color: var(--color-journal);
     text-transform: uppercase;
     letter-spacing: 0.1em;
     margin-bottom: 0.5rem;
