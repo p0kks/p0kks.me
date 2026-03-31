@@ -14,6 +14,8 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
+    <canvas id="matrix-bg"></canvas>
+    
     <main class="container">
         <!-- Profile Section -->
         <section class="profile">
@@ -70,5 +72,47 @@
     <footer class="footer">
         <p class="footer-text">2026 &bull; P0KKS.ME</p>
     </footer>
+
+    <script>
+        const canvas = document.getElementById('matrix-bg');
+        const ctx = canvas.getContext('2d');
+
+        let width, height, columns;
+        const fontSize = 16;
+        let drops = [];
+
+        function resize() {
+            width = canvas.width = window.innerWidth;
+            height = canvas.height = window.innerHeight;
+            columns = Math.floor(width / fontSize);
+            drops = new Array(columns).fill(1);
+        }
+
+        window.addEventListener('resize', resize);
+        resize();
+
+        const charSet = "01"; 
+
+        function draw() {
+            // Subtle trail effect
+            ctx.fillStyle = 'rgba(0, 0, 0, 0.05)';
+            ctx.fillRect(0, 0, width, height);
+
+            ctx.fillStyle = '#111111'; // Very subtle gray
+            ctx.font = fontSize + 'px monospace';
+
+            for (let i = 0; i < drops.length; i++) {
+                const text = charSet.charAt(Math.floor(Math.random() * charSet.length));
+                ctx.fillText(text, i * fontSize, drops[i] * fontSize);
+
+                if (drops[i] * fontSize > height && Math.random() > 0.975) {
+                    drops[i] = 0;
+                }
+                drops[i]++;
+            }
+        }
+
+        setInterval(draw, 50);
+    </script>
 </body>
 </html>
