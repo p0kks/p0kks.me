@@ -14,11 +14,12 @@
     --bg-color: #000000;
     --text-primary: #ffffff;
     --text-secondary: #888888;
-    --accent-color: #444444; /* Grayscale from profile logo */
+    --accent-color: #444444;
     --border-color: #222222;
     --max-width: 480px;
     --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    
+    --focus-ring: 2px solid #fbca04;
+
     /* Section Specific Colors */
     --color-journal: #fbca04;
     --color-code: #0e8a16;
@@ -34,10 +35,9 @@ body {
     flex-direction: column;
     align-items: center;
     min-height: 100vh;
-    padding: 4rem 1.5rem 6rem 1.5rem; /* Bottom padding for fixed footer */
+    padding: 4rem 1.5rem 6rem 1.5rem;
 }
 
-/* Container */
 .container {
     width: 100%;
     max-width: var(--max-width);
@@ -45,10 +45,9 @@ body {
     flex-direction: column;
     gap: 4rem;
     position: relative;
-    z-index: 1; /* Ensure content stays above matrix */
+    z-index: 1;
 }
 
-/* Matrix Background */
 #matrix-bg {
     position: fixed;
     top: 0;
@@ -57,10 +56,9 @@ body {
     height: 100%;
     z-index: 0;
     pointer-events: none;
-    opacity: 0.6; /* Adjust for overall subtlety */
+    opacity: 0.6;
 }
 
-/* Profile Section */
 .profile {
     text-align: center;
     display: flex;
@@ -74,7 +72,6 @@ body {
     height: 100px;
     border-radius: 50%;
     object-fit: cover;
-    /* Border removed per request */
 }
 
 .profile-name {
@@ -88,14 +85,12 @@ body {
 }
 
 .profile-bio {
-    font-size: 0.9rem;
+    font-size: 0.95rem;
     color: var(--text-secondary);
     max-width: 380px;
-    font-style: italic;
-    opacity: 0.8;
+    opacity: 0.9;
 }
 
-/* Dropdown Navigation */
 .nav-menu {
     width: 100%;
     display: flex;
@@ -106,10 +101,6 @@ details {
     width: 100%;
     border-bottom: 1px solid var(--border-color);
     transition: var(--transition);
-}
-
-details:last-of-type {
-    border-bottom: 1px solid var(--border-color);
 }
 
 summary {
@@ -129,6 +120,13 @@ summary {
 
 summary:hover {
     color: var(--text-primary);
+}
+
+summary:focus-visible,
+.project-item:focus-visible {
+    outline: var(--focus-ring);
+    outline-offset: 4px;
+    border-radius: 2px;
 }
 
 summary::-webkit-details-marker {
@@ -175,7 +173,6 @@ details[open] summary {
     color: var(--text-primary);
 }
 
-/* Section Specific Indicators */
 .nav-code summary::after { color: var(--color-code); }
 .nav-audio summary::after { color: var(--color-audio); }
 .nav-journal summary::after { color: var(--color-journal); }
@@ -199,15 +196,14 @@ details[open] summary {
     transition: var(--transition);
 }
 
-.nav-code .project-item:hover { color: var(--color-code); padding-left: 0.5rem; }
-.nav-audio .project-item:hover { color: var(--color-audio); padding-left: 0.5rem; }
+.nav-code .project-item:hover { color: var(--color-code); }
+.nav-audio .project-item:hover { color: var(--color-audio); }
 
-.project-item:hover {
-    color: var(--text-primary);
+.project-item:hover,
+.project-item:focus-visible {
     padding-left: 0.5rem;
 }
 
-/* Journal Section (Index Content) */
 .journal {
     width: 100%;
     display: flex;
@@ -318,7 +314,6 @@ details[open] summary {
     fill: currentColor;
 }
 
-/* Fixed Footer */
 .footer {
     position: fixed;
     bottom: 0;
@@ -338,24 +333,38 @@ details[open] summary {
     text-transform: uppercase;
 }
 
-/* Modern Animations */
 @keyframes fadeIn {
     from { opacity: 0; transform: translateY(-5px); }
     to { opacity: 1; transform: translateY(0); }
 }
 
-/* Custom Scrollbar */
 ::-webkit-scrollbar {
     width: 4px;
 }
+
 ::-webkit-scrollbar-track {
     background: var(--bg-color);
 }
+
 ::-webkit-scrollbar-thumb {
     background: var(--accent-color);
 }
 
-/* Media Queries */
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+    }
+
+    #matrix-bg {
+        display: none;
+    }
+}
+
 @media (max-width: 480px) {
     body {
         padding: 3rem 1rem 5rem 1rem;
