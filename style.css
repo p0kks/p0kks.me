@@ -151,20 +151,20 @@ details[open] summary::after {
 }
 
 .nav-code summary::before {
-    content: '<';
+    content: '💻';
     color: var(--color-code);
     font-weight: 700;
     font-size: 1.1rem;
 }
 
 .nav-audio summary::before {
-    content: '♫';
+    content: '🎵';
     color: var(--color-audio);
     font-size: 0.95rem;
 }
 
 .nav-journal summary::before {
-    content: '◈';
+    content: '📝';
     color: var(--color-journal);
     font-size: 0.9rem;
 }
