@@ -8,9 +8,10 @@ This repository currently contains a lightweight static landing page with:
 
 - Profile header and short bio
 - Expandable sections for About, Code Projects, and Audio Projects
-- Journal snippets
-- Subtle animated matrix-style canvas background
-- Fixed footer with custom domain branding
+- Dynamic content fetching from GitHub Issues for portfolio items and journals
+- Glassmorphic modal for seamless rich-content viewing without navigating away
+- Subtle animated matrix-style canvas background (using an optimized `requestAnimationFrame` loop)
+- Responsive footer and mobile-friendly layout
 
 ## Stack
 
