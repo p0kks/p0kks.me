@@ -525,11 +525,17 @@ details[open].nav-about summary::before {
     line-height: 1.7;
 }
 
-.modal-body h1, .modal-body h2, .modal-body h3 {
-    margin-top: 1.5rem;
+.modal-body h1, .modal-body h2, .modal-body h3, 
+.modal-body h4, .modal-body h5, .modal-body h6 {
+    margin-top: 1.75rem;
     margin-bottom: 0.75rem;
     color: var(--text-primary);
+    font-weight: 600;
 }
+
+.modal-body h1 { font-size: 1.75rem; border-bottom: 1px solid rgba(255, 255, 255, 0.1); padding-bottom: 0.5rem; }
+.modal-body h2 { font-size: 1.4rem; }
+.modal-body h3 { font-size: 1.2rem; }
 
 .modal-body p {
     margin-bottom: 1rem;
@@ -539,6 +545,12 @@ details[open].nav-about summary::before {
     color: var(--text-primary);
     text-decoration: underline;
     text-underline-offset: 3px;
+    transition: var(--transition);
+}
+
+.modal-body a:hover {
+    color: var(--color-journal);
+    text-decoration-color: var(--color-journal);
 }
 
 .modal-body ul, .modal-body ol {
@@ -546,19 +558,90 @@ details[open].nav-about summary::before {
     margin-bottom: 1rem;
 }
 
+.modal-body li {
+    margin-bottom: 0.25rem;
+}
+
 .modal-body blockquote {
-    border-left: 2px solid var(--accent-color);
+    border-left: 3px solid var(--accent-color);
     padding-left: 1rem;
     color: var(--text-secondary);
     margin-bottom: 1rem;
+    font-style: italic;
+    background: rgba(255, 255, 255, 0.02);
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+    border-radius: 0 4px 4px 0;
 }
 
 .modal-body code {
-    background: rgba(255,255,255,0.1);
+    background: rgba(255, 255, 255, 0.08);
     padding: 0.2rem 0.4rem;
     border-radius: 4px;
     font-family: monospace;
     font-size: 0.85em;
+    color: #e2e2e2;
+}
+
+.modal-body pre {
+    background: #111;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 1rem;
+    border-radius: 6px;
+    overflow-x: auto;
+    margin-bottom: 1.5rem;
+}
+
+.modal-body pre code {
+    background: transparent;
+    padding: 0;
+    border-radius: 0;
+    color: #e2e2e2;
+    font-size: 0.85rem;
+    white-space: pre;
+}
+
+.modal-body img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 6px;
+    margin: 1.5rem 0;
+    display: block;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+.modal-body hr {
+    border: 0;
+    height: 1px;
+    background: rgba(255, 255, 255, 0.1);
+    margin: 2rem 0;
+}
+
+.modal-body table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 1.5rem;
+    font-size: 0.9rem;
+}
+
+.modal-body th, .modal-body td {
+    padding: 0.75rem 1rem;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    text-align: left;
+}
+
+.modal-body th {
+    background: rgba(255, 255, 255, 0.05);
+    font-weight: 600;
+}
+
+.modal-body tbody tr:nth-child(even) {
+    background: rgba(255, 255, 255, 0.02);
+}
+
+.modal-body strong {
+    color: #fff;
+    font-weight: 600;
 }
 
 /* Skeletons */

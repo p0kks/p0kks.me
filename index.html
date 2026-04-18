@@ -10,6 +10,10 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Dependencies for robust Markdown rendering -->
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/dompurify/3.0.6/purify.min.js"></script>
 
     <link rel="stylesheet" href="style.css">
 </head>
@@ -168,6 +172,9 @@
             });
         }
 
+        // Global state for storing fetched issues
+        window.appIssues = new Map();
+
         // Dynamic content from GitHub Issues
         async function loadDynamicContent() {
             try {
@@ -187,8 +194,10 @@
 
                 const categories = { code: [], audio: [], journal: [] };
 
-                // Categorize issues by labels
+                // Categorize issues by labels and store in global state
                 issues.forEach(issue => {
+                    window.appIssues.set(issue.id.toString(), issue);
+                    
                     const labels = issue.labels.map(label => label.name);
                     if (labels.includes('code')) categories.code.push(issue);
                     else if (labels.includes('audio')) categories.audio.push(issue);
@@ -198,13 +207,13 @@
                 // Populate nav-code
                 const navCode = document.querySelector('.nav-code .dropdown-content');
                 navCode.innerHTML = categories.code.length ? categories.code.map(issue => 
-                    `<button class="project-item" data-body="${escapeHtml(issue.body || 'No details available')}">${issue.title}</button>`
+                    `<button class="project-item" data-id="${issue.id}">${issue.title}</button>`
                 ).join('') : '<div class="empty-state">No active code projects</div>';
 
                 // Populate nav-audio
                 const navAudio = document.querySelector('.nav-audio .dropdown-content');
                 navAudio.innerHTML = categories.audio.length ? categories.audio.map(issue => 
-                    `<button class="project-item" data-body="${escapeHtml(issue.body || 'No details available')}">${issue.title}</button>`
+                    `<button class="project-item" data-id="${issue.id}">${issue.title}</button>`
                 ).join('') : '<div class="empty-state">No incoming audio projects</div>';
 
                 // Populate latest journal highlight
@@ -212,14 +221,17 @@
                 if (categories.journal.length > 0) {
                     const latest = categories.journal.shift(); // Remove latest from archive list
                     const date = new Date(latest.created_at).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
-                    const excerpt = latest.body ? escapeHtml(latest.body.substring(0, 150) + '...') : 'No description available';
+                    // Provide a safe excerpt
+                    let rawBody = latest.body || '';
+                    // Remove markdown tags for excerpt if needed, or just take first 150 chars
+                    const excerpt = extractExcerpt(rawBody, 150);
                     
                     previewSection.innerHTML = `
                         <span class="preview-tag">Latest Writing</span>
                         <h2 class="preview-title">${latest.title}</h2>
                         <span class="preview-date">${date}</span>
                         <p class="preview-excerpt">${excerpt}</p>
-                        <button class="preview-expand-btn" data-body="${escapeHtml(latest.body || 'No details available')}">Read Full Note</button>
+                        <button class="preview-expand-btn" data-id="${latest.id}">Read Full Note</button>
                     `;
                     previewSection.classList.add('loaded');
                 } else {
@@ -229,7 +241,7 @@
                 // Populate nav-journal
                 const navJournal = document.querySelector('.nav-journal .dropdown-content');
                 navJournal.innerHTML = categories.journal.length ? categories.journal.map(issue => 
-                    `<button class="project-item" data-body="${escapeHtml(issue.body || 'No details available')}">${issue.title}</button>`
+                    `<button class="project-item" data-id="${issue.id}">${issue.title}</button>`
                 ).join('') : '<div class="empty-state">No archived journal logs</div>';
 
             } catch (error) {
@@ -237,23 +249,39 @@
             }
         }
 
-        // Helper function to escape HTML
-        function escapeHtml(text) {
-            const div = document.createElement('div');
-            div.textContent = text;
-            return div.innerHTML;
+        // Helper to extract plain text excerpt from Markdown
+        function extractExcerpt(markdown, maxLength) {
+            if (!markdown) return 'No description available';
+            // Strip headers, lists, code blocks, links, etc. superficially just for excerpt
+            let plain = markdown
+                .replace(/#+\s/g, '')
+                .replace(/\*\*(.*?)\*\*/g, '$1')
+                .replace(/\[(.*?)\]\(.*?\)/g, '$1')
+                .replace(/`{1,3}[^`]*`{1,3}/g, '')
+                .replace(/\n+/g, ' ')
+                .trim();
+            if (plain.length > maxLength) {
+                return plain.substring(0, maxLength) + '...';
+            }
+            return plain || 'No description available';
         }
 
-        // Simple Markdown formatter
+        // Robust Markdown formatter using Marked and DOMPurify
         function formatMarkdown(text) {
-            let html = escapeHtml(text);
-            // Replace bold
-            html = html.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
-            // Replace links [text](url)
-            html = html.replace(/\[(.*?)\]\((.*?)\)/g, '<a href="$2" target="_blank" rel="noopener noreferrer" style="color: var(--text-primary); text-decoration: underline;">$1</a>');
-            // Replace newlines with <br>
-            html = html.replace(/\n/g, '<br>');
-            return html;
+            if (!text) return '<p><i>No details available</i></p>';
+            
+            // Configure Marked to use GFM and line breaks
+            marked.use({
+                gfm: true,
+                breaks: true
+            });
+            
+            const rawHtml = marked.parse(text);
+            
+            // Sanitize against XSS
+            return DOMPurify.sanitize(rawHtml, {
+                ADD_ATTR: ['target'] // Allow link targets 
+            });
         }
 
         // Event listeners for modal and expand
@@ -262,11 +290,24 @@
                 // Ignore empty loading links
                 if (e.target.tagName !== 'BUTTON') return;
                 
-                const rawBody = e.target.getAttribute('data-body');
+                const issueId = e.target.getAttribute('data-id');
+                const issue = window.appIssues.get(issueId);
                 
-                // We decode back since we escaped it in data attribute purely to hold the string
-                const unescapedBody = new DOMParser().parseFromString(rawBody, 'text/html').documentElement.textContent;
-                document.getElementById('modal-body').innerHTML = formatMarkdown(unescapedBody);
+                let modalContent = '';
+                if (issue) {
+                    modalContent = formatMarkdown(issue.body);
+                } else {
+                    modalContent = '<p class="empty-state">Failed to load content.</p>';
+                }
+                
+                document.getElementById('modal-body').innerHTML = modalContent;
+                
+                // Customize links in modal to open in new tab
+                const links = document.querySelectorAll('#modal-body a');
+                links.forEach(link => {
+                    link.setAttribute('target', '_blank');
+                    link.setAttribute('rel', 'noopener noreferrer');
+                });
                 
                 const modal = document.getElementById('modal');
                 modal.style.display = 'flex';
