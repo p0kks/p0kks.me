@@ -1,60 +1,58 @@
 # p0kks.me
 
-A minimal, single-page personal website for [p0kks.me](https://p0kks.me), built with plain HTML, CSS, and a small inline JavaScript effect.
+A high-performance, minimal personal portal designed with an "Obsidian" brutalist aesthetic. Built for speed, accessibility, and seamless content delivery.
 
-## Overview
+## 🚀 Features
 
-This repository currently contains a lightweight static landing page with:
+- **Brutalist Design**: High-contrast, grayscale aesthetic with focus on typography and hierarchy.
+- **Dynamic Content**: Fetches portfolio items and journal entries directly from GitHub Issues using the GitHub REST API.
+- **Optimized Performance**: 
+    - Zero frameworks, zero dependencies (build-less).
+    - Session-based caching for API requests.
+    - Optimized canvas animations with `visibilitychange` detection to save CPU.
+- **Glassmorphic UI**: Interactive elements use sophisticated frosted-glass effects with native `-webkit-backdrop-filter` support.
+- **Responsive Layout**: Fluid design that adapts from mobile to large desktop screens.
+- **Matrix Background**: Custom animated Nordic Rune matrix effect (Elder Futhark) that respects `prefers-reduced-motion`.
+- **Accessible & SEO Ready**: Semantic HTML5, ARIA compliance, and full Open Graph/Twitter metadata.
 
-- Profile header and short bio
-- Expandable sections for About, Code Projects, and Audio Projects
-- Dynamic content fetching from GitHub Issues for portfolio items and journals
-- Glassmorphic modal for seamless rich-content viewing without navigating away
-- Subtle animated matrix-style canvas background (using an optimized `requestAnimationFrame` loop)
-- Responsive footer and mobile-friendly layout
+## 🛠 Tech Stack
 
-## Stack
+- **Frontend**: HTML5, Vanilla CSS3 (Custom Properties), Vanilla JavaScript (ES6+).
+- **External Dependencies**: 
+    - [Marked.js](https://marked.js.org/) (Markdown parsing)
+    - [DOMPurify](https://github.com/cure53/dompurify) (XSS sanitization)
+    - [Highlight.js](https://highlightjs.org/) (Code syntax highlighting)
+- **Content Management**: GitHub Issues (leveraged as a lightweight Headless CMS).
 
-- HTML5
-- CSS3 (custom properties + responsive media queries)
-- Vanilla JavaScript (no build step, no framework)
-
-## Project Structure
+## 📁 Project Structure
 
 ```text
 .
+├── .github/workflows/  # CI/CD for GitHub Pages
 ├── assets/
-│   └── images/
-│       ├── p0kks-me-optimized.png
-│       └── p0kks-me-pfp.png
-├── CNAME
-├── index.html
-├── style.css
-└── README.md
+│   └── images/         # Optimized branding and profile assets
+├── index.html          # Core application logic and structure
+├── style.css           # Global design system and component styles
+├── CNAME               # Custom domain configuration
+└── README.md           # Documentation
 ```
 
-## Local Development
+## 🛠 Local Development
 
-Because this is a static site, any simple local web server works.
-
-### Option 1: Python
+Any static file server will work. For example:
 
 ```bash
+# Using Python
 python -m http.server 8000
+
+# Using Node (npx)
+npx serve .
 ```
 
-Then open <http://localhost:8000>.
+## 🚢 Deployment
 
-### Option 2: Open directly
+Automatically deployed to **GitHub Pages** via the included GitHub Actions workflow (`static.yml`). Pushing to the `main` branch triggers an instant build and deployment.
 
-You can also open `index.html` directly in a browser.
+## ⚖️ License
 
-## Maintenance Notes
-
-- External links opened in a new tab use `rel="noopener noreferrer"`.
-- Reduced-motion preference is respected by disabling animations.
-- Canvas animation pauses when the page is hidden to reduce background CPU usage.
-
-## License
-
-MIT (or project owner's preferred license).
+MIT © 2026 [p0kks](https://p0kks.me)
