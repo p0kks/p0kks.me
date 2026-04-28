@@ -219,16 +219,23 @@
             };
 
             // --- HTML Generators ---
-            const generateIssueHTML = (issue) => `
+            const generateIssueHTML = (issue, labelType) => {
+                let labelBadge = '';
+                if (labelType === 'journal') {
+                    labelBadge = `<span class="issue-number" style="background: rgba(251, 202, 4, 0.1); color: #fbca04;">Journal</span>`;
+                } else if (labelType === 'project') {
+                    labelBadge = `<span class="issue-number" style="background: rgba(56, 189, 248, 0.1); color: #38bdf8;">Project</span>`;
+                }
+                return `
                 <div class="issue-preview glass-panel" data-id="${issue.id}" tabindex="0" role="button" aria-label="Open ${escapeHTML(issue.title)}">
-                    <h3 class="issue-title">${escapeHTML(issue.title)}</h3>
-                    <div class="issue-meta">
+                    <div class="issue-meta" style="margin-bottom: 0.5rem;">
                         <span>${new Date(issue.created_at).toLocaleDateString()}</span>
-                        <span class="issue-number">#${issue.number}</span>
+                        ${labelBadge}
                     </div>
-                    <p class="issue-excerpt">${extractExcerpt(issue.body, 120)}</p>
+                    <h3 class="issue-title" style="margin-bottom: 0;">${escapeHTML(issue.title)}</h3>
                 </div>
             `;
+            };
 
             const generateListIssueHTML = (issue) => `
                 <div class="issue-list-item glass-panel" data-id="${issue.id}" tabindex="0" role="button" aria-label="Open ${escapeHTML(issue.title)}">
@@ -286,7 +293,7 @@
                     valid.forEach(i => appIssues.set(i.id.toString(), i));
 
                     if (valid.length > 0) {
-                        els.journalPreview.innerHTML = generateIssueHTML(valid[0]);
+                        els.journalPreview.innerHTML = generateIssueHTML(valid[0], 'journal');
                         if (valid.length > 1) {
                             els.journalDropdown.style.display = 'block';
                             els.journalList.innerHTML = valid.slice(1).map(generateListIssueHTML).join('');
@@ -315,7 +322,7 @@
                     valid.forEach(i => appIssues.set(i.id.toString(), i));
 
                     if (valid.length > 0) {
-                        els.projectsList.innerHTML = valid.map(generateIssueHTML).join('');
+                        els.projectsList.innerHTML = valid.map(i => generateIssueHTML(i, 'project')).join('');
                     } else {
                         els.projectsList.innerHTML = '<p class="footer-text" style="text-align:left">No projects available.</p>';
                     }
@@ -334,11 +341,11 @@
                     if (data.items && data.items.length > 0) {
                         els.youtubeList.innerHTML = data.items.map(video => `
                             <a href="${escapeHTML(video.link)}" target="_blank" rel="noopener noreferrer" class="issue-preview glass-panel" style="display: block; text-decoration: none;">
-                                <h3 class="issue-title" style="margin-bottom: 0.5rem;">${escapeHTML(video.title)}</h3>
-                                <div class="issue-meta">
+                                <div class="issue-meta" style="margin-bottom: 0.5rem;">
                                     <span>${new Date(video.pubDate).toLocaleDateString()}</span>
                                     <span class="issue-number" style="background: rgba(255, 0, 0, 0.1); color: #ff4444;">YouTube</span>
                                 </div>
+                                <h3 class="issue-title" style="margin-bottom: 0;">${escapeHTML(video.title)}</h3>
                             </a>
                         `).join('');
                     } else {
